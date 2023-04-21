@@ -1,0 +1,13 @@
+/**********************************
+*
+*          index.php
+*
+**********************************/
+/* topic.html */
+section#index-topic {
+  height: 60vh;
+}
+section#index-topic img {
+  -o-object-fit: cover;
+     object-fit: cover;
+}/*# sourceMappingURL=main.css.map */
