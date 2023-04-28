@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2023-04-27 03:19:09
+-- 產生時間： 2023-04-28 10:39:22
 -- 伺服器版本： 10.4.22-MariaDB
 -- PHP 版本： 8.1.2
 
@@ -904,7 +904,7 @@ CREATE TABLE `user` (
   `uId` int(10) NOT NULL,
   `name` varchar(10) NOT NULL,
   `phone` text NOT NULL,
-  `email` varchar(20) NOT NULL,
+  `email` varchar(40) NOT NULL,
   `password` varchar(20) NOT NULL,
   `permission` enum('user','manager') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -914,7 +914,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`uId`, `name`, `phone`, `email`, `password`, `permission`) VALUES
-(1, '鄔仁迪', '0xxxxxxxxx', 'xxxxxxxxxx@gmail.com', 'A1234567', 'manager'),
+(1, '鄔仁迪', '0914168771', 'whats2000mc@gmail.com', '<?php A1?>', 'manager'),
 (2, '翁武麟', '0902379316', 'willy910928@gmail.co', 'B1234567', 'manager'),
 (3, '黃冠誠', '0912290366', 'alan88.huang@gmail.c', 'C1234567', 'manager'),
 (4, '王姵財', '0935957190', 'RHibDzsJC@gmail.com', 'BfPRSsVK', 'user'),
@@ -1050,7 +1050,7 @@ ALTER TABLE `payment`
   ADD PRIMARY KEY (`pId`,`payDate`);
 
 --
--- 資料表索引 `postpicture`
+-- 資料表索引 `post`
 --
 ALTER TABLE `post`
   ADD PRIMARY KEY (`pId`);
