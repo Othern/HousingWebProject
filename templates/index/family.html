@@ -1,29 +1,30 @@
-<section id="index-recommend" class="container py-5">
-    <h2 class="mb-4 fw-bold text-center">為您推薦</h2>
-    {% if recommend_post %}
-        <div id="recommend-house-lg" class="carousel slide d-none d-lg-block" data-bs-interval="false">
+<section id="index-family" class="container py-5">
+    <h2 class="fw-bold text-center">找新家?</h2>
+    <h5 class="mb-4 text-center">找尋屬於你溫暖的家</h5>
+    {% if family_post %}
+        <div id="family-house-lg" class="carousel slide d-none d-lg-block" data-bs-interval="false">
             <div class="carousel-inner">
-                {% for i in range(0, recommend_post|length, 4) %}
+                {% for i in range(0, family_post|length, 4) %}
                     <div class="carousel-item {% if i == 0 %}active{% endif %}">
                         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                             {% for num in range(i, i + 4) %}
-                                {% if num < recommend_post|length %}
+                                {% if num < family_post|length %}
                                     <div class="col">
                                         <a href="#" class="card text-decoration-none">
-                                            <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
+                                            <img src="{{ family_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">
-                                                <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
+                                                <h4 class="card-title">{{ family_post[num]['address'] }}</h4>
                                                 <p class="card-text">
-                                                    {{ recommend_post[num]['district'] }} /
-                                                    {{ recommend_post[num]['type'] }} /
-                                                    {{ recommend_post[num]['twPing'] }}
+                                                    {{ family_post[num]['district'] }} /
+                                                    {{ family_post[num]['type'] }} /
+                                                    {{ family_post[num]['twPing'] }}
                                                 </p>
-                                                {% if recommend_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
+                                                {% if family_post[num]['sellPrice'] %}
+                                                    <h5 class="text-danger">{{ family_post[num]['sellPrice'] }}
                                                         萬</h5>
                                                 {% else %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
+                                                    <h5 class="text-danger">{{ family_post[num]['rentPrice'] }}
                                                         元/月</h5>
                                                 {% endif %}
                                             </div>
@@ -35,41 +36,41 @@
                     </div>
                 {% endfor %}
             </div>
-            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-lg"
+            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#family-house-lg"
                     data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-lg"
+            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#family-house-lg"
                     data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
 
-        <div id="recommend-house-md" class="carousel slide d-none d-md-block d-lg-none" data-bs-interval="false">
+        <div id="family-house-md" class="carousel slide d-none d-md-block d-lg-none" data-bs-interval="false">
             <div class="carousel-inner">
-                {% for i in range(0, recommend_post|length, 2) %}
+                {% for i in range(0, family_post|length, 2) %}
                     <div class="carousel-item {% if i == 0 %}active{% endif %}">
                         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                             {% for num in range(i, i + 2) %}
-                                {% if num < recommend_post|length %}
+                                {% if num < family_post|length %}
                                     <div class="col">
                                         <a href="#" class="card text-decoration-none">
-                                            <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
+                                            <img src="{{ family_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">
-                                                <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
+                                                <h4 class="card-title">{{ family_post[num]['address'] }}</h4>
                                                 <p class="card-text">
-                                                    {{ recommend_post[num]['district'] }} /
-                                                    {{ recommend_post[num]['type'] }} /
-                                                    {{ recommend_post[num]['twPing'] }}
+                                                    {{ family_post[num]['district'] }} /
+                                                    {{ family_post[num]['type'] }} /
+                                                    {{ family_post[num]['twPing'] }}
                                                 </p>
-                                                {% if recommend_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
+                                                {% if family_post[num]['sellPrice'] %}
+                                                    <h5 class="text-danger">{{ family_post[num]['sellPrice'] }}
                                                         萬</h5>
                                                 {% else %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
+                                                    <h5 class="text-danger">{{ family_post[num]['rentPrice'] }}
                                                         元/月</h5>
                                                 {% endif %}
                                             </div>
@@ -81,41 +82,41 @@
                     </div>
                 {% endfor %}
             </div>
-            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-md"
+            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#family-house-md"
                     data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-md"
+            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#family-house-md"
                     data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
 
-        <div id="recommend-house-sm" class="carousel slide d-sm-block d-md-none" data-bs-interval="false">
+        <div id="family-house-sm" class="carousel slide d-sm-block d-md-none" data-bs-interval="false">
             <div class="carousel-inner">
-                {% for i in range(0, recommend_post|length, 1) %}
+                {% for i in range(0, family_post|length, 1) %}
                     <div class="carousel-item {% if i == 0 %}active{% endif %}">
                         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                             {% for num in range(i, i + 1) %}
-                                {% if num < recommend_post|length %}
+                                {% if num < family_post|length %}
                                     <div class="col">
                                         <a href="#" class="card text-decoration-none">
-                                            <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
+                                            <img src="{{ family_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">
-                                                <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
+                                                <h4 class="card-title">{{ family_post[num]['address'] }}</h4>
                                                 <p class="card-text">
-                                                    {{ recommend_post[num]['district'] }} /
-                                                    {{ recommend_post[num]['type'] }} /
-                                                    {{ recommend_post[num]['twPing'] }} 坪
+                                                    {{ family_post[num]['district'] }} /
+                                                    {{ family_post[num]['type'] }} /
+                                                    {{ family_post[num]['twPing'] }} 坪
                                                 </p>
-                                                {% if recommend_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
+                                                {% if family_post[num]['sellPrice'] %}
+                                                    <h5 class="text-danger">{{ family_post[num]['sellPrice'] }}
                                                         萬</h5>
                                                 {% else %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
+                                                    <h5 class="text-danger">{{ family_post[num]['rentPrice'] }}
                                                         元/月</h5>
                                                 {% endif %}
                                             </div>
@@ -127,12 +128,12 @@
                     </div>
                 {% endfor %}
             </div>
-            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-sm"
+            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#family-house-sm"
                     data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-sm"
+            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#family-house-sm"
                     data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>

@@ -14,6 +14,7 @@ def index():
 
     results = {}
 
+    # For recommend.html
     sql = f"SELECT `pId`, `address`, `district`, " \
           f"       `type`, `twPing`, `image`," \
           f"       `housesell`.`price` as `sellPrice`, " \
@@ -34,14 +35,68 @@ def index():
 
     results[0] = cursor.fetchall()
 
-    db.close()
+    # For family.html
+    sql = f"SELECT `pId`, `address`, `district`, " \
+          f"       `type`, `twPing`, `image`," \
+          f"       `housesell`.`price` as `sellPrice` " \
+          f"FROM `post` " \
+          f"NATURAL JOIN `payment` " \
+          f"NATURAL JOIN `house` " \
+          f"NATURAL JOIN `image` " \
+          f"NATURAL JOIN `housesell` "  \
+          f"WHERE `city` = '{selected_region}' " \
+          f"ORDER BY `class` DESC " \
+          f"LIMIT 8 "
 
-    print(pd.DataFrame(results[0]).columns)
+    cursor.execute(sql)
+
+    results[1] = cursor.fetchall()
+
+    # For suite.html
+    sql = f"SELECT `pId`, `address`, `district`, " \
+          f"       `type`, `twPing`, `image`," \
+          f"       `houserent`.`price` as `rentPrice` " \
+          f"FROM `post` " \
+          f"NATURAL JOIN `payment` " \
+          f"NATURAL JOIN `house` " \
+          f"NATURAL JOIN `image` " \
+          f"NATURAL JOIN `houserent` " \
+          f"WHERE `city` = '{selected_region}' AND" \
+          f"      `type` = '獨立套房'" \
+          f"ORDER BY `class` DESC " \
+          f"LIMIT 8 "
+
+    cursor.execute(sql)
+
+    results[2] = cursor.fetchall()
+
+    # For suite.html
+    sql = f"SELECT `pId`, `address`, `district`, " \
+          f"       `type`, `twPing`, `image`," \
+          f"       `houserent`.`price` as `rentPrice` " \
+          f"FROM `post` " \
+          f"NATURAL JOIN `payment` " \
+          f"NATURAL JOIN `house` " \
+          f"NATURAL JOIN `image` " \
+          f"NATURAL JOIN `houserent` " \
+          f"WHERE `city` = '{selected_region}' AND" \
+          f"      `type` IN ('分租套房', '雅房')" \
+          f"ORDER BY `class` DESC " \
+          f"LIMIT 8 "
+
+    cursor.execute(sql)
+
+    results[3] = cursor.fetchall()
+
+    db.close()
 
     return render_template(
         'index.html',
         selected_region=selected_region,
-        recommend_post=results[0]
+        recommend_post=results[0],
+        family_post=results[1],
+        suite_post=results[2],
+        shared_post=results[3]
     )
 
 
