@@ -1,3 +1,4 @@
+import pandas as pd
 from flask import Flask, render_template, request, session
 
 from database import link_sql
@@ -13,20 +14,34 @@ def index():
 
     results = {}
 
-    sql = f"SELECT * FROM `post` " \
+    sql = f"SELECT `pId`, `address`, `district`, " \
+          f"       `type`, `twPing`, `image`," \
+          f"       `housesell`.`price` as `sellPrice`, " \
+          f"       `houserent`.`price` as `rentPrice` " \
+          f"FROM `post` " \
           f"NATURAL JOIN `payment` " \
+          f"NATURAL JOIN `house` " \
+          f"NATURAL JOIN `image` " \
+          f"LEFT OUTER JOIN `housesell` " \
+          f"             ON `house`.`hId` = `housesell`.`hid`" \
+          f"LEFT OUTER JOIN `houserent` " \
+          f"             ON `house`.`hId` = `houserent`.`hid`" \
           f"WHERE `city` = '{selected_region}' " \
-          f"ORDER BY `class` LIMIT 8"
+          f"ORDER BY `class` DESC " \
+          f"LIMIT 8 "
+
     cursor.execute(sql)
 
     results[0] = cursor.fetchall()
 
     db.close()
 
+    print(pd.DataFrame(results[0]).columns)
+
     return render_template(
         'index.html',
         selected_region=selected_region,
-        recomment_post=results[0]
+        recommend_post=results[0]
     )
 
 

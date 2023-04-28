@@ -1,9 +1,15 @@
 section#index-recommend {
     position: relative;
 
+    img {
+        @media  screen and (max-width: 768px){
+            border-radius: 0.75em 0.75em 0 0;
+        }
+    }
+
     .card {
         border: 0;
-        border-radius: 0%;
+        border-radius: 0;
         --bs-card-border-radius: 0%;
         --bs-card-inner-border-radius: 0%;
     }
@@ -20,7 +26,7 @@ section#index-recommend {
             transform: translateX(-100%);
         }
 
-        border-radius: 0.75em 0em 0em 0.75em;
+        border-radius: 0.75em 0 0 0.75em;
     }
 
     .carousel-control-next {
@@ -29,6 +35,6 @@ section#index-recommend {
             transform: translateX(100%);
         }
 
-        border-radius: 0em 0.75em 0.75em 0em;
+        border-radius: 0 0.75em 0.75em 0;
     }
 }
