@@ -1,8 +1,8 @@
 <nav class="container py-2">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-            <img src="../../static/images/icon/icon.png" height="60">
-            <img src="../../static/images/icon/name.png" height="60">
+            <img src="../../static/images/icon/icon.png" height="60" alt="icon">
+            <img src="../../static/images/icon/name.png" height="60" alt="WNW">
         </a>
 
         <ul class=" nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -50,8 +50,10 @@
         </ul>
 
         <div class="text-end">
-            <button type="button" class="btn btn-outline-secondary me-2">登入</button>
-            <button type="button" class="btn btn-warning">註冊</button>
+            <button type="button" class="btn btn-outline-secondary me-2" data-bs-toggle="modal"
+                data-bs-target="#modal-login">登入</button>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                data-bs-target="#modal-signup">註冊</button>
         </div>
     </div>
 </nav>
@@ -71,6 +73,10 @@
             }
         });
     }
-
-
 </script>
+
+{% include './login/login_form.html' %}
+
+{% include './login/signup_form.html' %}
+
+{% include './login/policy.html' %}

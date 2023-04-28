@@ -1,0 +1,104 @@
+<section id="index-recommend" class="container py-5">
+    <h2 class="mb-4 fw-bold text-center">為您推薦</h2>
+    <div id="recommend-house-lg" class="carousel slide d-none d-lg-block" data-bs-interval="false">
+        <div class="carousel-inner">
+            {% for i in range(0, 8, 4) %}
+            <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                    {% for num in range(i, i + 4) %}
+                    <div class="col">
+                        <a href="#" class="card">
+                            <img src="https://picsum.photos/id/1/800/400" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Address {{num}}</h5>
+                                <p class="card-text">坪數: {{num * 10}}<br>價格: {{num * 1000}}<br>類型: {{ 'A' if not num % 2
+                                    else 'B' }}</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-lg"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-lg"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div id="recommend-house-md" class="carousel slide d-none d-md-block d-lg-none" data-bs-interval="false">
+        <div class="carousel-inner">
+            {% for i in range(0, 8, 2) %}
+            <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                    {% for num in range(i, i + 2) %}
+                    <div class="col">
+                        <a href="#" class="card">
+                            <img src="https://picsum.photos/id/1/800/400" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Address {{num}}</h5>
+                                <p class="card-text">坪數: {{num * 10}}<br>價格: {{num * 1000}}<br>類型: {{ 'A' if not num % 2
+                                    else 'B' }}</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-md"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-md"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div id="recommend-house-sm" class="carousel slide d-sm-block d-md-none" data-bs-interval="false">
+        <div class="carousel-inner">
+            {% for i in range(0, 8, 1) %}
+            <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                    {% for num in range(i, i + 1) %}
+                    <div class="col">
+                        <a href="#" class="card">
+                            <img src="https://picsum.photos/id/1/800/400" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Address {{num}}</h5>
+                                <p class="card-text">坪數: {{num * 10}}<br>價格: {{num * 1000}}<br>類型: {{ 'A' if not num % 2
+                                    else 'B' }}</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-sm"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-sm"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+<style>
+</style>
