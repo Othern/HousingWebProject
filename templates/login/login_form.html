@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-login" data-bs-backdrop="static" aria-hidden="true"
-    aria-labelledby="model-login-label" tabindex="-1">
+     aria-labelledby="model-login-label" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header p-5 pb-4 border-bottom-0">
@@ -8,13 +8,13 @@
             </div>
 
             <div class="modal-body p-5 pt-0">
-                <form action="" method="POST">
+                <form action="/login" id="login-form">
                     <input type="hidden" name="method" value="login">
 
                     <label for="login-email" class="mb-3">電子信箱</label>
                     <div class="input-group mb-3">
                         <input type="email" name="email" class="form-control shadow-none" id="login-email"
-                            placeholder="name@example.com" required>
+                               placeholder="name@example.com" required>
                         <span class="input-group-text">
                             <i class="bi bi-envelope"></i>
                         </span>
@@ -22,12 +22,13 @@
                     <label for="login-password" class="mb-3">密碼</label>
                     <div class="input-group mb-3">
                         <input type="password" name="password" class="check-password form-control shadow-none"
-                            id="login-password" placeholder="Password" required>
+                               id="login-password" placeholder="Password" required>
                         <span class="input-group-text">
                             <i class="bi bi-eye-slash toggle-password" id="toggle-password"></i>
                         </span>
                     </div>
-                    <button class="w-100 my-2 btn btn-lg rounded-3 btn-secondary" type="submit">登入</button>
+                    <button id="login-btn" class="w-100 my-2 btn btn-lg rounded-3 btn-secondary" type="submit">登入
+                    </button>
                     <hr class="my-4">
                     <small class="text-muted">
                         還沒註冊?
@@ -40,3 +41,27 @@
         </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    $("#login-form").submit(function(event) {
+        event.preventDefault(); // 防止表單自動提交
+
+        const formData = $(this).serialize(); // 取得表單資料
+
+        $.ajax({
+            type: "POST",
+            url: "/login",
+            data: formData,
+            success: function(response) {
+                // 登入成功後重新導向到指定頁面
+                alert(response);
+            },
+            error: function(xhr, status, error) {
+                // 登入失敗時顯示錯誤訊息
+                alert("登入失敗，請檢查帳號密碼是否正確！");
+            }
+        });
+    });
+});
+</script>
