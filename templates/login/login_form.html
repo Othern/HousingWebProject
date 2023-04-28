@@ -18,6 +18,14 @@
                         <span class="input-group-text">
                             <i class="bi bi-envelope"></i>
                         </span>
+                        <div class="invalid-feedback">
+                            <ul>
+                                <li class="requirements my-1">
+                                    <i class="bi bi-x-circle red-text"></i>
+                                    用戶或密碼錯誤
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <label for="login-password" class="mb-3">密碼</label>
                     <div class="input-group mb-3">
@@ -26,6 +34,14 @@
                         <span class="input-group-text">
                             <i class="bi bi-eye-slash toggle-password" id="toggle-password"></i>
                         </span>
+                        <div class="invalid-feedback">
+                            <ul>
+                                <li class="requirements my-1 leng big-letter num special-char">
+                                    <i class="bi bi-x-circle red-text"></i>
+                                    密碼格式似乎有錯
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <button id="login-btn" class="w-100 my-2 btn btn-lg rounded-3 btn-secondary" type="submit">登入
                     </button>
@@ -43,25 +59,29 @@
 </div>
 
 <script>
-$(document).ready(function() {
-    $("#login-form").submit(function(event) {
-        event.preventDefault(); // 防止表單自動提交
+    $(document).ready(function () {
+        $("#login-form").submit(function (event) {
+            event.preventDefault(); // 防止表單自動提交
 
-        const formData = $(this).serialize(); // 取得表單資料
+            const formData = $(this).serialize(); // 取得表單資料
 
-        $.ajax({
-            type: "POST",
-            url: "/login",
-            data: formData,
-            success: function(response) {
-                // 登入成功後重新導向到指定頁面
-                alert(response);
-            },
-            error: function(xhr, status, error) {
-                // 登入失敗時顯示錯誤訊息
-                alert("登入失敗，請檢查帳號密碼是否正確！");
-            }
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                data: formData,
+                success: function (response) {
+                    if(response === 'success'){
+                        location.reload();
+                        return;
+                    }
+
+                    $("#check-email").addClass("is-invalid");
+                },
+                error: function () {
+                    // 登入失敗時顯示錯誤訊息
+                    alert("登入失敗");
+                }
+            });
         });
     });
-});
 </script>

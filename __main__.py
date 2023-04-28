@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from flask_login import logout_user, LoginManager, login_user, login_required, UserMixin
 
-from database import link_sql
+from database import link_sql, check_user_exist
 
 app = Flask(__name__, template_folder='./templates')
 app.secret_key = '12345678'
@@ -32,7 +32,7 @@ def load_user(user_id):
     if not user:
         return None
 
-    user = User(user['id'], user['email'], user['permission'])
+    user = User(user['uId'], user['email'], user['permission'])
     return user
 
 
@@ -151,15 +151,49 @@ def login():
     db.close()
 
     if user is None:
-        return '該用戶不存在，請註冊'
+        return 'invalid email'
 
     if user['password'] != password:
-        return '密碼錯誤，請檢查你的密碼'
+        return 'password error'
 
     # 如果驗證成功，使用 login_user 函數登入使用者
     user = User(user['uId'], user['email'], user['permission'])
     login_user(user)
-    return '成功登入'
+    flash('成功登入')
+    return 'success'
+
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    # 獲取表單提交的用戶詳細信息
+    name = request.form['name']
+    email = request.form['email']
+    password = request.form['password']
+
+    # 檢查用戶是否已經註冊
+    if check_user_exist(email):
+        # 如果用戶已經註冊，返回錯誤消息
+        flash('該用戶已經註冊')
+        return 'already signup'
+
+    # 如果用戶尚未註冊，將其詳細信息存儲到資料庫中
+    db, cursor = link_sql()
+    sql = "INSERT INTO `user` (`name`, `email`, `password`) VALUES (%s, %s, %s)"
+    cursor.execute(sql, (name, email, password))
+    db.commit()
+
+    # 獲取用戶 ID
+    sql = "SELECT * FROM `user` WHERE `email` = %s"
+    cursor.execute(sql, (email,))
+    user = cursor.fetchone()
+    db.close()
+    # 登入用戶
+    user = User(user['uId'], user['email'], user['permission'])
+    login_user(user)
+
+    # 返回一個成功消息
+    flash('用戶註冊成功')
+    return 'success'
 
 
 # 登出的 API
@@ -168,7 +202,8 @@ def login():
 def logout():
     # 使用 logout_user 函數登出使用者
     logout_user()
-    return redirect(url_for(''))
+    flash('成功登出')
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':

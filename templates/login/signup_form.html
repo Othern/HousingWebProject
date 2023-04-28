@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-signup" data-bs-backdrop="static" aria-hidden="true"
-    aria-labelledby="modal-signin-label" tabindex="-1">
+     aria-labelledby="modal-signin-label" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header p-5 pb-4 border-bottom-0">
@@ -8,7 +8,7 @@
             </div>
 
             <div class="modal-body p-5 pt-0">
-                <form action="" method="POST">
+                <form action="/signup" id="signup-form">
                     <input type="hidden" name="method" value="signup">
 
                     <label for="signin-name" class="form-label">用戶名</label>
@@ -32,7 +32,7 @@
                     <label for="signin-password" class="form-label">密碼</label>
                     <div class="input-group mb-3">
                         <input type="password" name="password" class="check-password form-control shadow-none"
-                            id="signin-password" minlength="8" autocomplete="off" required>
+                               id="signin-password" minlength="8" autocomplete="off" required>
                         <span class="input-group-text rounded-end">
                             <i class="bi bi-eye-slash toggle-password" id="toggle-password"></i>
                         </span>
@@ -58,10 +58,10 @@
                         </div>
                     </div>
 
-                    <label for="signin-password" class="form-label">確認密碼</label>
+                    <label for="signin-password-confirm" class="form-label">確認密碼</label>
                     <div class="input-group mb-3">
                         <input type="password" name="password" class="check-password-confirm form-control shadow-none"
-                            id="signin-password-confirm" minlength="8" autocomplete="off" required>
+                               id="signin-password-confirm" minlength="8" autocomplete="off" required>
                         <span class="input-group-text rounded-end">
                             <i class="bi bi-eye-slash toggle-password-confirm" id="toggle-password-confirm"></i>
                         </span>
@@ -72,14 +72,14 @@
 
                     <div class="form-check my-2 d-flex align-items-center">
                         <input class="form-check-input mt-0" type="checkbox" value="" id="flexCheckDefault"
-                            data-bs-toggle="modal" data-bs-target="#modal-policy" required>
+                               data-bs-toggle="modal" data-bs-target="#modal-policy" required>
                         <label class="form-check-label ps-2" for="flexCheckDefault">
                             <p class="mb-0">我同意使用者條款</p>
                         </label>
                     </div>
 
                     <button class="check-password-submit w-100 my-2 btn btn-lg rounded-3 btn-secondary disabled"
-                        type="submit">
+                            type="submit">
                         註冊
                     </button>
                     <hr class="my-4">
@@ -102,3 +102,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#signup-form").submit(function (event) {
+            event.preventDefault(); // 防止表單自動提交
+
+            const formData = $(this).serialize(); // 取得表單資料
+
+            $.ajax({
+                type: "POST",
+                url: "/signup",
+                data: formData,
+                success: function () {
+                    location.reload();
+                },
+                error: function () {
+                    // 註冊失敗時顯示錯誤訊息
+                    alert("註冊失敗");
+                }
+            });
+        });
+    });
+</script>

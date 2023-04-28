@@ -14,7 +14,7 @@ config = {
 
 
 # 連接資料庫
-def link_sql():
+def link_sql() -> object:
     # 連接資料庫
     db = pymysql.connect(**config)
     # cursor()方法獲取操作游標
@@ -25,3 +25,16 @@ def link_sql():
 
     except ConnectionError:
         print(f"資料庫訪問失敗")
+
+
+def check_user_exist(email: str) -> bool:
+    db, cursor = link_sql()
+    sql = "SELECT * FROM `user` WHERE email=%s"
+    cursor.execute(sql, (email,))
+    result = cursor.fetchone()
+    db.close()
+
+    if result:
+        return True
+    else:
+        return False
