@@ -30,7 +30,7 @@ def index():
     )
 
 
-@app.route('/update', methods=['POST'])
+@app.route('/update/region', methods=['POST'])
 def update():
     selected_region = request.json['region']
     session['selected_region'] = selected_region

@@ -62,7 +62,7 @@
     function updateDropdown(selectedRegion) {
         $.ajax({
             type: 'POST',
-            url: '/update',
+            url: '/update/region',
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify({ region: selectedRegion }),
             success: function () {
