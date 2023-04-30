@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <div>
+    <label class="py-5" for="image">選擇一張圖片：</label>
+    <input type="file" id="image" name="image" required>
+    <br>
+    <img id="image-preview" style="max-width: 600px; max-height: 400px;">
+  </div>
+  
+<html>
+<script>
+  const imageInput = document.getElementById('image');
+  const imagePreview = document.getElementById('image-preview');
+  
+  imageInput.addEventListener('change', function() {
+    const file = this.files[0];
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      imagePreview.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+</script>
+
+  

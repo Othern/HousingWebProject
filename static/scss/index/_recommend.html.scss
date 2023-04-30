@@ -1,0 +1,43 @@
+section#index-recommend,
+section#index-family,
+section#index-suite,
+section#index-shared {
+  position: relative;
+
+  img {
+    @media screen and (max-width: 768px) {
+      border-radius: 0.75em 0.75em 0 0;
+    }
+  }
+
+  .card {
+    border: 0;
+    border-radius: 0;
+    --bs-card-border-radius: 0%;
+    --bs-card-inner-border-radius: 0%;
+  }
+
+  .card-body {
+    @media screen and (max-width: 768px) {
+      padding-left: 20%;
+    }
+  }
+
+  .carousel-control-prev {
+    @media screen and (min-width: 768px) {
+      width: 5%;
+      transform: translateX(-100%);
+    }
+
+    border-radius: 0.75em 0 0 0.75em;
+  }
+
+  .carousel-control-next {
+    @media screen and (min-width: 768px) {
+      width: 5%;
+      transform: translateX(100%);
+    }
+
+    border-radius: 0 0.75em 0.75em 0;
+  }
+}

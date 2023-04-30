@@ -1,8 +1,16 @@
+@import "basic";
 /**********************************
 *
-*          index.php
+*          login modal
+*
+**********************************/
+@import "login/policy.html";
+/**********************************
+*
+*          index.html
 *
 **********************************/
 @import "index/footer.html";
 @import "index/navbar.html";
+@import "index/recommend.html";
 @import "index/topic.html";

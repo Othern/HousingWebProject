@@ -1,0 +1,164 @@
+<section id="index-shared" class="container py-5">
+    <h2 class="fw-bold text-center">學生好選擇</h2>
+    <h5 class="mb-4 text-center">便宜又方便好選擇</h5>
+    {% if shared_post %}
+        <div id="shared-house-lg" class="carousel slide d-none d-lg-block" data-bs-interval="false">
+            <div class="carousel-inner">
+                {% for i in range(0, shared_post|length, 4) %}
+                    <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                            {% for num in range(i, i + 4) %}
+                                {% if num < shared_post|length %}
+                                    <div class="col">
+                                        {% if  shared_post[num]['pId'] <47%}
+                            <a href="/sellinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                {% else %}
+                                <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                {% endif %}
+                                            <img src="{{ shared_post[num]['image'] }}" class="card-img-top"
+                                                 alt="...">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{ shared_post[num]['address'] }}</h4>
+                                                <p class="card-text">
+                                                    {{ shared_post[num]['district'] }} /
+                                                    {{ shared_post[num]['type'] }} /
+                                                    {{ shared_post[num]['twPing'] }}坪
+                                                </p>
+                                                {% if shared_post[num]['sellPrice'] %}
+                                                    <h5 class="text-danger">{{ shared_post[num]['sellPrice'] }}
+                                                        萬</h5>
+                                                {% else %}
+                                                    <h5 class="text-danger">{{ shared_post[num]['rentPrice'] }}
+                                                        元/月</h5>
+                                                {% endif %}
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#shared-house-lg"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#shared-house-lg"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div id="shared-house-md" class="carousel slide d-none d-md-block d-lg-none" data-bs-interval="false">
+            <div class="carousel-inner">
+                {% for i in range(0, shared_post|length, 2) %}
+                    <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                            {% for num in range(i, i + 2) %}
+                                {% if num < shared_post|length %}
+                                    <div class="col">
+                                        {% if  shared_post[num]['pId'] <47%}
+                                        <a href="/sellinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                            {% else %}
+                                            <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                            {% endif %}
+                                            <img src="{{ shared_post[num]['image'] }}" class="card-img-top"
+                                                 alt="...">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{ shared_post[num]['address'] }}</h4>
+                                                <p class="card-text">
+                                                    {{ shared_post[num]['district'] }} /
+                                                    {{ shared_post[num]['type'] }} /
+                                                    {{ shared_post[num]['twPing'] }}坪
+                                                </p>
+                                                {% if shared_post[num]['sellPrice'] %}
+                                                    <h5 class="text-danger">{{ shared_post[num]['sellPrice'] }}
+                                                        萬</h5>
+                                                {% else %}
+                                                    <h5 class="text-danger">{{ shared_post[num]['rentPrice'] }}
+                                                        元/月</h5>
+                                                {% endif %}
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#shared-house-md"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#shared-house-md"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div id="shared-house-sm" class="carousel slide d-sm-block d-md-none" data-bs-interval="false">
+            <div class="carousel-inner">
+                {% for i in range(0, shared_post|length, 1) %}
+                    <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                            {% for num in range(i, i + 1) %}
+                                {% if num < shared_post|length %}
+                                    <div class="col">
+                                        {% if  shared_post[num]['pId'] <47%}
+                                        <a href="/sellinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                            {% else %}
+                                            <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                            {% endif %}
+                                            <img src="{{ shared_post[num]['image'] }}" class="card-img-top"
+                                                 alt="...">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{ shared_post[num]['address'] }}</h4>
+                                                <p class="card-text">
+                                                    {{ shared_post[num]['district'] }} /
+                                                    {{ shared_post[num]['type'] }} /
+                                                    {{ shared_post[num]['twPing'] }} 坪
+                                                </p>
+                                                {% if shared_post[num]['sellPrice'] %}
+                                                    <h5 class="text-danger">{{ shared_post[num]['sellPrice'] }}
+                                                        萬</h5>
+                                                {% else %}
+                                                    <h5 class="text-danger">{{ shared_post[num]['rentPrice'] }}
+                                                        元/月</h5>
+                                                {% endif %}
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#shared-house-sm"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#shared-house-sm"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    {% else %}
+        <div class="container bg-secondary">
+            <div class="p-5 text-center bg-body-tertiary rounded-3">
+                <h1 class="text-body-emphasis">這裡空空如也</h1>
+                <p class="lead">
+                    目前沒有任何關於該區域的資料，你可以發布第一個房子
+                </p>
+            </div>
+        </div>
+    {% endif %}
+</section>

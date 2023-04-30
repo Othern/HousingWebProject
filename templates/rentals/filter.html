@@ -1,0 +1,166 @@
+<div class="card">
+    <div class="card-header">
+    
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">格局</h5>
+        <div>
+            <label>
+                <input class="form-check-input" type="checkbox" name="pattern" value="=1"  id="pattern_option1"> 1 房
+            </label>
+            <label>
+                <input class="form-check-input" type="checkbox" name="pattern" value="=2"  id="pattern_option2"> 2 房
+            </label>
+            <label>
+                <input class="form-check-input" type="checkbox" name="pattern" value="=3"  id="pattern_option3"> 3 房
+            </label>
+            <label>
+                <input class="form-check-input" type="checkbox" name="pattern" value=">=4"  id="pattern_option4"> 4 房 以上
+            </label>
+        </div>
+        
+
+        
+        <h5 class="card-title">類型</h5>
+        <div>
+            <label>
+              <input type="checkbox" name="type" value="住宅" id="type_option1"> 整層住家
+            </label>
+            <label>
+              <input type="checkbox" name="type" value="獨立套房" id="type_option2"> 獨立套房
+            </label>
+            <label>
+              <input type="checkbox" name="type" value="分租套房" id="type_option3"> 分租套房
+            </label>
+            <label>
+                <input type="checkbox" name="type" value="雅房" id="type_option4"> 雅房
+            </label>
+        </div>
+        
+        <h5 class="card-title">售價</h5>
+        <div>
+            <label>
+              <input type="checkbox" name="price" value="< 5000" id="price_option1"> 5000以下
+            </label>
+            <label>
+              <input type="checkbox" name="price" value="BETWEEN 5000 AND 10000" id="price_option2"> 5000-10000
+            </label>
+            <label>
+              <input type="checkbox" name="price" value="BETWEEN 10000.1 AND 20000" id="price_option3"> 10000-20000
+            </label>
+            <label>
+                <input type="checkbox" name="price" value="BETWEEN 20000.1 AND 30000" id="price_option4"> 20000-30000
+            </label>
+            <label>
+                <input type="checkbox" name="price" value="BETWEEN 30000.1 AND 40000" id="price_option5"> 30000-40000
+            </label>
+            <label>
+                <input type="checkbox" name="price" value="BETWEEN 40000.1 AND 50000" id="price_option6"> 40000-5000
+            </label>
+            <label>
+                <input type="checkbox" name="price" value=">50000" id="price_option7"> 50000以上
+            </label>
+
+        <h5 class="card-title">坪數</h5>
+        <div>
+            <label>
+                <input type="checkbox" name="twPing" value="< 20" id="twPing_option1"> 20坪以下
+            </label>
+            <label>
+                <input type="checkbox" name="twPing" value="BETWEEN 20 AND 30" id="twPing_option2"> 20坪-30坪
+            </label>
+            <label>
+                <input type="checkbox" name="twPing" value="BETWEEN 30.1 AND 40" id="twPing_option3"> 30坪-40坪
+            </label>
+            <label>
+                <input type="checkbox" name="twPing" value="BETWEEN 40.1 AND 50" id="twPing_option4"> 40坪-50坪
+            </label>
+            <label>
+                <input type="checkbox" name="twPing" value="> 50" id="twPing_option5"> 50坪以上
+            </label>
+        </div>
+        <h5 class="card-title">自己的貼文</h5>
+        <div>
+            <label>
+                <input type="checkbox" name="myPost" value="1" id="myPost_option1"> 我的貼文
+                <input type="checkbox" name="myPost" value="0" id="myPost_option2"> 其他人的貼文
+            </label>
+        </div>
+        <!--
+        <h5 class="card-title">屋齡</h5>
+        <div>
+            <label>
+                <input type="checkbox" name="age" value="< 5" id="age_option1"> 5年以下
+            </label>
+            <label>
+                <input type="checkbox" name="age" value="BETWEEN 5.1 AND 10" id="age_option2"> 5-10年
+            </label>
+            <label>
+                <input type="checkbox" name="age" value="BETWEEN 10.1 AND 15" id="age_option3"> 10-15年
+            </label>
+            <label>
+                <input type="checkbox" name="age" value="BETWEEN 15.1 AND 20" id="age_option4"> 15-20年
+            </label>
+            <label>
+                <input type="checkbox" name="age" value="> 20" id="age_option5"> 20年以上
+            </label>
+        </div>
+        -->
+        
+    </div>
+  </div>
+  
+
+
+<script>
+    function filter(filter_name,defaults) {
+        const filterOptions = document.querySelectorAll('input[name="'+filter_name+'"]');
+        filterOptions.forEach((option) => {
+        option.checked = localStorage.getItem(option.id) === "true";
+        option.addEventListener("change", (event) => {
+            selectedfilter = event.target.value;
+            if (event.target.checked) {
+                filterOptions.forEach((option) => {
+                if (option !== event.target && option.checked) {
+                option.checked = false;
+                localStorage.setItem(option.id, false);
+                }
+            });
+                localStorage.setItem(event.target.id, true);
+                selectedfilter = event.target.value;
+            } else {
+                localStorage.setItem(event.target.id, false);
+                selectedfilter = defaults;
+            }
+            const obj = {};
+            obj[filter_name] = selectedfilter
+            $.ajax({
+                type: 'POST',
+                url: '/update/'+filter_name,
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify(obj),
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+                });
+            });
+        });
+    }
+    filter("type","All")
+    filter("pattern",">=0")
+    filter("price",">=0")
+    filter("twPing",">=0")
+    filter("myPost","All")
+</script>
+
+    
+    
+    
+    
+    
+    
+    
+
