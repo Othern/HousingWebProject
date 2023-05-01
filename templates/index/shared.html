@@ -10,7 +10,11 @@
                             {% for num in range(i, i + 4) %}
                                 {% if num < shared_post|length %}
                                     <div class="col">
-                                        <a href="#" class="card text-decoration-none">
+                                    {% if  shared_post[num]['pId'] <47%}
+                                    <a href="/sellinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                    {% else %}
+                                    <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                    {% endif %}
                                             <img src="{{ shared_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">
@@ -18,7 +22,7 @@
                                                 <p class="card-text">
                                                     {{ shared_post[num]['district'] }} /
                                                     {{ shared_post[num]['type'] }} /
-                                                    {{ shared_post[num]['twPing'] }}
+                                                    {{ shared_post[num]['twPing'] }}坪
                                                 </p>
                                                 {% if shared_post[num]['sellPrice'] %}
                                                     <h5 class="text-danger">{{ shared_post[num]['sellPrice'] }}
@@ -56,7 +60,11 @@
                             {% for num in range(i, i + 2) %}
                                 {% if num < shared_post|length %}
                                     <div class="col">
-                                        <a href="#" class="card text-decoration-none">
+                                        {% if  shared_post[num]['pId'] <47%}
+                                        <a href="/sellinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% else %}
+                                        <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% endif %}
                                             <img src="{{ shared_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">
@@ -64,6 +72,7 @@
                                                 <p class="card-text">
                                                     {{ shared_post[num]['district'] }} /
                                                     {{ shared_post[num]['type'] }} /
+                                                    {{ shared_post[num]['twPing'] }}坪
                                                     {{ shared_post[num]['twPing'] }}
                                                 </p>
                                                 {% if shared_post[num]['sellPrice'] %}
@@ -102,7 +111,11 @@
                             {% for num in range(i, i + 1) %}
                                 {% if num < shared_post|length %}
                                     <div class="col">
-                                        <a href="#" class="card text-decoration-none">
+                                        {% if  shared_post[num]['pId'] <47%}
+                                        <a href="/sellinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% else %}
+                                        <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% endif %}
                                             <img src="{{ shared_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">

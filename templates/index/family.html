@@ -10,7 +10,11 @@
                             {% for num in range(i, i + 4) %}
                                 {% if num < family_post|length %}
                                     <div class="col">
-                                        <a href="#" class="card text-decoration-none">
+                                        {% if  family_post[num]['pId'] <47%}
+                                        <a href="/sellinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% else %}
+                                        <a href="/rentalsinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% endif %}
                                             <img src="{{ family_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">
@@ -18,7 +22,7 @@
                                                 <p class="card-text">
                                                     {{ family_post[num]['district'] }} /
                                                     {{ family_post[num]['type'] }} /
-                                                    {{ family_post[num]['twPing'] }}
+                                                    {{ family_post[num]['twPing'] }}坪
                                                 </p>
                                                 {% if family_post[num]['sellPrice'] %}
                                                     <h5 class="text-danger">{{ family_post[num]['sellPrice'] }}
@@ -56,7 +60,11 @@
                             {% for num in range(i, i + 2) %}
                                 {% if num < family_post|length %}
                                     <div class="col">
-                                        <a href="#" class="card text-decoration-none">
+                                        {% if  family_post[num]['pId'] <47%}
+                                        <a href="/sellinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% else %}
+                                        <a href="/rentalsinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% endif %}
                                             <img src="{{ family_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">
@@ -64,7 +72,7 @@
                                                 <p class="card-text">
                                                     {{ family_post[num]['district'] }} /
                                                     {{ family_post[num]['type'] }} /
-                                                    {{ family_post[num]['twPing'] }}
+                                                    {{ family_post[num]['twPing'] }}坪
                                                 </p>
                                                 {% if family_post[num]['sellPrice'] %}
                                                     <h5 class="text-danger">{{ family_post[num]['sellPrice'] }}
@@ -102,7 +110,11 @@
                             {% for num in range(i, i + 1) %}
                                 {% if num < family_post|length %}
                                     <div class="col">
-                                        <a href="#" class="card text-decoration-none">
+                                        {% if  family_post[num]['pId'] <47%}
+                                        <a href="/sellinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% else %}
+                                        <a href="/rentalsinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% endif %}
                                             <img src="{{ family_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">
