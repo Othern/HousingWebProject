@@ -10,11 +10,11 @@
                             {% for num in range(i, i + 4) %}
                                 {% if num < shared_post|length %}
                                     <div class="col">
-                                        {% if  shared_post[num]['pId'] <47%}
-                            <a href="/sellinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
-                                {% else %}
-                                <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
-                                {% endif %}
+                                    {% if  shared_post[num]['pId'] <47%}
+                                    <a href="/sellinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                    {% else %}
+                                    <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                    {% endif %}
                                             <img src="{{ shared_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">
@@ -62,9 +62,9 @@
                                     <div class="col">
                                         {% if  shared_post[num]['pId'] <47%}
                                         <a href="/sellinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
-                                            {% else %}
-                                            <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
-                                            {% endif %}
+                                        {% else %}
+                                        <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% endif %}
                                             <img src="{{ shared_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">
@@ -73,6 +73,7 @@
                                                     {{ shared_post[num]['district'] }} /
                                                     {{ shared_post[num]['type'] }} /
                                                     {{ shared_post[num]['twPing'] }}坪
+                                                    {{ shared_post[num]['twPing'] }}
                                                 </p>
                                                 {% if shared_post[num]['sellPrice'] %}
                                                     <h5 class="text-danger">{{ shared_post[num]['sellPrice'] }}
@@ -112,9 +113,9 @@
                                     <div class="col">
                                         {% if  shared_post[num]['pId'] <47%}
                                         <a href="/sellinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
-                                            {% else %}
-                                            <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
-                                            {% endif %}
+                                        {% else %}
+                                        <a href="/rentalsinfo.html?pId={{shared_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% endif %}
                                             <img src="{{ shared_post[num]['image'] }}" class="card-img-top"
                                                  alt="...">
                                             <div class="card-body">

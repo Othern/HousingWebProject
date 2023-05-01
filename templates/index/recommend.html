@@ -1,146 +1,163 @@
 <section id="index-recommend" class="container py-5">
     <h2 class="mb-4 fw-bold text-center">為您推薦</h2>
-    <div id="recommend-house-lg" class="carousel slide d-none d-lg-block" data-bs-interval="false">
-        <div class="carousel-inner">
-            {% for i in range(0, recommend_post|length, 4) %}
-            <div class="carousel-item {% if i == 0 %}active{% endif %}">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                    {% for num in range(i, i + 4) %}
-                        {% if num < recommend_post|length %}
-                        <div class="col">
-                            {% if  recommend_post[num]['pId'] <47%}
-                            <a href="/sellinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
-                                {% else %}
-                                <a href="/rentalsinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+    {% if recommend_post %}
+        <div id="recommend-house-lg" class="carousel slide d-none d-lg-block" data-bs-interval="false">
+            <div class="carousel-inner">
+                {% for i in range(0, recommend_post|length, 4) %}
+                    <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                            {% for num in range(i, i + 4) %}
+                                {% if num < recommend_post|length %}
+                                    <div class="col">
+                                        {% if  recommend_post[num]['pId'] <47 %}
+                                        <a href="/sellinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% else %}
+                                        <a href="/rentalsinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% endif %}
+                                            <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
+                                                 alt="...">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
+                                                <p class="card-text">
+                                                    {{ recommend_post[num]['district'] }} /
+                                                    {{ recommend_post[num]['type'] }} /
+                                                    {{ recommend_post[num]['twPing'] }}
+                                                </p>
+                                                {% if recommend_post[num]['sellPrice'] %}
+                                                    <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
+                                                        萬</h5>
+                                                {% else %}
+                                                    <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
+                                                        元/月</h5>
+                                                {% endif %}
+                                            </div>
+                                        </a>
+                                    </div>
                                 {% endif %}
-                                <img src="{{recommend_post[num]['image']}}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h4 class="card-title">{{recommend_post[num]['address']}}</h4>
-                                    <p class="card-text">
-                                        {{recommend_post[num]['district']}} /
-                                        {{recommend_post[num]['type']}} /
-                                        {{recommend_post[num]['twPing']}}坪
-                                    </p>
-                                    {% if recommend_post[num]['sellPrice'] %}
-                                        <h5 class="text-danger">{{recommend_post[num]['sellPrice']}} 萬</h5>
-                                    {% else %}
-                                        <h5 class="text-danger">{{recommend_post[num]['rentPrice']}} 元/月</h5>
-                                    {% endif %}
-                                </div>
-                            </a>
+                            {% endfor %}
                         </div>
-                        {%  endif %}
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-lg"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-lg"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-lg"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-lg"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
 
-    <div id="recommend-house-md" class="carousel slide d-none d-md-block d-lg-none" data-bs-interval="false">
-        <div class="carousel-inner">
-            {% for i in range(0, recommend_post|length, 2) %}
-            <div class="carousel-item {% if i == 0 %}active{% endif %}">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                    {% for num in range(i, i + 2) %}
-                        {% if num < recommend_post|length %}
-                        <div class="col">
-                            {% if  recommend_post[num]['pId'] <47%}
-                            <a href="/sellinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
-                                {% else %}
-                                <a href="/rentalsinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+        <div id="recommend-house-md" class="carousel slide d-none d-md-block d-lg-none" data-bs-interval="false">
+            <div class="carousel-inner">
+                {% for i in range(0, recommend_post|length, 2) %}
+                    <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                            {% for num in range(i, i + 2) %}
+                                {% if num < recommend_post|length %}
+                                    <div class="col">
+                                        {% if  recommend_post[num]['pId'] <47 %}
+                                        <a href="/sellinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% else %}
+                                        <a href="/rentalsinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% endif %}
+                                            <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
+                                                 alt="...">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
+                                                <p class="card-text">
+                                                    {{ recommend_post[num]['district'] }} /
+                                                    {{ recommend_post[num]['type'] }} /
+                                                    {{ recommend_post[num]['twPing'] }}
+                                                </p>
+                                                {% if recommend_post[num]['sellPrice'] %}
+                                                    <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
+                                                        萬</h5>
+                                                {% else %}
+                                                    <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
+                                                        元/月</h5>
+                                                {% endif %}
+                                            </div>
+                                        </a>
+                                    </div>
                                 {% endif %}
-                                <img src="{{recommend_post[num]['image']}}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h4 class="card-title">{{recommend_post[num]['address']}}</h4>
-                                    <p class="card-text">
-                                        {{recommend_post[num]['district']}} /
-                                        {{recommend_post[num]['type']}} /
-                                        {{recommend_post[num]['twPing']}}坪
-                                    </p>
-                                    {% if recommend_post[num]['sellPrice'] %}
-                                        <h5 class="text-danger">{{recommend_post[num]['sellPrice']}} 萬</h5>
-                                    {% else %}
-                                        <h5 class="text-danger">{{recommend_post[num]['rentPrice']}} 元/月</h5>
-                                    {% endif %}
-                                </div>
-                            </a>
+                            {% endfor %}
                         </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-md"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-md"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-md"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-md"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
 
-    <div id="recommend-house-sm" class="carousel slide d-sm-block d-md-none" data-bs-interval="false">
-        <div class="carousel-inner">
-            {% for i in range(0, recommend_post|length, 1) %}
-            <div class="carousel-item {% if i == 0 %}active{% endif %}">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                    {% for num in range(i, i + 1) %}
-                        {% if num < recommend_post|length %}
-                        <div class="col">
-                            {% if  recommend_post[num]['pId'] <47%}
-                            <a href="/sellinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
-                                {% else %}
-                                <a href="/rentalsinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+        <div id="recommend-house-sm" class="carousel slide d-sm-block d-md-none" data-bs-interval="false">
+            <div class="carousel-inner">
+                {% for i in range(0, recommend_post|length, 1) %}
+                    <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                            {% for num in range(i, i + 1) %}
+                                {% if num < recommend_post|length %}
+                                    <div class="col">
+                                        {% if  recommend_post[num]['pId'] <47 %}
+                                        <a href="/sellinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% else %}
+                                        <a href="/rentalsinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% endif %}
+                                            <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
+                                                 alt="...">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
+                                                <p class="card-text">
+                                                    {{ recommend_post[num]['district'] }} /
+                                                    {{ recommend_post[num]['type'] }} /
+                                                    {{ recommend_post[num]['twPing'] }} 坪
+                                                </p>
+                                                {% if recommend_post[num]['sellPrice'] %}
+                                                    <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
+                                                        萬</h5>
+                                                {% else %}
+                                                    <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
+                                                        元/月</h5>
+                                                {% endif %}
+                                            </div>
+                                        </a>
+                                    </div>
                                 {% endif %}
-                                <img src="{{recommend_post[num]['image']}}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h4 class="card-title">{{recommend_post[num]['address']}}</h4>
-                                    <p class="card-text">
-                                        {{recommend_post[num]['district']}} /
-                                        {{recommend_post[num]['type']}} /
-                                        {{recommend_post[num]['twPing']}}坪
-                                    </p>
-                                    {% if recommend_post[num]['sellPrice'] %}
-                                        <h5 class="text-danger">{{recommend_post[num]['sellPrice']}} 萬</h5>
-                                    {% else %}
-                                        <h5 class="text-danger">{{recommend_post[num]['rentPrice']}} 元/月</h5>
-                                    {% endif %}
-                                </div>
-                            </a>
+                            {% endfor %}
                         </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-sm"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-sm"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#recommend-house-sm"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#recommend-house-sm"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
+    {% else %}
+        <div class="container bg-secondary">
+            <div class="p-5 text-center bg-body-tertiary rounded-3">
+                <h1 class="text-body-emphasis">這裡空空如也</h1>
+                <p class="lead">
+                    目前沒有任何關於該區域的資料，你可以發布第一個房子
+                </p>
+            </div>
+        </div>
+    {% endif %}
 </section>
-
-<style>
-</style>
