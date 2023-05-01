@@ -10,28 +10,30 @@
                             {% for num in range(i, i + 4) %}
                                 {% if num < family_post|length %}
                                     <div class="col">
-                                        {% if  family_post[num]['pId'] <47%}
-                                        <a href="/sellinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% if  family_post[num]['pId'] <47 %}
+                                            <a href="../sell_info.html?pId={{ family_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% else %}
-                                        <a href="/rentalsinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../rentals_info.html?pId={{ family_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% endif %}
-                                            <img src="{{ family_post[num]['image'] }}" class="card-img-top"
-                                                 alt="...">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{ family_post[num]['address'] }}</h4>
-                                                <p class="card-text">
-                                                    {{ family_post[num]['district'] }} /
-                                                    {{ family_post[num]['type'] }} /
-                                                    {{ family_post[num]['twPing'] }}坪
-                                                </p>
-                                                {% if family_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ family_post[num]['sellPrice'] }}
-                                                        萬</h5>
-                                                {% else %}
-                                                    <h5 class="text-danger">{{ family_post[num]['rentPrice'] }}
-                                                        元/月</h5>
-                                                {% endif %}
-                                            </div>
+                                        <img src="{{ family_post[num]['image'] }}" class="card-img-top"
+                                             alt="...">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ family_post[num]['address'] }}</h4>
+                                            <p class="card-text">
+                                                {{ family_post[num]['district'] }} /
+                                                {{ family_post[num]['type'] }} /
+                                                {{ family_post[num]['twPing'] }}坪
+                                            </p>
+                                            {% if family_post[num]['sellPrice'] %}
+                                                <h5 class="text-danger">{{ family_post[num]['sellPrice'] }}
+                                                    萬</h5>
+                                            {% else %}
+                                                <h5 class="text-danger">{{ family_post[num]['rentPrice'] }}
+                                                    元/月</h5>
+                                            {% endif %}
+                                        </div>
                                         </a>
                                     </div>
                                 {% endif %}
@@ -60,28 +62,30 @@
                             {% for num in range(i, i + 2) %}
                                 {% if num < family_post|length %}
                                     <div class="col">
-                                        {% if  family_post[num]['pId'] <47%}
-                                        <a href="/sellinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% if  family_post[num]['pId'] <47 %}
+                                            <a href="../sell_info.html?pId={{ family_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% else %}
-                                        <a href="/rentalsinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../rentals_info.html?pId={{ family_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% endif %}
-                                            <img src="{{ family_post[num]['image'] }}" class="card-img-top"
-                                                 alt="...">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{ family_post[num]['address'] }}</h4>
-                                                <p class="card-text">
-                                                    {{ family_post[num]['district'] }} /
-                                                    {{ family_post[num]['type'] }} /
-                                                    {{ family_post[num]['twPing'] }}坪
-                                                </p>
-                                                {% if family_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ family_post[num]['sellPrice'] }}
-                                                        萬</h5>
-                                                {% else %}
-                                                    <h5 class="text-danger">{{ family_post[num]['rentPrice'] }}
-                                                        元/月</h5>
-                                                {% endif %}
-                                            </div>
+                                        <img src="{{ family_post[num]['image'] }}" class="card-img-top"
+                                             alt="...">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ family_post[num]['address'] }}</h4>
+                                            <p class="card-text">
+                                                {{ family_post[num]['district'] }} /
+                                                {{ family_post[num]['type'] }} /
+                                                {{ family_post[num]['twPing'] }}坪
+                                            </p>
+                                            {% if family_post[num]['sellPrice'] %}
+                                                <h5 class="text-danger">{{ family_post[num]['sellPrice'] }}
+                                                    萬</h5>
+                                            {% else %}
+                                                <h5 class="text-danger">{{ family_post[num]['rentPrice'] }}
+                                                    元/月</h5>
+                                            {% endif %}
+                                        </div>
                                         </a>
                                     </div>
                                 {% endif %}
@@ -110,28 +114,30 @@
                             {% for num in range(i, i + 1) %}
                                 {% if num < family_post|length %}
                                     <div class="col">
-                                        {% if  family_post[num]['pId'] <47%}
-                                        <a href="/sellinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% if  family_post[num]['pId'] <47 %}
+                                            <a href="../sell_info.html?pId={{ family_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% else %}
-                                        <a href="/rentalsinfo.html?pId={{family_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../rentals_info.html?pId={{ family_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% endif %}
-                                            <img src="{{ family_post[num]['image'] }}" class="card-img-top"
-                                                 alt="...">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{ family_post[num]['address'] }}</h4>
-                                                <p class="card-text">
-                                                    {{ family_post[num]['district'] }} /
-                                                    {{ family_post[num]['type'] }} /
-                                                    {{ family_post[num]['twPing'] }} 坪
-                                                </p>
-                                                {% if family_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ family_post[num]['sellPrice'] }}
-                                                        萬</h5>
-                                                {% else %}
-                                                    <h5 class="text-danger">{{ family_post[num]['rentPrice'] }}
-                                                        元/月</h5>
-                                                {% endif %}
-                                            </div>
+                                        <img src="{{ family_post[num]['image'] }}" class="card-img-top"
+                                             alt="...">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ family_post[num]['address'] }}</h4>
+                                            <p class="card-text">
+                                                {{ family_post[num]['district'] }} /
+                                                {{ family_post[num]['type'] }} /
+                                                {{ family_post[num]['twPing'] }} 坪
+                                            </p>
+                                            {% if family_post[num]['sellPrice'] %}
+                                                <h5 class="text-danger">{{ family_post[num]['sellPrice'] }}
+                                                    萬</h5>
+                                            {% else %}
+                                                <h5 class="text-danger">{{ family_post[num]['rentPrice'] }}
+                                                    元/月</h5>
+                                            {% endif %}
+                                        </div>
                                         </a>
                                     </div>
                                 {% endif %}

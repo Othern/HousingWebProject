@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,28 +22,27 @@
 
     <script src="../static/scripts/login/password_validation.js"></script>
 </head>
-
 <body>
-{% include './rentals/navbar.html' %}
-{% include 'common/notifaction.html' %}
 
 <main>
-    {% include './rentals/topic.html' %}
-    {% include './rentals/filter.html' %}
-    {% include './rentals/recoment.html' %}
+    {% include './add_post/navbar.html' %}
+    {% include './add_post/topic.html' %}
+
+    <form action="/uploadPost" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="postType" name="postType" value="{{ postType }}">
+        {% include './add_post/post.html' %}
+        {% include './add_post/house.html' %}
+        {% if postType == 'sell' %}
+            {% include './add_post/house_sell.html' %}
+        {% elif postType == 'rent' %}
+            {% include './add_post/house_rent.html' %}
+        {% endif %}
+        {% include './add_post/image.html' %}
+
+        {% include './add_post/payment.html' %}
+        <input type="submit" value="Submit">
+    </form>
 </main>
 </body>
 
-<footer>
-    {% include './rentals/footer.html' %}
-</footer>
-
 </html>
-<script>
-    $(document).ready(function () {
-        const messages = "{{ get_flashed_messages() }}";
-
-        if (typeof messages != 'undefined' && messages !== '[]')
-            $("#notification").modal('show');
-    });
-</script>

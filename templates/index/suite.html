@@ -10,28 +10,30 @@
                             {% for num in range(i, i + 4) %}
                                 {% if num < suite_post|length %}
                                     <div class="col">
-                                        {% if  suite_post[num]['pId'] <47%}
-                                        <a href="/sellinfo.html?pId={{suite_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% if  suite_post[num]['pId'] <47 %}
+                                            <a href="../sell_info.html?pId={{ suite_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% else %}
-                                        <a href="/rentalsinfo.html?pId={{suite_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../rentals_info.html?pId={{ suite_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% endif %}
-                                            <img src="{{ suite_post[num]['image'] }}" class="card-img-top"
-                                                 alt="...">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{ suite_post[num]['address'] }}</h4>
-                                                <p class="card-text">
-                                                    {{ suite_post[num]['district'] }} /
-                                                    {{ suite_post[num]['type'] }} /
-                                                    {{ suite_post[num]['twPing'] }}坪
-                                                </p>
-                                                {% if suite_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ suite_post[num]['sellPrice'] }}
-                                                        萬</h5>
-                                                {% else %}
-                                                    <h5 class="text-danger">{{ suite_post[num]['rentPrice'] }}
-                                                        元/月</h5>
-                                                {% endif %}
-                                            </div>
+                                        <img src="{{ suite_post[num]['image'] }}" class="card-img-top"
+                                             alt="...">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ suite_post[num]['address'] }}</h4>
+                                            <p class="card-text">
+                                                {{ suite_post[num]['district'] }} /
+                                                {{ suite_post[num]['type'] }} /
+                                                {{ suite_post[num]['twPing'] }}坪
+                                            </p>
+                                            {% if suite_post[num]['sellPrice'] %}
+                                                <h5 class="text-danger">{{ suite_post[num]['sellPrice'] }}
+                                                    萬</h5>
+                                            {% else %}
+                                                <h5 class="text-danger">{{ suite_post[num]['rentPrice'] }}
+                                                    元/月</h5>
+                                            {% endif %}
+                                        </div>
                                         </a>
                                     </div>
                                 {% endif %}
@@ -60,28 +62,30 @@
                             {% for num in range(i, i + 2) %}
                                 {% if num < suite_post|length %}
                                     <div class="col">
-                                        {% if  recommend_post[num]['pId'] <47%}
-                                        <a href="/sellinfo.html?pId={{suite_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% if  recommend_post[num]['pId'] <47 %}
+                                            <a href="../sell_info.html?pId={{ suite_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% else %}
-                                        <a href="/rentalsinfo.html?pId={{suite_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../rentals_info.html?pId={{ suite_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% endif %}
-                                            <img src="{{ suite_post[num]['image'] }}" class="card-img-top"
-                                                 alt="...">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{ suite_post[num]['address'] }}</h4>
-                                                <p class="card-text">
-                                                    {{ suite_post[num]['district'] }} /
-                                                    {{ suite_post[num]['type'] }} /
-                                                    {{ suite_post[num]['twPing'] }}坪
-                                                </p>
-                                                {% if suite_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ suite_post[num]['sellPrice'] }}
-                                                        萬</h5>
-                                                {% else %}
-                                                    <h5 class="text-danger">{{ suite_post[num]['rentPrice'] }}
-                                                        元/月</h5>
-                                                {% endif %}
-                                            </div>
+                                        <img src="{{ suite_post[num]['image'] }}" class="card-img-top"
+                                             alt="...">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ suite_post[num]['address'] }}</h4>
+                                            <p class="card-text">
+                                                {{ suite_post[num]['district'] }} /
+                                                {{ suite_post[num]['type'] }} /
+                                                {{ suite_post[num]['twPing'] }}坪
+                                            </p>
+                                            {% if suite_post[num]['sellPrice'] %}
+                                                <h5 class="text-danger">{{ suite_post[num]['sellPrice'] }}
+                                                    萬</h5>
+                                            {% else %}
+                                                <h5 class="text-danger">{{ suite_post[num]['rentPrice'] }}
+                                                    元/月</h5>
+                                            {% endif %}
+                                        </div>
                                         </a>
                                     </div>
                                 {% endif %}
@@ -110,28 +114,30 @@
                             {% for num in range(i, i + 1) %}
                                 {% if num < suite_post|length %}
                                     <div class="col">
-                                        {% if  suite_post[num]['pId'] <47%}
-                                        <a href="/sellinfo.html?pId={{suite_post[num]['pId']}}" class="card text-decoration-none">
+                                        {% if  suite_post[num]['pId'] <47 %}
+                                            <a href="../sell_info.html?pId={{ suite_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% else %}
-                                        <a href="/rentalsinfo.html?pId={{suite_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../rentals_info.html?pId={{ suite_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% endif %}
-                                            <img src="{{ suite_post[num]['image'] }}" class="card-img-top"
-                                                 alt="...">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{ suite_post[num]['address'] }}</h4>
-                                                <p class="card-text">
-                                                    {{ suite_post[num]['district'] }} /
-                                                    {{ suite_post[num]['type'] }} /
-                                                    {{ suite_post[num]['twPing'] }} 坪
-                                                </p>
-                                                {% if suite_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ suite_post[num]['sellPrice'] }}
-                                                        萬</h5>
-                                                {% else %}
-                                                    <h5 class="text-danger">{{ suite_post[num]['rentPrice'] }}
-                                                        元/月</h5>
-                                                {% endif %}
-                                            </div>
+                                        <img src="{{ suite_post[num]['image'] }}" class="card-img-top"
+                                             alt="...">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ suite_post[num]['address'] }}</h4>
+                                            <p class="card-text">
+                                                {{ suite_post[num]['district'] }} /
+                                                {{ suite_post[num]['type'] }} /
+                                                {{ suite_post[num]['twPing'] }} 坪
+                                            </p>
+                                            {% if suite_post[num]['sellPrice'] %}
+                                                <h5 class="text-danger">{{ suite_post[num]['sellPrice'] }}
+                                                    萬</h5>
+                                            {% else %}
+                                                <h5 class="text-danger">{{ suite_post[num]['rentPrice'] }}
+                                                    元/月</h5>
+                                            {% endif %}
+                                        </div>
                                         </a>
                                     </div>
                                 {% endif %}

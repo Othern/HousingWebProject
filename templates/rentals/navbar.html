@@ -8,7 +8,7 @@
         <ul class=" nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li class="nav-item dropdown">
                 <a id="selected-region" class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                    aria-expanded="false">{{ selected_region }}</a>
+                   aria-expanded="false">{{ selected_region }}</a>
 
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#" onclick="updateDropdown('台北市')">台北市</a></li>
@@ -47,9 +47,9 @@
             <li><a href="{{ url_for('index') }}" class="nav-link px-2 ">首頁</a></li>
             <li><a href="{{ url_for('sell') }}" class="nav-link px-2 ">買屋</a></li>
             <li><a href="{{ url_for('rentals') }}" class="nav-link px-2 link-secondary">租屋</a></li>
-            {% if session['login_status'] == 1%}
-            <li><a href="{{ url_for('myPost') }}" class="nav-link px-2">我的貼文</a></li>
-            {% endif%}
+            {% if session['login_status'] == 1 %}
+                <li><a href="{{ url_for('my_post') }}" class="nav-link px-2">我的貼文</a></li>
+            {% endif %}
         </ul>
 
         <div class="text-end">

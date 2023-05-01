@@ -1,0 +1,96 @@
+<div class="container mt-5 py-5">
+    <div class="row">
+        <div class="col-md-3">
+            <h1 class="text-center mb-3">格局</h1>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="bedRoom">房：</label>
+                    <input type="number" id="bedRoom" class="form-control" name="bedRoom" min="0" required>
+                    <small class="text-danger d-none" id="bedRoomError">請輸入數字</small>
+                </div>
+                <div class="col-md-3">
+                    <label for="livingRoom">廳：</label>
+                    <input type="number" id="livingRoom" class="form-control" name="livingRoom" min="0" required>
+                    <small class="text-danger d-none" id="livingRoomError">請輸入數字</small>
+                </div>
+                <div class="col-md-3">
+                    <label for="restRoom">衛：</label>
+                    <input type="number" id="restRoom" class="form-control" name="restRoom" min="0" required>
+                    <small class="text-danger d-none" id="restRoomError">請輸入數字</small>
+                </div>
+                <div class="col-md-3">
+                    <label for="balcony">陽台：</label>
+                    <input type="number" id="balcony" class="form-control" name="balcony" min="0" required>
+                    <small class="text-danger d-none" id="balconyError">請輸入數字</small>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h1 class="text-center mb-4">型態</h1>
+            <div class="form-group">
+                <label for="type">選擇型態</label>
+                <select class="form-control" id="type" name="type">
+                    <option value="住宅">住宅</option>
+                    {% if postType == 'rent' %}
+                        <option value="獨立套房">獨立套房</option>
+                        <option value="分租套房">分租套房</option>
+                        <option value="雅房">雅房</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h1 class="text-center mb-4">坪數</h1>
+            <div class="form-group">
+                <label for="twPing">輸入坪數</label>
+                <input type="text" class="form-control" id="twPing" name="twPing" min="0" required>
+                <small class="text-danger d-none" id="twPingError">請輸入數字</small>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <h1 class="text-center mb-4">是否住過</h1>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="lived" name="lived">
+                <label class="form-check-label" for="lived">
+                    是否住過
+                </label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h1 class="text-center mb-4">樓層</h1>
+            <div class="form-group">
+                <label for="floor">輸入樓層</label>
+                <input type="text" class="form-control" id="floor" name="floor" min="0" required>
+                <small class="text-danger d-none" id="floorError">請輸入數字</small>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function warning_not_number(input) {
+        // 獲取坪數輸入框和錯誤信息元素
+        const inputElement = document.getElementById(input);
+        const inputErrorElement = document.getElementById(input + "Error");
+
+        // 監聽坪數輸入框的輸入事件
+        inputElement.addEventListener('input', () => {
+            // 判斷輸入是否為數字
+            if (isNaN(inputElement.value)) {
+                // 如果不是數字，顯示錯誤信息
+                inputErrorElement.classList.remove('d-none');
+                // 同時清除輸入框的內容
+                inputElement.value = '';
+            } else {
+                // 如果是數字，隱藏錯誤信息
+                inputErrorElement.classList.add('d-none');
+            }
+        });
+    }
+
+    warning_not_number("twPing")
+    warning_not_number("floor")
+
+
+</script>

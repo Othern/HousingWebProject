@@ -10,27 +10,29 @@
                                 {% if num < recommend_post|length %}
                                     <div class="col">
                                         {% if  recommend_post[num]['pId'] <47 %}
-                                        <a href="/sellinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../sell_info.html?pId={{ recommend_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% else %}
-                                        <a href="/rentalsinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../rentals_info.html?pId={{ recommend_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% endif %}
-                                            <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
-                                                 alt="...">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
-                                                <p class="card-text">
-                                                    {{ recommend_post[num]['district'] }} /
-                                                    {{ recommend_post[num]['type'] }} /
-                                                    {{ recommend_post[num]['twPing'] }}
-                                                </p>
-                                                {% if recommend_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
-                                                        萬</h5>
-                                                {% else %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
-                                                        元/月</h5>
-                                                {% endif %}
-                                            </div>
+                                        <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
+                                             alt="...">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
+                                            <p class="card-text">
+                                                {{ recommend_post[num]['district'] }} /
+                                                {{ recommend_post[num]['type'] }} /
+                                                {{ recommend_post[num]['twPing'] }}
+                                            </p>
+                                            {% if recommend_post[num]['sellPrice'] %}
+                                                <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
+                                                    萬</h5>
+                                            {% else %}
+                                                <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
+                                                    元/月</h5>
+                                            {% endif %}
+                                        </div>
                                         </a>
                                     </div>
                                 {% endif %}
@@ -60,27 +62,29 @@
                                 {% if num < recommend_post|length %}
                                     <div class="col">
                                         {% if  recommend_post[num]['pId'] <47 %}
-                                        <a href="/sellinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../sell_info.html?pId={{ recommend_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% else %}
-                                        <a href="/rentalsinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../rentals_info.html?pId={{ recommend_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% endif %}
-                                            <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
-                                                 alt="...">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
-                                                <p class="card-text">
-                                                    {{ recommend_post[num]['district'] }} /
-                                                    {{ recommend_post[num]['type'] }} /
-                                                    {{ recommend_post[num]['twPing'] }}
-                                                </p>
-                                                {% if recommend_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
-                                                        萬</h5>
-                                                {% else %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
-                                                        元/月</h5>
-                                                {% endif %}
-                                            </div>
+                                        <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
+                                             alt="...">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
+                                            <p class="card-text">
+                                                {{ recommend_post[num]['district'] }} /
+                                                {{ recommend_post[num]['type'] }} /
+                                                {{ recommend_post[num]['twPing'] }}
+                                            </p>
+                                            {% if recommend_post[num]['sellPrice'] %}
+                                                <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
+                                                    萬</h5>
+                                            {% else %}
+                                                <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
+                                                    元/月</h5>
+                                            {% endif %}
+                                        </div>
                                         </a>
                                     </div>
                                 {% endif %}
@@ -110,27 +114,29 @@
                                 {% if num < recommend_post|length %}
                                     <div class="col">
                                         {% if  recommend_post[num]['pId'] <47 %}
-                                        <a href="/sellinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../sell_info.html?pId={{ recommend_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% else %}
-                                        <a href="/rentalsinfo.html?pId={{recommend_post[num]['pId']}}" class="card text-decoration-none">
+                                            <a href="../rentals_info.html?pId={{ recommend_post[num]['pId'] }}"
+                                               class="card text-decoration-none">
                                         {% endif %}
-                                            <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
-                                                 alt="...">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
-                                                <p class="card-text">
-                                                    {{ recommend_post[num]['district'] }} /
-                                                    {{ recommend_post[num]['type'] }} /
-                                                    {{ recommend_post[num]['twPing'] }} 坪
-                                                </p>
-                                                {% if recommend_post[num]['sellPrice'] %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
-                                                        萬</h5>
-                                                {% else %}
-                                                    <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
-                                                        元/月</h5>
-                                                {% endif %}
-                                            </div>
+                                        <img src="{{ recommend_post[num]['image'] }}" class="card-img-top"
+                                             alt="...">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ recommend_post[num]['address'] }}</h4>
+                                            <p class="card-text">
+                                                {{ recommend_post[num]['district'] }} /
+                                                {{ recommend_post[num]['type'] }} /
+                                                {{ recommend_post[num]['twPing'] }} 坪
+                                            </p>
+                                            {% if recommend_post[num]['sellPrice'] %}
+                                                <h5 class="text-danger">{{ recommend_post[num]['sellPrice'] }}
+                                                    萬</h5>
+                                            {% else %}
+                                                <h5 class="text-danger">{{ recommend_post[num]['rentPrice'] }}
+                                                    元/月</h5>
+                                            {% endif %}
+                                        </div>
                                         </a>
                                     </div>
                                 {% endif %}

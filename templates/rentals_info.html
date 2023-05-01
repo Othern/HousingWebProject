@@ -24,20 +24,35 @@
     <script src="../static/scripts/login/password_validation.js"></script>
 </head>
 
-<body>
-{% include './rentals/navbar.html' %}
-{% include 'common/notifaction.html' %}
 
-<main>
-    {% include './rentals/topic.html' %}
-    {% include './rentals/filter.html' %}
-    {% include './rentals/recoment.html' %}
-</main>
+<body>
+{% include './rentals_info/navbar.html' %}
+{% include 'common/notifaction.html' %}
+<div id="sellinfo-content">
+    {% include './rentals_info/content.html' %}
+</div>
+{% if  revise_permission == 1 %}
+    <div id="revise-content">
+        <form action="/revisePost" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="pId" name="pId" value="{{ pId }}">
+            <input type="hidden" id="postType" name="postType" value="{{ postType }}">
+            {% include './revise_post/post.html' %}
+            {% include './revise_post/house.html' %}
+            {% include './revise_post/houseRent.html' %}
+
+            <div class="container">
+                <input class="btn btn-dark" type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+{% endif %}
 </body>
 
+
 <footer>
-    {% include './rentals/footer.html' %}
+    {% include './rentals_info/footer.html' %}
 </footer>
+
 
 </html>
 <script>

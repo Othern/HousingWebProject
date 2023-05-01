@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2023-04-28 10:39:22
+-- 產生時間： 2023-05-01 11:11:20
 -- 伺服器版本： 10.4.22-MariaDB
 -- PHP 版本： 8.1.2
 
@@ -237,13 +237,13 @@ CREATE TABLE `houserent` (
   `waterHeater` tinyint(1) NOT NULL,
   `bed` tinyint(1) NOT NULL,
   `closet` tinyint(1) NOT NULL,
-  `paiedTVChannel` tinyint(1) NOT NULL,
+  `paidTVChannel` tinyint(1) NOT NULL,
   `internet` tinyint(1) NOT NULL,
   `gas` tinyint(1) NOT NULL,
   `sofa` tinyint(1) NOT NULL,
   `deskChair` tinyint(1) NOT NULL,
   `balcony` tinyint(1) NOT NULL,
-  `elevater` tinyint(1) NOT NULL,
+  `elevator` tinyint(1) NOT NULL,
   `parkingSpace` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -251,7 +251,7 @@ CREATE TABLE `houserent` (
 -- 傾印資料表的資料 `houserent`
 --
 
-INSERT INTO `houserent` (`hId`, `price`, `refrigerator`, `washingMachine`, `TV`, `airConditioner`, `waterHeater`, `bed`, `closet`, `paiedTVChannel`, `internet`, `gas`, `sofa`, `deskChair`, `balcony`, `elevater`, `parkingSpace`) VALUES
+INSERT INTO `houserent` (`hId`, `price`, `refrigerator`, `washingMachine`, `TV`, `airConditioner`, `waterHeater`, `bed`, `closet`, `paidTVChannel`, `internet`, `gas`, `sofa`, `deskChair`, `balcony`, `elevator`, `parkingSpace`) VALUES
 (47, 10000, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0),
 (48, 11000, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0),
 (49, 16000, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0),
@@ -1013,7 +1013,8 @@ INSERT INTO `user` (`uId`, `name`, `phone`, `email`, `password`, `permission`) V
 (97, '程育維', '0932904274', 'C0evIaS9@gmail.com', 'SkeSMZzT', 'user'),
 (98, '孫啟亞', '0922284501', 'VZkoyAYW@gmail.com', '2k4bk2DY', 'user'),
 (99, '夏家綺', '0988357075', 'YxssHHQ8tB@gmail.com', '7rUB2yQn', 'user'),
-(100, '林怡芳', '0952908829', 'MfF3ftei3RGo@gmail.c', 'dkMxWZkf', 'user');
+(100, '林怡芳', '0952908829', 'MfF3ftei3RGo@gmail.c', 'dkMxWZkf', 'user'),
+(106, 'kh0109092', '', 'kh0109092@gmail.com', 'rEMB3fE8QSF9u9B!', 'user');
 
 --
 -- 已傾印資料表的索引
@@ -1075,7 +1076,7 @@ ALTER TABLE `house`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user`
 --
 ALTER TABLE `user`
-  MODIFY `uId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `uId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

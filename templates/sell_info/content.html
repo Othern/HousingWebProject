@@ -1,0 +1,45 @@
+<section class="container py-5">
+    {% if post %}
+    <h5 class="title">{{ post['title'] }}</h5>
+        <div class="row align-items-stretch">
+            <div class="col-md-4 ">
+                <img src="{{ post['image'] }}" class="img-fluid " alt="圖片無法顯示">
+            </div>
+            <div class="col-md-8">
+                <div class="card h-100 py-1">
+                    <div class="card-body">
+                        <span style="font-weight: bold; color: red; font-size: 40px">{{ post['price'] }}</span>
+                        <span>萬元</span>
+                        <div class="text-muted">(單價:{{ post['pricePerTwping'] }}/坪)</div>
+
+                        <p class="card-text mt-2 "><span
+                                class="text-muted">地址:</span>{{ post['city'] }}{{ post['district'] }}{{ post['address'] }}
+                        </p>
+                        <p class="card-text  "><span class="text-muted">房屋類型:</span>{{ post['houseType'] }}</p>
+                        <p class="card-text  "><span class="text-muted">屋齡:</span>{{ post['age'] }}年</p>
+                        <p class="card-text  "><span
+                                class="text-muted">格局:</span>{{ post['bedRoom'] }}房{{ post['livingRoom'] }}廳{{ post['restRoom'] }}衛{{ post['balcony'] }}陽台
+                        </p>
+                        <p class="card-text"><span class="text-muted">樓層:</span>{{ post['floor'] }}樓</p>
+                        <p class="card-text"><span class="text-muted">坪數:</span>{{ post['twPing'] }}</p>
+                        <p class="card-text"><span class="text-muted">公設比:</span>{{ post['ratioOfPublicArea'] }}</p>
+                        <p class="card-text"><span class="text-muted">負責人:</span>{{ post['name'] }}
+                            - {{ post['phone'] }}</p>
+                        <p class="card-text">
+                        <p class="text-muted">介紹:</p>
+                        <p>{{ post['description'] }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="container bg-secondary">
+            <div class="p-5 text-center bg-body-tertiary rounded-3">
+                <h1 class="text-body-emphasis">這裡空空如也</h1>
+                <p class="lead">
+                    目前沒有任何資料，你可以發布第一個房子
+                </p>
+            </div>
+        </div>
+    {% endif %}
+</section>

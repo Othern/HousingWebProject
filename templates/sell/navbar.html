@@ -48,7 +48,7 @@
             <li><a href="{{ url_for('sell') }}" class="nav-link px-2 link-secondary">買屋</a></li>
             <li><a href="{{ url_for('rentals') }}" class="nav-link px-2">租屋</a></li>
             {% if session['login_status'] == 1%}
-            <li><a href="{{ url_for('myPost') }}" class="nav-link px-2">我的貼文</a></li>
+            <li><a href="{{ url_for('my_post') }}" class="nav-link px-2">我的貼文</a></li>
             {% endif%}
         </ul>
 
