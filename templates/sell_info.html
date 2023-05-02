@@ -33,8 +33,6 @@
 </div>
 {% if  revise_permission == 1 %}
     <div id="revise-content">
-
-
         <form action="/revisePost" method="post" enctype="multipart/form-data">
             <input type="hidden" id="pId" name="pId" value="{{ pId }}">
             <input type="hidden" id="postType" name="postType" value="{{ postType }}">
