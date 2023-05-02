@@ -1,8 +1,9 @@
-<div class="container mt-5 py-5">
-    <label class="py-5" for="image">選擇一張圖片：</label>
-    <input type="file" id="image" name="image" required>
-    <br>
-    <img id="image-preview" style="max-width: 600px; max-height: 400px;" alt="預覽照片" src="">
+<div class="input-group mb-3">
+    <label class="input-group-text" for="image">選擇一張圖片：</label>
+    <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+</div>
+<div class="d-flex align-items-center justify-content-center border-danger">
+    <img id="image-preview" alt="預覽照片" src="../../static/images/post/300x200.png">
 </div>
 
 <script>

@@ -27,22 +27,10 @@
 <main>
     {% include './add_post/navbar.html' %}
     {% include './add_post/topic.html' %}
-
-    <form action="/uploadPost" method="post" enctype="multipart/form-data">
-        <input type="hidden" id="postType" name="postType" value="{{ postType }}">
-        {% include './add_post/post.html' %}
-        {% include './add_post/house.html' %}
-        {% if postType == 'sell' %}
-            {% include './add_post/house_sell.html' %}
-        {% elif postType == 'rent' %}
-            {% include './add_post/house_rent.html' %}
-        {% endif %}
-        {% include './add_post/image.html' %}
-
-        {% include './add_post/payment.html' %}
-        <input type="submit" value="Submit">
-    </form>
+    {% include './add_post/add_post_form.html' %}
 </main>
 </body>
-
+<footer>
+    {% include './index/footer.html' %}
+</footer>
 </html>

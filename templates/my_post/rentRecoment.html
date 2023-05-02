@@ -3,7 +3,7 @@
     {% for post in post_rent_results %}
 
         {% if session['manager'] == 1 %}
-            <a href="{% url_for('delete_post_rent') %}?pId={{ post.pId }}" onclick="return confirm('您確定要刪除這個貼文嗎？')"
+            <a href="{{ url_for('delete_post_rent') }}?pId={{ post.pId }}" onclick="return confirm('您確定要刪除這個貼文嗎？')"
                style="text-decoration: none;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x"
                      viewBox="0 0 16 16">

@@ -1,27 +1,36 @@
-<div class="container mt-5 py-5">
-    <div class="row">
-        <div class="col-md-3">
-            <h1 class="text-center mb-4">選擇消費方案</h1>
-            <div class="row">
-                <label for="class">選擇付款型態</label>
-                <select class="form-control" id="class" name="class">
-                    <option value='1'>黃金</option>
-                    <option value='2'>白金</option>
-                    <option value='3'>鑽石</option>
-                </select>
-            </div>
+<div class="my-3 row">
+    <div class="col">
+        <label for="class">選擇刊登方案：</label>
+        <select class="form-control" id="class" name="class">
+            <option value='1'>黃金</option>
+            <option value='2'>白金</option>
+            <option value='3'>鑽石</option>
+        </select>
+    </div>
+</div>
+
+<div class="row gy-3">
+    <div class="col-md-6">
+        <label for="cardNumber" class="form-label">輸入信用卡卡號：</label>
+        <input type="text" class="form-control" id="cardNumber" name="cardNumber" pattern="^[0-9]*$" required>
+        <div class="invalid-feedback">
+            你必須輸入信用卡卡號
         </div>
-        <div class="col-md-3">
-            <h1 class="text-center mb-4">輸入付款資訊</h1>
-            <label for="cardNumber">輸入信用卡卡號：</label>
-            <input type="text" id="cardNumber" name="cardNumber" pattern="^[0-9]*$" required>
-            <label for="expDate">輸入信用卡到期日：(mm/yy)</label>
-            <input type="text" id="expDate" name="expDate" pattern="^\d\d/\d\d$" required>
+    </div>
+
+    <div class="col-md-3">
+        <label for="expDate" class="form-label">輸入到期日：(mm/yy)</label>
+        <input type="text" class="form-control" id="expDate" name="expDate" pattern="^\d\d/\d\d$" required>
+        <div class="invalid-feedback">
+            到期日需填寫
         </div>
-        <div class="col-md-3">
-            <h1 class="text-center mb-4">輸入刊登時間</h1>
-            <label for="month">刊登時間(月)</label>
-            <input type="number" id="month" name="month" required>
+    </div>
+
+    <div class="col-md-3">
+        <label for="month" class="form-label">刊登時間(月)</label>
+        <input type="number" class="form-control" id="month" name="month" required>
+        <div class="invalid-feedback">
+            刊登時間需填寫
         </div>
     </div>
 </div>
