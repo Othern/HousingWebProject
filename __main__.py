@@ -259,20 +259,19 @@ def my_post():
 def sell_info():
     p_id = request.args.get('pId')
     u_id = session.get("uId", 0)
-    selected_region = session.get('selected_region', '台北市')
     db, cursor = link_sql()
 
     sql = f"SELECT house.*, post.*, image.*, housesell.* " \
           f"FROM ((`house` JOIN `post` ON house.pId = post.pId)" \
           f"JOIN `image` ON image.pId = post.pId)" \
           f"JOIN `housesell` ON house.hId = housesell.hId " \
-          f"WHERE post.pId = {p_id} "\
+          f"WHERE post.pId = {p_id} " \
           f"LIMIT 1"
 
     cursor.execute(sql)
     results = cursor.fetchone()
     db.close()
-    
+
     if u_id == results["uId"]:
         revise_permission = 1
     else:
@@ -403,12 +402,12 @@ def upload_post():
     end_date = pay_date + dt.timedelta(days=month * 30)
     pay_date = dt.date.strftime(pay_date, '%Y-%m-%d')
     end_date = dt.date.strftime(end_date, '%Y-%m-%d')
-    
+
     pay_class = int(request.form.get("class"))
     exp_date = request.form.get("expDate")
     exp_year = int(str(exp_date).split("/")[1])
     exp_month = int(str(exp_date).split("/")[0])
-    exp_date =dt.date(exp_year,exp_month,1)
+    exp_date = dt.date(exp_year, exp_month, 1)
     if pay_class == 1:
         cost = month * 300
     elif pay_class == 2:
