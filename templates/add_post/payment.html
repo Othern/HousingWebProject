@@ -1,16 +1,13 @@
-<div class="my-3 row">
-    <div class="col">
-        <label for="class">選擇刊登方案：</label>
-        <select class="form-control" id="class" name="class">
+<div class="row gy-3">
+    <div class="col-md-3">
+        <label for="class" class="form-label">選擇刊登方案：</label>
+        <select class="form-select" id="class" name="class">
             <option value='1'>黃金</option>
             <option value='2'>白金</option>
             <option value='3'>鑽石</option>
         </select>
     </div>
-</div>
-
-<div class="row gy-3">
-    <div class="col-md-6">
+    <div class="col-md-3">
         <label for="cardNumber" class="form-label">輸入信用卡卡號：</label>
         <input type="text" class="form-control" id="cardNumber" name="cardNumber" pattern="^[0-9]*$" required>
         <div class="invalid-feedback">
