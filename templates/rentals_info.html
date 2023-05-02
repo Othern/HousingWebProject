@@ -62,4 +62,21 @@
         if (typeof messages != 'undefined' && messages !== '[]')
             $("#notification").modal('show');
     });
+    if('{{uId}}' != 0){
+        const obj = {};
+        obj['pId'] = '{{pId}}';
+        obj['uId'] = '{{uId}}';
+        $.ajax({
+            type: 'POST',
+            url: '/update/browses',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(obj),
+            success: function () {
+                
+            },
+            error: function (error) {
+                console.log(error);
+            }
+            });
+    }
 </script>

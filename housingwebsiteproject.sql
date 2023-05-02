@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- 主機： 127.0.0.1
--- 產生時間： 2023-05-01 11:11:20
--- 伺服器版本： 10.4.22-MariaDB
--- PHP 版本： 8.1.2
+-- 主機： localhost
+-- 產生時間： 2023 年 05 月 02 日 19:14
+-- 伺服器版本： 10.4.28-MariaDB
+-- PHP 版本： 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 資料庫: `housingwebsiteproject`
+-- 資料庫： `housingWebsiteProject`
 --
 
 -- --------------------------------------------------------
@@ -31,7 +31,7 @@ CREATE TABLE `availabletime` (
   `pId` int(11) NOT NULL,
   `startTime` datetime NOT NULL,
   `endTime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -43,7 +43,7 @@ CREATE TABLE `browses` (
   `uId` int(10) NOT NULL,
   `pId` int(10) NOT NULL,
   `browseTime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE `criticizes` (
   `uId` int(10) NOT NULL,
   `pId` int(10) NOT NULL,
   `comment` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -74,7 +74,7 @@ CREATE TABLE `house` (
   `restRoom` int(2) DEFAULT NULL,
   `balcony` int(2) DEFAULT NULL,
   `pId` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `house`
@@ -245,7 +245,7 @@ CREATE TABLE `houserent` (
   `balcony` tinyint(1) NOT NULL,
   `elevator` tinyint(1) NOT NULL,
   `parkingSpace` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `houserent`
@@ -360,7 +360,7 @@ CREATE TABLE `housesell` (
   `age` int(3) NOT NULL,
   `houseType` enum('華廈','電梯大樓','公寓','透天厝','別墅') NOT NULL,
   `houseName` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `housesell`
@@ -423,7 +423,7 @@ INSERT INTO `housesell` (`hId`, `ratioOfPublicArea`, `pricePerTwping`, `price`, 
 CREATE TABLE `image` (
   `pId` int(10) NOT NULL,
   `image` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `image`
@@ -584,7 +584,7 @@ CREATE TABLE `payment` (
   `expDate` date NOT NULL,
   `cardNumber` text NOT NULL,
   `cost` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `payment`
@@ -747,7 +747,7 @@ CREATE TABLE `post` (
   `name` varchar(10) NOT NULL,
   `phone` varchar(10) NOT NULL,
   `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `post`
@@ -907,7 +907,7 @@ CREATE TABLE `user` (
   `email` varchar(40) NOT NULL,
   `password` varchar(20) NOT NULL,
   `permission` enum('user','manager') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `user`
@@ -1030,7 +1030,7 @@ ALTER TABLE `availabletime`
 -- 資料表索引 `browses`
 --
 ALTER TABLE `browses`
-  ADD PRIMARY KEY (`uId`,`pId`);
+  ADD PRIMARY KEY (`uId`,`pId`,`browseTime`);
 
 --
 -- 資料表索引 `criticizes`

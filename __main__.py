@@ -280,7 +280,8 @@ def sell_info():
 
     return render_template(
         'sell_info.html',
-        pId=p_id,
+        pId = p_id,
+        uId = u_id,
         revise_permission=revise_permission,
         postType="sell",
         post=results
@@ -310,6 +311,7 @@ def rentals_info():
     return render_template(
         'rentals_info.html',
         pId=request.args.get('pId'),
+        uId = u_id,
         postType="rent",
         revise_permission=revise_permission,
         post=results
@@ -418,7 +420,7 @@ def upload_post():
     card_number = request.form.get("cardNumber")
 
     payment = str(('pId', 'payDate', 'endDate', 'class', 'expDate', 'cardNumber', 'cost')).replace("'", "`")
-    sql = f"INSERT INTO `Payment`{payment} " \
+    sql = f"INSERT INTO `Payment`({payment})" \
           f"VALUES ({p_id},'{pay_date}','{end_date}','{pay_class}','{exp_date}','{card_number}',{cost})"
     cursor.execute(sql)
     db.commit()
@@ -573,6 +575,28 @@ def update_my_post():
     session['selected_myPost'] = selected_my_post
     return 'susses'
 
+@app.route('/update/browses', methods=['POST'])
+def update_browses():
+    uId = request.json['uId']
+    pId = request.json['pId']
+    now = dt.datetime.now()
+    db, cursor = link_sql()
+    sql = f"SELECT * FROM `post` WHERE `pId` = {pId} limit 1"
+    cursor.execute(sql)
+    post_author = cursor.fetchone()["uId"] 
+
+    sql = f"SELECT * FROM `browses` WHERE `pId` = {pId} AND `uId` = {uId} limit 1"
+    cursor.execute(sql)
+    last_visit = cursor.fetchone()["browseTime"]
+
+    if pId == post_author or now-last_visit <= dt.timedelta(1):
+        return "browses add deny"
+    
+    sql = f"INSERT INTO `browses`(`uId`,`pId`,`browseTime`) VALUES ({uId},{pId},'{now}')"
+    cursor.execute(sql)
+    db.commit()
+    db.close()
+    return "susses"
 
 # 登入的 API
 @app.route('/login', methods=['POST'])
