@@ -133,30 +133,31 @@
         <div class="form-group">
             <label class="form-label" for="price">租金(萬)</label>
             <input class="form-control" type="text" id="price" name="price" min="0" required>
+            <div class="invalid-feedback">
+                請輸入數字
+            </div>
         </div>
-        <small class="text-danger d-none" id="priceError">請輸入數字</small>
     </div>
 </div>
 <script>
-    function warning_not_number(input) {
+    function warningNotNumber(input) {
         // 獲取坪數輸入框和錯誤信息元素
-        const inputElement = document.getElementById(input);
-        const inputErrorElement = document.getElementById(input + "Error");
+        const inputElement = $('#' + input);
 
         // 監聽坪數輸入框的輸入事件
-        inputElement.addEventListener('input', () => {
+        inputElement.on('input', function () {
             // 判斷輸入是否為數字
-            if (isNaN(inputElement.value)) {
+            if (isNaN(inputElement.val())) {
                 // 如果不是數字，顯示錯誤信息
-                inputErrorElement.classList.remove('d-none');
+                inputElement.addClass('is-invalid');
                 // 同時清除輸入框的內容
-                inputElement.value = '';
+                inputElement.val('');
             } else {
                 // 如果是數字，隱藏錯誤信息
-                inputErrorElement.classList.add('d-none');
+                inputElement.removeClass('is-invalid');
             }
         });
     }
 
-    warning_not_number("price")
+    warningNotNumber("price")
 </script>

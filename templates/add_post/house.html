@@ -20,15 +20,19 @@
         <div class="form-group">
             <label class="form-label" for="twPing">輸入坪數</label>
             <input type="text" class="form-control" id="twPing" name="twPing" min="0" required>
-            <small class="text-danger d-none" id="twPingError">請輸入數字</small>
+            <div class="invalid-feedback">
+                請輸入數字
+            </div>
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
             <label class="form-label" for="floor">輸入樓層</label>
             <input type="text" class="form-control" id="floor" name="floor" min="0" required>
+            <div class="invalid-feedback">
+                請輸入數字
+            </div>
         </div>
-        <small class="text-danger d-none" id="floorError">請輸入數字</small>
     </div>
 </div>
 
@@ -38,21 +42,18 @@
             <label for="bedRoom" class="input-group-text">房數：</label>
             <input type="number" id="bedRoom" class="form-control" name="bedRoom" min="0" required>
         </div>
-        <small class="text-danger d-none" id="bedRoomError">請輸入數字</small>
     </div>
     <div class="col-md-3 mb-3">
         <div class="input-group">
             <label for="livingRoom" class="input-group-text">廳數：</label>
             <input type="number" id="livingRoom" class="form-control" name="livingRoom" min="0" required>
         </div>
-        <small class="text-danger d-none" id="livingRoomError">請輸入數字</small>
     </div>
     <div class="col-md-3 mb-3">
         <div class="input-group">
             <label for="restRoom" class="input-group-text">衛浴：</label>
             <input type="number" id="restRoom" class="form-control" name="restRoom" min="0" required>
         </div>
-        <small class="text-danger d-none" id="restRoomError">請輸入數字</small>
     </div>
     <div class="col-md-3 mb-3">
         <div class="input-group">
@@ -60,7 +61,6 @@
             <input type="number" id="balcony" class="form-control" name="balcony" min="0" required>
         </div>
     </div>
-    <small class="text-danger d-none" id="balconyError">請輸入數字</small>
 </div>
 
 <div class="form-check">
@@ -71,28 +71,25 @@
 </div>
 
 <script>
-    function warning_not_number(input) {
+    function warningNotNumber(input) {
         // 獲取坪數輸入框和錯誤信息元素
-        const inputElement = document.getElementById(input);
-        const inputErrorElement = document.getElementById(input + "Error");
+        const inputElement = $('#' + input);
 
         // 監聽坪數輸入框的輸入事件
-        inputElement.addEventListener('input', () => {
+        inputElement.on('input', function () {
             // 判斷輸入是否為數字
-            if (isNaN(inputElement.value)) {
+            if (isNaN(inputElement.val())) {
                 // 如果不是數字，顯示錯誤信息
-                inputErrorElement.classList.remove('d-none');
+                inputElement.addClass('is-invalid');
                 // 同時清除輸入框的內容
-                inputElement.value = '';
+                inputElement.val('');
             } else {
                 // 如果是數字，隱藏錯誤信息
-                inputErrorElement.classList.add('d-none');
+                inputElement.removeClass('is-invalid');
             }
         });
     }
 
-    warning_not_number("twPing")
-    warning_not_number("floor")
-
-
+    warningNotNumber("twPing");
+    warningNotNumber("floor");
 </script>

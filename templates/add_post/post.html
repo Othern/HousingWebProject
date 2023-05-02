@@ -66,11 +66,13 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="input-group mb-3">
+        <div class="input-group has-validation mb-3">
             <label for="phone" class="input-group-text">聯絡電話：</label>
             <input class="form-control" type="text" id="phone" name="phone" pattern="09[0-9]{8}" required>
+            <div class="invalid-feedback">
+                請輸入有效電話號碼
+            </div>
         </div>
-        <div id="phoneError"></div>
     </div>
 </div>
 
@@ -94,15 +96,22 @@
 </div>
 
 <script>
-    function checkPhoneNumber(phoneNumber) {
+    function checkPhoneNumber(input) {
+        // 獲取輸入框
+        const inputElement = $('#' + input);
         const phonePattern = /^09\d{8}$/; // 手機號碼格式
-        const phoneError = document.getElementById("phoneError");
-        if (phonePattern.test(phoneNumber)) {
-            // 格式正確，清除錯誤訊息
-            phoneError.innerHTML = "";
-        } else {
-            // 格式錯誤，顯示錯誤訊息
-            phoneError.innerHTML = "請輸入正確的手機號碼格式(例如:0912345678)";
-        }
+
+        // 監聽輸入框的輸入事件
+        inputElement.on('input', function () {
+            if (phonePattern.test(inputElement.val())) {
+                // 格式正確，清除錯誤訊息
+                inputElement.removeClass('is-invalid');
+            } else {
+                // 格式錯誤，顯示錯誤訊息
+                inputElement.addClass('is-invalid');
+            }
+        });
     }
+
+    checkPhoneNumber("phone");
 </script>
