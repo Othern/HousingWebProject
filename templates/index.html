@@ -25,28 +25,28 @@
 </head>
 
 <body>
-{% include './index/navbar.html' %}
+<header>
+    {% include './index/navbar.html' %}
+</header>
 
-{% include 'common/notifaction.html' %}
+{% include './index/topic.html' %}
 
-<main>
-    {% include './index/topic.html' %}
+{% include './index/recommend.html' %}
 
-    {% include './index/recommend.html' %}
+{% include './index/family.html' %}
 
-    {% include './index/family.html' %}
+{% include './index/suite.html' %}
 
-    {% include './index/suite.html' %}
-
-    {% include './index/shared.html' %}
-</main>
-</body>
+{% include './index/shared.html' %}
 
 <footer>
     {% include './index/footer.html' %}
 </footer>
+</body>
 
 </html>
+
+{% include 'common/notifaction.html' %}
 
 <script>
     $(document).ready(function () {
