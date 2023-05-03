@@ -4,9 +4,13 @@
 *
 **********************************/
 .wrong {
-    display: block;
+  display: block;
 }
 
 .good {
-    display: none;
+  display: none;
+}
+
+img {
+  object-fit: cover;
 }

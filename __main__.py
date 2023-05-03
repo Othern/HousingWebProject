@@ -13,7 +13,6 @@ app = Flask(__name__, template_folder='./templates')
 app.secret_key = '12345678'
 app.config['UPLOAD_POST_IMAGE_FOLDER'] = "static/images/post/"
 
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -168,8 +167,6 @@ def sell():
         my_post_sql = ""
 
     sql = sql + house_type_sql + pattern_sql + price_sql + tw_ping_sql + age_sql + my_post_sql
-
-    print(sql)
 
     db, cursor = link_sql()
     cursor.execute(sql)
@@ -361,7 +358,7 @@ def upload_post():
                 result.append(1) if request.form.get(attr) else result.append(0)
             else:
                 result.append(request.form.get(attr))
-        
+
         fetch_sql = "INSERT INTO " + entity + str(attrs).replace("'", "`") + "VALUES" + str(tuple(result))
         cursor.execute(fetch_sql)
         db.commit()
@@ -408,7 +405,7 @@ def upload_post():
 
     pay_class = int(request.form.get("class"))
     exp_date = request.form.get("expDate")
-    exp_year = int("20"+str(exp_date).split("/")[1])
+    exp_year = int("20" + str(exp_date).split("/")[1])
     exp_month = int(str(exp_date).split("/")[0])
     exp_date = dt.date(exp_year, exp_month, 1)
     if pay_class == 1:
@@ -463,8 +460,8 @@ def revise_post():
             if attr in ["pId", "uId", "hId"]:
                 continue
             elif attr in bool_attrs:
-                if attr== "balcony":
-                    if value >0:
+                if attr == "balcony":
+                    if int(value) > 0:
                         set_sql = set_sql + f"`{attr}` = 1, "
                     else:
                         set_sql = set_sql + f"`{attr}` = 0, "
@@ -597,9 +594,8 @@ def update_browses():
     cursor.execute(sql)
 
     last_visit = cursor.fetchone()['browseTime']
-    
-        
-    if last_visit != None and (now-last_visit <= dt.timedelta(1) or p_id == post_author):
+
+    if last_visit is not None and (now - last_visit <= dt.timedelta(1) or p_id == post_author):
         return "browses add deny"
 
     sql = f"INSERT INTO `browses`(`uId`,`pId`,`browseTime`) VALUES ({u_id},{p_id},'{now}')"
