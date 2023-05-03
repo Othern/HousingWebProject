@@ -73,7 +73,10 @@
                 // 驗證輸入是否符合 mm/yy 的格式
                 if (/^(0[1-9]|1[0-2])\/\d{2}$/.test(user_input)) {
                     // 將輸入的月份/年份轉換為 Date 物件
-                    const inputDate = new Date('20' + user_input.substr(3) + '-' + user_input.substr(0, 2) + '-01');
+                    const parts = user_input.split('/');
+                    const month = parseInt(parts[0], 10);
+                    const year = parseInt(parts[1], 10) + 2000;
+                    const inputDate = new Date(year, month - 1, 1);
                     const now = new Date();
 
                     // 比較輸入日期是否大於當前日期
