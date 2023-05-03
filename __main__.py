@@ -296,8 +296,7 @@ def rentals_info():
           f"FROM ((`house` JOIN `post` ON house.pId = post.pId)" \
           f"JOIN `image` ON image.pId = post.pId)" \
           f"JOIN `houserent` ON house.hId = houserent.hId " \
-          f"WHERE `city` = '{selected_region}' AND " \
-          f"    post.pId = {request.args.get('pId')} " \
+          f"WHERE post.pId = {request.args.get('pId')} " \
           f"LIMIT 1"
 
     cursor.execute(sql)
