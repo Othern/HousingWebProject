@@ -3,7 +3,8 @@
     <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
 </div>
 <div class="d-flex align-items-center justify-content-center border-danger">
-    <img id="image-preview" alt="預覽照片" src="../../static/images/post/300x200.png">
+    <img id="image-preview" alt="預覽照片"
+         src="{{ post['image'] if 'image' in post else '../../static/images/post/300x200.png' }}">
 </div>
 
 <script>

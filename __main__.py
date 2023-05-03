@@ -9,8 +9,11 @@ from werkzeug.utils import secure_filename
 from database import link_sql, check_user_exist
 
 app = Flask(__name__, template_folder='./templates')
+
 app.secret_key = '12345678'
 app.config['UPLOAD_POST_IMAGE_FOLDER'] = "static/images/post/"
+
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -259,20 +262,19 @@ def my_post():
 def sell_info():
     p_id = request.args.get('pId')
     u_id = session.get("uId", 0)
-    selected_region = session.get('selected_region', '台北市')
     db, cursor = link_sql()
 
     sql = f"SELECT house.*, post.*, image.*, housesell.* " \
           f"FROM ((`house` JOIN `post` ON house.pId = post.pId)" \
           f"JOIN `image` ON image.pId = post.pId)" \
           f"JOIN `housesell` ON house.hId = housesell.hId " \
-          f"WHERE post.pId = {p_id} "\
+          f"WHERE post.pId = {p_id} " \
           f"LIMIT 1"
 
     cursor.execute(sql)
     results = cursor.fetchone()
     db.close()
-    
+
     if u_id == results["uId"]:
         revise_permission = 1
     else:
@@ -280,8 +282,8 @@ def sell_info():
 
     return render_template(
         'sell_info.html',
-        pId = p_id,
-        uId = u_id,
+        pId=p_id,
+        uId=u_id,
         revise_permission=revise_permission,
         postType="sell",
         post=results
@@ -291,15 +293,13 @@ def sell_info():
 @app.route('/rentals_info.html')
 def rentals_info():
     u_id = session.get("uId", 0)
-    selected_region = session.get('selected_region', '台北市')
     db, cursor = link_sql()
 
     sql = f"SELECT house.*, post.*, image.*, houserent.* " \
           f"FROM ((`house` JOIN `post` ON house.pId = post.pId)" \
           f"JOIN `image` ON image.pId = post.pId)" \
           f"JOIN `houserent` ON house.hId = houserent.hId " \
-          f"WHERE `city` = '{selected_region}' AND " \
-          f"    post.pId = {request.args.get('pId')} " \
+          f"WHERE post.pId = {request.args.get('pId')} " \
           f"LIMIT 1"
 
     cursor.execute(sql)
@@ -311,7 +311,7 @@ def rentals_info():
     return render_template(
         'rentals_info.html',
         pId=request.args.get('pId'),
-        uId = u_id,
+        uId=u_id,
         postType="rent",
         revise_permission=revise_permission,
         post=results
@@ -405,12 +405,12 @@ def upload_post():
     end_date = pay_date + dt.timedelta(days=month * 30)
     pay_date = dt.date.strftime(pay_date, '%Y-%m-%d')
     end_date = dt.date.strftime(end_date, '%Y-%m-%d')
-    
+
     pay_class = int(request.form.get("class"))
     exp_date = request.form.get("expDate")
     exp_year = int(str(exp_date).split("/")[1])
     exp_month = int(str(exp_date).split("/")[0])
-    exp_date =dt.date(exp_year,exp_month,1)
+    exp_date = dt.date(exp_year, exp_month, 1)
     if pay_class == 1:
         cost = month * 300
     elif pay_class == 2:
@@ -575,30 +575,32 @@ def update_my_post():
     session['selected_myPost'] = selected_my_post
     return 'susses'
 
+
 @app.route('/update/browses', methods=['POST'])
 def update_browses():
-    uId = request.json['uId']
-    pId = request.json['pId']
+    u_id = request.json['uId']
+    p_id = request.json['pId']
     now = dt.datetime.now()
     db, cursor = link_sql()
-    sql = f"SELECT * FROM `post` WHERE `pId` = {pId} limit 1"
+    sql = f"SELECT * FROM `post` WHERE `pId` = {p_id} limit 1"
     cursor.execute(sql)
-    post_author = cursor.fetchone()["uId"] 
+    post_author = cursor.fetchone()["uId"]
 
-    sql = f"SELECT MAX(`browseTime`) AS `browseTime` FROM `browses` WHERE `pId` = {pId} AND `uId` = {uId} limit 1"
+    sql = f"SELECT MAX(`browseTime`) AS `browseTime` FROM `browses` WHERE `pId` = {p_id} AND `uId` = {u_id} limit 1"
     cursor.execute(sql)
 
     last_visit = cursor.fetchone()['browseTime']
     
         
-    if last_visit != None and (now-last_visit <= dt.timedelta(1) or pId == post_author):
+    if last_visit != None and (now-last_visit <= dt.timedelta(1) or p_id == post_author):
         return "browses add deny"
-    
-    sql = f"INSERT INTO `browses`(`uId`,`pId`,`browseTime`) VALUES ({uId},{pId},'{now}')"
+
+    sql = f"INSERT INTO `browses`(`uId`,`pId`,`browseTime`) VALUES ({u_id},{p_id},'{now}')"
     cursor.execute(sql)
     db.commit()
     db.close()
     return "susses"
+
 
 # 登入的 API
 @app.route('/login', methods=['POST'])

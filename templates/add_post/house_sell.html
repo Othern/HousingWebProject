@@ -3,10 +3,22 @@
         <div class="form-group">
             <label for="houseType">選擇房屋型態</label>
             <select class="form-select" id="houseType" name="houseType">
-                <option value='電梯大樓'>電梯大樓</option>
-                <option value='公寓'>公寓</option>
-                <option value='透天厝'>透天厝</option>
-                <option value='別墅'>別墅</option>
+                <option value='電梯大樓'
+                        {% if 'houseType' in post and post['houseType'] == '電梯大樓' %}selected{% endif %}>
+                    電梯大樓
+                </option>
+                <option value='公寓'
+                        {% if 'houseType' in post and post['houseType'] == '公寓' %}selected{% endif %}>
+                    公寓
+                </option>
+                <option value='透天厝'
+                        {% if 'houseType' in post and post['houseType'] == '透天厝' %}selected{% endif %}>
+                    透天厝
+                </option>
+                <option value='別墅'
+                        {% if 'houseType' in post and post['houseType'] == '別墅' %}selected{% endif %}>
+                    別墅
+                </option>
             </select>
         </div>
     </div>
@@ -14,65 +26,75 @@
         <div class="form-group">
             <label for="pricePerTwPing">每坪價格(萬)</label>
             <input type="text" class="form-control" id="pricePerTwPing" name="pricePerTwPing" min="0" required>
-            <small class="text-danger d-none" id="pricePerTwPingError">請輸入數字</small>
+            <div class="invalid-feedback">
+                請輸入數字
+            </div>
         </div>
     </div>
     <div class="col-md-4 mb-3">
         <div class="form-group">
             <label for="price">總價(萬)</label>
-            <input type="text" class="form-control" id="price" name="price" min="0" required>
-            <small class="text-danger d-none" id="priceError">請輸入數字</small>
+            <input type="text" class="form-control" id="price" name="price" min="0"
+                   value="{{ post['price'] if 'price' in post else '' }}" required>
+            <div class="invalid-feedback">
+                請輸入數字
+            </div>
         </div>
     </div>
     <div class="col-md-4 mb-3">
         <div class="form-group">
             <label for="age">屋齡(年)</label>
-            <input type="text" class="form-control" id="age" name="age" min="1" required>
-            <small class="text-danger d-none" id="ageError">請輸入數字</small>
+            <input type="text" class="form-control" id="age" name="age" min="1"
+                   value="{{ post['age'] if 'age' in post else '' }}" required>
+            <div class="invalid-feedback">
+                請輸入數字
+            </div>
         </div>
     </div>
     <div class="col-md-4 mb-3">
         <div class="form-group">
             <label for="ratioOfPublicArea">公設比(%)</label>
             <input type="text" class="form-control" id="ratioOfPublicArea" name="ratioOfPublicArea" min="0"
-                   required>
-            <small class="text-danger d-none" id="ratioOfPublicAreaError">請輸入數字</small>
+                   value="{{ post['ratioOfPublicArea'] if 'ratioOfPublicArea' in post else '' }}" required>
+            <div class="invalid-feedback">
+                請輸入數字
+            </div>
         </div>
     </div>
     <div class="col-md-4 mb-3">
         <div class="form-group">
             <label for="houseName">社區名稱</label>
-            <input type="text" class="form-control" id="houseName" name="houseName" required>
-            <small class="text-danger d-none" id="houseName">請輸入社區名稱</small>
+            <input type="text" class="form-control" id="houseName" name="houseName"
+                   value="{{ post['houseName'] if 'houseName' in post else '' }}" required>
+            <div class="invalid-feedback">
+                請輸入數字
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    $(document).ready(function () {
-        function warning_not_number(input) {
-            // 獲取坪數輸入框和錯誤信息元素
-            const inputElement = document.getElementById(input);
-            const inputErrorElement = document.getElementById(input + "Error");
+    function warningNotNumber(input) {
+        // 獲取坪數輸入框和錯誤信息元素
+        const inputElement = $('#' + input);
 
-            // 監聽坪數輸入框的輸入事件
-            inputElement.addEventListener('input', () => {
-                // 判斷輸入是否為數字
-                if (isNaN(inputElement.value)) {
-                    // 如果不是數字，顯示錯誤信息
-                    inputErrorElement.classList.remove('d-none');
-                    // 同時清除輸入框的內容
-                    inputElement.value = '';
-                } else {
-                    // 如果是數字，隱藏錯誤信息
-                    inputErrorElement.classList.add('d-none');
-                }
-            });
-        }
+        // 監聽坪數輸入框的輸入事件
+        inputElement.on('input', function () {
+            // 判斷輸入是否為數字
+            if (isNaN(inputElement.val())) {
+                // 如果不是數字，顯示錯誤信息
+                inputElement.addClass('is-invalid');
+                // 同時清除輸入框的內容
+                inputElement.val('');
+            } else {
+                // 如果是數字，隱藏錯誤信息
+                inputElement.removeClass('is-invalid');
+            }
+        });
+    }
 
-        warning_not_number("price")
-        warning_not_number("pricePerTwPing")
-        warning_not_number("ratioOfPublicArea")
-        warning_not_number("age")
-    });
+    warningNotNumber("price")
+    warningNotNumber("pricePerTwPing")
+    warningNotNumber("ratioOfPublicArea")
+    warningNotNumber("age")
 </script>

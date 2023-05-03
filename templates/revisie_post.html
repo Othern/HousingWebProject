@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,15 +23,33 @@
 
     <script src="../static/scripts/login/password_validation.js"></script>
 </head>
-<body>
 
-<main>
-    {% include './index/navbar.html' %}
-    {% include './add_post/topic.html' %}
-    {% include './add_post/add_post_form.html' %}
-</main>
+
+<body>
+{% include './index/navbar.html' %}
+{% include 'common/notifaction.html' %}
+<div id="sellinfo-content">
+    {% include './rentals_info/content.html' %}
+</div>
+{% if  revise_permission == 1 %}
+    <div id="revise-content">
+        {% include './revise_post/revise_post_form.html' %}
+    </div>
+{% endif %}
 </body>
+
+
 <footer>
     {% include './index/footer.html' %}
 </footer>
+
+
 </html>
+<script>
+    $(document).ready(function () {
+        const messages = "{{ get_flashed_messages() }}";
+
+        if (typeof messages != 'undefined' && messages !== '[]')
+            $("#notification").modal('show');
+    });
+</script>
