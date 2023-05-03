@@ -32,6 +32,13 @@
     {% include './rentals_info/content.html' %}
 </div>
 {% if  revise_permission == 1 %}
+    {% include './revise_post/confirm_delete.html' %}
+    <div class="container px-5">
+        <button class="w-100 btn btn-secondary btn-lg"
+                data-bs-toggle="modal" data-bs-target="#revise-post">
+            編輯貼文
+        </button>
+    </div>
     <div id="revise-content">
         {% include './revise_post/revise_post_form.html' %}
     </div>
@@ -52,7 +59,7 @@
         if (typeof messages != 'undefined' && messages !== '[]')
             $("#notification").modal('show');
     });
-    if('{{uId}}' != 0){
+    if ('{{uId}}' !== '0') {
         const obj = {};
         obj['pId'] = '{{pId}}';
         obj['uId'] = '{{uId}}';
@@ -62,11 +69,11 @@
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(obj),
             success: function () {
-                
+
             },
             error: function (error) {
                 console.log(error);
             }
-            });
+        });
     }
 </script>

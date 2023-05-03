@@ -716,10 +716,10 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/delete_post_sell')
+@app.route('/delete_post_sell', methods=['POST'])
 def delete_post_sell():
     db, cursor = link_sql()
-    p_id = request.args.get('pId')
+    p_id = request.form['delete-pId']
 
     sql = "DELETE house, post, image, housesell, payment " \
           "FROM house " \
@@ -735,10 +735,10 @@ def delete_post_sell():
     return redirect(url_for('sell'))
 
 
-@app.route('/delete_post_rent')
+@app.route('/delete_post_rent', methods=['POST'])
 def delete_post_rent():
     db, cursor = link_sql()
-    p_id = request.args.get('pId')
+    p_id = request.form['delete-pId']
 
     sql = "DELETE house, post, image, houserent, payment " \
           "FROM house JOIN post ON house.pId = post.pId " \

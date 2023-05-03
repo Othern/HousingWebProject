@@ -1,0 +1,27 @@
+<div class="modal fade" id="modal-delete-post" aria-hidden="true" aria-labelledby="modal-delete-post-label" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-body p-4 text-center">
+                <h5 class="mb-0" id="modal-delete-post-label"><strong>確定要刪除</strong></h5>
+            </div>
+            <div class="modal-footer flex-nowrap p-0">
+                <form method="POST" class="col-6 m-0 rounded-0 border-end text-center"
+                        {% if postType == 'sell' %}
+                      action="/delete_post_sell"
+                        {% else %}
+                      action="/delete_post_rent"
+                        {% endif %}>
+                    <input type="hidden" id="delete-pId" name="delete-pId" value="{{ pId }}">
+                    <button type="submit" class="btn btn-lg btn-link fs-6 text-decoration-none text-danger">
+                        是
+                    </button>
+                </form>
+
+                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+                    data-bs-dismiss="modal">
+                    否
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
