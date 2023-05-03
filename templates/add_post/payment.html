@@ -28,15 +28,50 @@
 
     <div class="col-md-3">
         <label for="month" class="form-label">刊登時間(月)</label>
-        <input type="number" class="form-control" id="month" name="month" required>
+        <input type="number" class="form-control" id="month" name="month" min="1" value="1" required>
         <div class="invalid-feedback">
             刊登時間需填寫
         </div>
     </div>
 </div>
+<hr class="my-4">
 
+<h4 class="mb-3">預計花費</h4>
+
+<p id="cost-result">你選擇了
+    <strong class="text-warning">黃金</strong>
+    方案，刊登時間為
+    <strong>1</strong>
+    個月，預計花費
+    <strong class="text-danger">300</strong> 元。
+</p>
 <script>
     $(document).ready(function () {
+        $('#class, #month').on('input', function () {
+            const selectedClass = $("#class option:selected");
+            const selectedMonth = $("#month").val();
+
+            const classVal = selectedClass.val();
+            const fee = classVal === '1' ? 300 :
+                classVal === '2' ? 400 :
+                    classVal === '3' ? 500 : 0;
+            const totalPrice = fee * selectedMonth;
+
+            const color = classVal === '1' ? 'warning' :
+                classVal === '2' ? 'secondary' :
+                    classVal === '3' ? 'primary' : 0;
+            $("#cost-result").html("你選擇了 <strong class='text-" +
+                color +
+                "'>" +
+                selectedClass.text() +
+                "</strong> 方案，刊登時間為 <strong>" +
+                selectedMonth +
+                "</strong> 個月，預計花費 <strong class='text-danger'>" +
+                totalPrice +
+                "</strong> 元。"
+            );
+        });
+
         function validateCreditCardNumber(input, valid) {
             const inputElement = $('#' + input);
             const valid_feed_back = $('#' + valid);
