@@ -13,6 +13,7 @@ app = Flask(__name__, template_folder='./templates')
 app.secret_key = '12345678'
 app.config['UPLOAD_POST_IMAGE_FOLDER'] = "static/images/post/"
 
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -146,12 +147,15 @@ def sell():
     selected_age = session.get('selected_age', ">=0")
     selected_my_post = session.get('selected_myPost', "All")
     u_id = session.get("uId", 0)
-
-    sql = f"SELECT * " \
-          f"FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
-          f"INNER JOIN `image` ON image.pId = post.pId) " \
-          f"INNER JOIN `housesell` ON house.hId = housesell.hId " \
-          f"WHERE `city` = '{selected_region}' AND type = '住宅'"
+        
+    sql = f"SELECT *FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) "\
+          f"INNER JOIN `image` ON image.pId = post.pId) "\
+          f"INNER JOIN `housesell` ON house.hId = housesell.hId "\
+          f"INNER JOIN  (SELECT post.pId,COUNT(browses.uId) as click FROM post LEFT OUTER JOIN `browses` ON browses.pId = post.pId" \
+          f" GROUP BY post.pId) AS click  ON post.pId = click.pId " \
+          f"WHERE `city` = '{selected_region}' AND type = '住宅' "\
+    
+          
 
     house_type_sql = "" if str(selected_house_type) == "All" else f" AND `houseType` = '{selected_house_type}'"
     pattern_sql = f" AND `bedRoom` {selected_pattern}"
@@ -167,10 +171,11 @@ def sell():
         my_post_sql = ""
 
     sql = sql + house_type_sql + pattern_sql + price_sql + tw_ping_sql + age_sql + my_post_sql
-
+    print(sql)
     db, cursor = link_sql()
     cursor.execute(sql)
     results = cursor.fetchall()
+    
 
     db.close()
 
@@ -304,7 +309,7 @@ def rentals_info():
     revise_permission = 1 if u_id == results["uId"] else 0
 
     db.close()
-
+    print(u_id, results["uId"])
     return render_template(
         'rentals_info.html',
         pId=request.args.get('pId'),
@@ -334,14 +339,16 @@ def upload_post():
     sql = f"SELECT `hId` from `house` ORDER BY `hId` DESC LIMIT 1"
     cursor.execute(sql)
     h_id = cursor.fetchone()["hId"] + 1
-
-    def insert_data(entity, attrs, int_attrs=None, float_attrs=None, bool_attrs=None):
+    now = dt.datetime.now()
+    def insert_data(entity, attrs, int_attrs=None, float_attrs=None, bool_attrs=None,now_attrs = None):
         if bool_attrs is None:
             bool_attrs = []
         if float_attrs is None:
             float_attrs = []
         if int_attrs is None:
             int_attrs = []
+        if now_attrs is None:
+            now_attrs = []
         result = []
         for attr in attrs:
             if attr == "pId":
@@ -356,15 +363,17 @@ def upload_post():
                 result.append(float(request.form.get(attr)))
             elif attr in bool_attrs:
                 result.append(1) if request.form.get(attr) else result.append(0)
+            elif attr in now_attrs:
+                result.append(f'{now}')
             else:
                 result.append(request.form.get(attr))
-
+        
         fetch_sql = "INSERT INTO " + entity + str(attrs).replace("'", "`") + "VALUES" + str(tuple(result))
         cursor.execute(fetch_sql)
         db.commit()
 
-    post = ('pId', 'uId', 'title', 'city', 'district', 'address', 'name', 'phone', 'description')
-    insert_data('`post`', post)
+    post = ('pId', 'uId', 'title', 'city', 'district', 'address', 'name', 'phone', 'description','reviseDateTime')
+    insert_data('`post`', post,now_attrs=['reviseDateTime'])
 
     house = ('hId', 'type', 'twPing', 'floor', 'lived', 'bedRoom', 'livingRoom', 'restRoom', 'balcony', 'pId')
     insert_data('`house`', house, ['bedRoom', 'livingRoom', 'restRoom', 'balcony'], float_attrs=['twPing'],
@@ -405,7 +414,7 @@ def upload_post():
 
     pay_class = int(request.form.get("class"))
     exp_date = request.form.get("expDate")
-    exp_year = int("20" + str(exp_date).split("/")[1])
+    exp_year = int("20"+str(exp_date).split("/")[1])
     exp_month = int(str(exp_date).split("/")[0])
     exp_date = dt.date(exp_year, exp_month, 1)
     if pay_class == 1:
@@ -445,8 +454,8 @@ def revise_post():
     sql = f"SELECT `hId` from `house` where `pId` = {p_id}"
     cursor.execute(sql)
     h_id = cursor.fetchone()["hId"]
-
-    def update_data(entity, attrs, int_attrs=None, float_attrs=None, bool_attrs=None, without_h_id=False):
+    now = dt.datetime.now()
+    def update_data(entity, attrs, int_attrs=None, float_attrs=None, bool_attrs=None,now_attrs = None, without_h_id=False):
 
         if bool_attrs is None:
             bool_attrs = []
@@ -454,14 +463,16 @@ def revise_post():
             float_attrs = []
         if int_attrs is None:
             int_attrs = []
+        if now_attrs is None:
+            now_attrs = []
         set_sql = " SET "
         for attr in attrs:
             value = request.form.get(attr)
             if attr in ["pId", "uId", "hId"]:
                 continue
             elif attr in bool_attrs:
-                if attr == "balcony":
-                    if int(value) > 0:
+                if attr== "balcony":
+                    if value >0:
                         set_sql = set_sql + f"`{attr}` = 1, "
                     else:
                         set_sql = set_sql + f"`{attr}` = 0, "
@@ -469,6 +480,8 @@ def revise_post():
                     set_sql = set_sql + f"`{attr}` = 1, "
                 else:
                     set_sql = set_sql + f"`{attr}` = 0, "
+            elif attr in now_attrs:
+                set_sql = set_sql + f"`{attr}` = '{now}', "
             elif not value:
                 continue
             elif attr in int_attrs:
@@ -476,19 +489,20 @@ def revise_post():
             elif attr in float_attrs:
                 set_sql = set_sql + f"`{attr}` = {float(value)}, "
             else:
+                
                 set_sql = set_sql + f"`{attr}` = '{value}', "
         if without_h_id:
             fetch_sql = "UPDATE " + entity + set_sql[:-2] + f" where `pId` = {p_id}"
         else:
             fetch_sql = "UPDATE " + entity + set_sql[:-2] + f" where `hId` = {h_id}"
-        try:
-            cursor.execute(fetch_sql)
-            db.commit()
-        except ConnectionError:
-            print(fetch_sql)
+        
+        cursor.execute(fetch_sql)
+        db.commit()
+        db.close()
 
-    post = ('pId', 'uId', 'title', 'city', 'district', 'address', 'name', 'phone', 'description')
-    update_data('`post`', post, without_h_id=True)
+            
+    post = ('pId', 'uId', 'title', 'city', 'district', 'address', 'name', 'phone', 'description','reviseDateTime')
+    update_data('`post`', post, without_h_id=True,now_attrs=['reviseDateTime'])
 
     house = ('hId', 'type', 'twPing', 'floor', 'lived', 'bedRoom', 'livingRoom', 'restRoom', 'balcony', 'pId')
     update_data('`house`', house, ['bedRoom', 'livingRoom', 'restRoom', 'balcony'], float_attrs=['twPing'],
@@ -594,8 +608,9 @@ def update_browses():
     cursor.execute(sql)
 
     last_visit = cursor.fetchone()['browseTime']
-
-    if last_visit is not None and (now - last_visit <= dt.timedelta(1) or p_id == post_author):
+    
+        
+    if last_visit != None and (now-last_visit <= dt.timedelta(1) or p_id == post_author):
         return "browses add deny"
 
     sql = f"INSERT INTO `browses`(`uId`,`pId`,`browseTime`) VALUES ({u_id},{p_id},'{now}')"
