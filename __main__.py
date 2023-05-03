@@ -466,38 +466,40 @@ def revise_post():
         if now_attrs is None:
             now_attrs = []
         set_sql = " SET "
-        try:
-            for attr in attrs:
-                value = request.form.get(attr)
-                if attr in ["pId", "uId", "hId"]:
-                    continue
-                elif attr in bool_attrs:
-                    if attr== "balcony":
-                        if value >0:
-                            set_sql = set_sql + f"`{attr}` = 1, "
-                        else:
-                            set_sql = set_sql + f"`{attr}` = 0, "
-                    elif value:
+        for attr in attrs:
+            value = request.form.get(attr)
+            if attr in ["pId", "uId", "hId"]:
+                continue
+            elif attr in bool_attrs:
+                if attr== "balcony":
+                    if value >0:
                         set_sql = set_sql + f"`{attr}` = 1, "
                     else:
                         set_sql = set_sql + f"`{attr}` = 0, "
-                elif attr in now_attrs:
-                    set_sql = set_sql + f"`{attr}` = {now}, "
-                elif not value:
-                    continue
-                elif attr in int_attrs:
-                    set_sql = set_sql + f"`{attr}` = {int(value)}, "
-                elif attr in float_attrs:
-                    set_sql = set_sql + f"`{attr}` = {float(value)}, "
+                elif value:
+                    set_sql = set_sql + f"`{attr}` = 1, "
                 else:
-                    set_sql = set_sql + f"`{attr}` = '{value}', "
-            if without_h_id:
-                fetch_sql = "UPDATE " + entity + set_sql[:-2] + f" where `pId` = {p_id}"
+                    set_sql = set_sql + f"`{attr}` = 0, "
+            elif attr in now_attrs:
+                set_sql = set_sql + f"`{attr}` = '{now}', "
+            elif not value:
+                continue
+            elif attr in int_attrs:
+                set_sql = set_sql + f"`{attr}` = {int(value)}, "
+            elif attr in float_attrs:
+                set_sql = set_sql + f"`{attr}` = {float(value)}, "
             else:
-                fetch_sql = "UPDATE " + entity + set_sql[:-2] + f" where `hId` = {h_id}"
-        except:
-            print(attr,value)
+                set_sql = set_sql + f"`{attr}` = '{value}', "
+        if without_h_id:
+            fetch_sql = "UPDATE " + entity + set_sql[:-2] + f" where `pId` = {p_id}"
+        else:
+            fetch_sql = "UPDATE " + entity + set_sql[:-2] + f" where `hId` = {h_id}"
         
+        cursor.execute(fetch_sql)
+        db.commit()
+        db.close()
+
+            
     post = ('pId', 'uId', 'title', 'city', 'district', 'address', 'name', 'phone', 'description','reviseDateTime')
     update_data('`post`', post, without_h_id=True,now_attrs=['reviseDateTime'])
 
