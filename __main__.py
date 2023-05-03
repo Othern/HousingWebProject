@@ -585,11 +585,13 @@ def update_browses():
     cursor.execute(sql)
     post_author = cursor.fetchone()["uId"] 
 
-    sql = f"SELECT * FROM `browses` WHERE `pId` = {pId} AND `uId` = {uId} limit 1"
+    sql = f"SELECT MAX(`browseTime`) AS `browseTime` FROM `browses` WHERE `pId` = {pId} AND `uId` = {uId} limit 1"
     cursor.execute(sql)
-    last_visit = cursor.fetchone()["browseTime"]
 
-    if pId == post_author or now-last_visit <= dt.timedelta(1):
+    last_visit = cursor.fetchone()['browseTime']
+    
+        
+    if last_visit != None and (now-last_visit <= dt.timedelta(1) or pId == post_author):
         return "browses add deny"
     
     sql = f"INSERT INTO `browses`(`uId`,`pId`,`browseTime`) VALUES ({uId},{pId},'{now}')"
