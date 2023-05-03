@@ -7,11 +7,16 @@
         <div class="form-group">
             <label class="form-label" for="type">選擇型態</label>
             <select class="form-select" id="type" name="type">
-                <option value="住宅">住宅</option>
+                <option value="住宅" {% if 'type' in post and post['type'] == '住宅' %}selected{% endif %}>住宅</option>
                 {% if postType == 'rent' %}
-                    <option value="獨立套房">獨立套房</option>
-                    <option value="分租套房">分租套房</option>
-                    <option value="雅房">雅房</option>
+                    <option value="獨立套房" {% if 'type' in post and post['type'] == '獨立套房' %}selected{% endif %}>
+                        獨立套房
+                    </option>
+                    <option value="分租套房" {% if 'type' in post and post['type'] == '分租套房' %}selected{% endif %}>
+                        分租套房
+                    </option>
+                    <option value="雅房" {% if 'type' in post and post['type'] == '雅房' %}selected{% endif %}>雅房
+                    </option>
                 {% endif %}
             </select>
         </div>
@@ -19,7 +24,8 @@
     <div class="col-md-3">
         <div class="form-group">
             <label class="form-label" for="twPing">輸入坪數</label>
-            <input type="text" class="form-control" id="twPing" name="twPing" min="0" required>
+            <input type="text" class="form-control" id="twPing" name="twPing" min="0"
+                   value="{{ post['twPing'] if 'twPing' in post else '' }}" required>
             <div class="invalid-feedback">
                 請輸入數字
             </div>
@@ -28,7 +34,8 @@
     <div class="col-md-3">
         <div class="form-group">
             <label class="form-label" for="floor">輸入樓層</label>
-            <input type="text" class="form-control" id="floor" name="floor" min="0" required>
+            <input type="text" class="form-control" id="floor" name="floor" min="0"
+                   value="{{ post['floor'] if 'floor' in post else '' }}" required>
             <div class="invalid-feedback">
                 請輸入數字
             </div>
@@ -40,31 +47,36 @@
     <div class="col-md-3 mb-3">
         <div class="input-group">
             <label for="bedRoom" class="input-group-text">房數：</label>
-            <input type="number" id="bedRoom" class="form-control" name="bedRoom" min="0" required>
+            <input type="number" id="bedRoom" class="form-control" name="bedRoom" min="0"
+                   value="{{ post['bedRoom'] if 'bedRoom' in post else '' }}" required>
         </div>
     </div>
     <div class="col-md-3 mb-3">
         <div class="input-group">
             <label for="livingRoom" class="input-group-text">廳數：</label>
-            <input type="number" id="livingRoom" class="form-control" name="livingRoom" min="0" required>
+            <input type="number" id="livingRoom" class="form-control" name="livingRoom" min="0"
+                   value="{{ post['livingRoom'] if 'livingRoom' in post else '' }}" required>
         </div>
     </div>
     <div class="col-md-3 mb-3">
         <div class="input-group">
             <label for="restRoom" class="input-group-text">衛浴：</label>
-            <input type="number" id="restRoom" class="form-control" name="restRoom" min="0" required>
+            <input type="number" id="restRoom" class="form-control" name="restRoom" min="0"
+                   value="{{ post['restRoom'] if 'restRoom' in post else '' }}" required>
         </div>
     </div>
     <div class="col-md-3 mb-3">
         <div class="input-group">
             <label for="balcony" class="input-group-text">陽台：</label>
-            <input type="number" id="balcony" class="form-control" name="balcony" min="0" required>
+            <input type="number" id="balcony" class="form-control" name="balcony" min="0"
+                   value="{{ post['balcony'] if 'balcony' in post else '' }}" required>
         </div>
     </div>
 </div>
 
 <div class="form-check">
-    <input class="form-check-input" type="checkbox" id="lived" name="lived">
+    <input class="form-check-input" type="checkbox" id="lived" name="lived"
+           {% if 'lived' in post and post['lived'] %}checked{% endif %}>
     <label class="form-check-label" for="lived">
         是否住過
     </label>

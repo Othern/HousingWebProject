@@ -289,7 +289,6 @@ def sell_info():
 @app.route('/rentals_info.html')
 def rentals_info():
     u_id = session.get("uId", 0)
-    selected_region = session.get('selected_region', '台北市')
     db, cursor = link_sql()
 
     sql = f"SELECT house.*, post.*, image.*, houserent.* " \

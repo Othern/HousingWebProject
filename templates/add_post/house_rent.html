@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="refrigerator" name="refrigerator">
+                    <input class="form-check-input" type="checkbox" id="refrigerator" name="refrigerator"
+                    {% if 'refrigerator' in post and post['refrigerator'] %}checked{% endif %}>
                     <label class="form-check-label" for="refrigerator">
                         冰箱
                     </label>
@@ -11,7 +12,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="washingMachine" name="washingMachine">
+                    <input class="form-check-input" type="checkbox" id="washingMachine" name="washingMachine"
+                    {% if 'washingMachine' in post and post['washingMachine'] %}checked{% endif %}>
                     <label class="form-check-label" for="washingMachine">
                         洗衣機
                     </label>
@@ -19,7 +21,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="TV" name="TV">
+                    <input class="form-check-input" type="checkbox" id="TV" name="TV"
+                    {% if 'TV' in post and post['TV'] %}checked{% endif %}>
                     <label class="form-check-label" for="TV">
                         電視
                     </label>
@@ -27,7 +30,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="airConditioner" name="airConditioner">
+                    <input class="form-check-input" type="checkbox" id="airConditioner" name="airConditioner"
+                    {% if 'airConditioner' in post and post['airConditioner'] %}checked{% endif %}>
                     <label class="form-check-label" for="airConditioner">
                         冷氣機
                     </label>
@@ -37,7 +41,8 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="waterHeater" name="waterHeater">
+                    <input class="form-check-input" type="checkbox" id="waterHeater" name="waterHeater"
+                    {% if 'waterHeater' in post and post['waterHeater'] %}checked{% endif %}>
                     <label class="form-check-label" for="waterHeater">
                         熱水器
                     </label>
@@ -45,7 +50,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="bed" name="bed">
+                    <input class="form-check-input" type="checkbox" id="bed" name="bed"
+                    {% if 'bed' in post and post['bed'] %}checked{% endif %}>
                     <label class="form-check-label" for="bed">
                         床
                     </label>
@@ -53,7 +59,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="closet" name="closet">
+                    <input class="form-check-input" type="checkbox" id="closet" name="closet"
+                    {% if 'closet' in post and post['closet'] %}checked{% endif %}>
                     <label class="form-check-label" for="closet">
                         衣櫃
                     </label>
@@ -61,7 +68,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="paidTVChannel" name="paidTVChannel">
+                    <input class="form-check-input" type="checkbox" id="paidTVChannel" name="paidTVChannel"
+                    {% if 'paidTVChannel' in post and post['paidTVChannel'] %}checked{% endif %}>
                     <label class="form-check-label" for="paidTVChannel">
                         第四台
                     </label>
@@ -71,7 +79,8 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="internet" name="internet">
+                    <input class="form-check-input" type="checkbox" id="internet" name="internet"
+                    {% if 'internet' in post and post['internet'] %}checked{% endif %}>
                     <label class="form-check-label" for="internet">
                         網路
                     </label>
@@ -79,7 +88,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gas" name="gas">
+                    <input class="form-check-input" type="checkbox" id="gas" name="gas"
+                    {% if 'gas' in post and post['gas'] %}checked{% endif %}>
                     <label class="form-check-label" for="gas">
                         天然氣
                     </label>
@@ -87,7 +97,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="sofa" name="sofa">
+                    <input class="form-check-input" type="checkbox" id="sofa" name="sofa"
+                    {% if 'sofa' in post and post['sofa'] %}checked{% endif %}>
                     <label class="form-check-label" for="sofa">
                         沙發
                     </label>
@@ -95,7 +106,8 @@
             </div>
             <div class="col-md-3">
                 <div class="deskChair">
-                    <input class="form-check-input" type="checkbox" id="deskChair" name="deskChair">
+                    <input class="form-check-input" type="checkbox" id="deskChair" name="deskChair"
+                    {% if 'deskChair' in post and post['deskChair'] %}checked{% endif %}>
                     <label class="form-check-label" for="deskChair">
                         桌椅
                     </label>
@@ -105,7 +117,8 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="rent-balcony" name="balcony">
+                    <input class="form-check-input" type="checkbox" id="rent-balcony" name="balcony"
+                    {% if 'rent-balcony' in post and post['rent-balcony'] %}checked{% endif %}>
                     <label class="form-check-label" for="rent-balcony">
                         陽台
                     </label>
@@ -113,7 +126,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="elevator" name="elevator">
+                    <input class="form-check-input" type="checkbox" id="elevator" name="elevator"
+                    {% if 'elevator' in post and post['elevator'] %}checked{% endif %}>
                     <label class="form-check-label" for="elevator">
                         電梯
                     </label>
@@ -121,7 +135,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="parkingSpace" name="parkingSpace">
+                    <input class="form-check-input" type="checkbox" id="parkingSpace" name="parkingSpace"
+                    {% if 'parkingSpace' in post and post['parkingSpace'] %}checked{% endif %}>
                     <label class="form-check-label" for="parkingSpace">
                         停車位
                     </label>
@@ -132,7 +147,8 @@
     <div class="col-md-3">
         <div class="form-group">
             <label class="form-label" for="price">租金(萬)</label>
-            <input class="form-control" type="text" id="price" name="price" min="0" required>
+            <input class="form-control" type="text" id="price" name="price" min="0"
+                   value="{{ post['price'] if 'price' in post else '' }}" required>
             <div class="invalid-feedback">
                 請輸入數字
             </div>

@@ -3,10 +3,22 @@
         <div class="form-group">
             <label for="houseType">選擇房屋型態</label>
             <select class="form-select" id="houseType" name="houseType">
-                <option value='電梯大樓'>電梯大樓</option>
-                <option value='公寓'>公寓</option>
-                <option value='透天厝'>透天厝</option>
-                <option value='別墅'>別墅</option>
+                <option value='電梯大樓'
+                        {% if 'houseType' in post and post['houseType'] == '電梯大樓' %}selected{% endif %}>
+                    電梯大樓
+                </option>
+                <option value='公寓'
+                        {% if 'houseType' in post and post['houseType'] == '公寓' %}selected{% endif %}>
+                    公寓
+                </option>
+                <option value='透天厝'
+                        {% if 'houseType' in post and post['houseType'] == '透天厝' %}selected{% endif %}>
+                    透天厝
+                </option>
+                <option value='別墅'
+                        {% if 'houseType' in post and post['houseType'] == '別墅' %}selected{% endif %}>
+                    別墅
+                </option>
             </select>
         </div>
     </div>
@@ -22,7 +34,8 @@
     <div class="col-md-4 mb-3">
         <div class="form-group">
             <label for="price">總價(萬)</label>
-            <input type="text" class="form-control" id="price" name="price" min="0" required>
+            <input type="text" class="form-control" id="price" name="price" min="0"
+                   value="{{ post['price'] if 'price' in post else '' }}" required>
             <div class="invalid-feedback">
                 請輸入數字
             </div>
@@ -31,7 +44,8 @@
     <div class="col-md-4 mb-3">
         <div class="form-group">
             <label for="age">屋齡(年)</label>
-            <input type="text" class="form-control" id="age" name="age" min="1" required>
+            <input type="text" class="form-control" id="age" name="age" min="1"
+                   value="{{ post['age'] if 'age' in post else '' }}" required>
             <div class="invalid-feedback">
                 請輸入數字
             </div>
@@ -41,7 +55,7 @@
         <div class="form-group">
             <label for="ratioOfPublicArea">公設比(%)</label>
             <input type="text" class="form-control" id="ratioOfPublicArea" name="ratioOfPublicArea" min="0"
-                   required>
+                   value="{{ post['ratioOfPublicArea'] if 'ratioOfPublicArea' in post else '' }}" required>
             <div class="invalid-feedback">
                 請輸入數字
             </div>
@@ -50,7 +64,8 @@
     <div class="col-md-4 mb-3">
         <div class="form-group">
             <label for="houseName">社區名稱</label>
-            <input type="text" class="form-control" id="houseName" name="houseName" required>
+            <input type="text" class="form-control" id="houseName" name="houseName"
+                   value="{{ post['houseName'] if 'houseName' in post else '' }}" required>
             <div class="invalid-feedback">
                 請輸入數字
             </div>
