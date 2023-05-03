@@ -322,6 +322,7 @@ def rentals_info():
 
 
 @app.route('/add_post.html')
+@login_required
 def add_post():
     post_type = request.args.get('postType')
 
@@ -331,6 +332,7 @@ def add_post():
 
 
 @app.route('/upload_post', methods=['POST', 'GET'])
+@login_required
 def upload_post():
     u_id = session.get('uId', 0)
     db, cursor = link_sql()
@@ -450,6 +452,7 @@ def upload_post():
 
 
 @app.route('/revise_post', methods=['POST', 'GET'])
+@login_required
 def revise_post():
     db, cursor = link_sql()
     p_id = int(request.form.get("pId"))
@@ -641,23 +644,14 @@ def login():
     db.close()
 
     if user is None:
-        session['manager'] = 0
         return 'invalid email'
 
     if user['password'] != password:
-        session['manager'] = 0
         return 'password error'
 
     # 如果驗證成功，使用 login_user 函數登入使用者
     login_user(User(user['uId'], user['email'], user['permission']))
-    if user['permission'] == 'manager':
-        session['manager'] = 1
-        print("manager value:", session['manager'])
-    else:
-        session['manager'] = 0
 
-    session['uId'] = user['uId']
-    session['login_status'] = 1
     flash('成功登入')
     return 'success'
 
@@ -690,28 +684,18 @@ def signup():
     user = User(user['uId'], user['email'], user['permission'])
     login_user(user)
 
-    if user.permission == 'manager':
-        session['manager'] = 1
-        print("manager value:", session['manager'])
-    else:
-        session['manager'] = 0
-
-    session['login_status'] = 1
-
     # 返回一個成功消息
     flash('用戶註冊成功')
     return 'success'
 
 
 # 登出的 API
+
 @app.route('/logout')
 @login_required
 def logout():
     # 使用 logout_user 函數登出使用者
     logout_user()
-    session['login_status'] = 0
-    session['manager'] = 0
-    session['uId'] = 0
     flash('成功登出')
     return redirect(url_for('index'))
 

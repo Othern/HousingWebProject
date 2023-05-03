@@ -12,35 +12,29 @@
                     <input type="hidden" name="method" value="login">
 
                     <label for="login-email" class="mb-3">電子信箱</label>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3 has-validation">
                         <input type="email" name="email" class="form-control shadow-none" id="login-email"
                                placeholder="name@example.com" required>
                         <span class="input-group-text">
                             <i class="bi bi-envelope"></i>
                         </span>
-                        <div class="invalid-feedback">
-                            <ul>
-                                <li class="requirements my-1">
-                                    <i class="bi bi-x-circle red-text"></i>
-                                    用戶或密碼錯誤
-                                </li>
-                            </ul>
+                        <div class="invalid-feedback d-flex align-items-center">
+                            <i class="bi bi-x-circle red-text me-2 mb-1"></i>
+                            用戶或密碼錯誤
                         </div>
                     </div>
                     <label for="login-password" class="mb-3">密碼</label>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3 has-validation">
                         <input type="password" name="password" class="check-password form-control shadow-none"
                                id="login-password" placeholder="Password" required>
                         <span class="input-group-text">
                             <i class="bi bi-eye-slash toggle-password" id="toggle-password"></i>
                         </span>
                         <div class="invalid-feedback">
-                            <ul>
-                                <li class="requirements my-1 leng big-letter num special-char">
-                                    <i class="bi bi-x-circle red-text"></i>
-                                    密碼格式似乎有錯
-                                </li>
-                            </ul>
+                            <div class="requirements my-1 leng big-letter num special-char d-flex align-items-center">
+                                <i class="bi bi-x-circle red-text me-2 mb-1"></i>
+                                密碼格式似乎有錯
+                            </div>
                         </div>
                     </div>
                     <button id="login-btn" class="w-100 my-2 btn btn-lg rounded-3 btn-secondary" type="submit">登入
@@ -70,12 +64,12 @@
                 url: "/login",
                 data: formData,
                 success: function (response) {
-                    if(response === 'success'){
+                    if (response === 'success') {
                         location.reload();
                         return;
                     }
 
-                    $("#check-email").addClass("is-invalid");
+                    $("#login-email").addClass("is-invalid");
                 },
                 error: function () {
                     // 登入失敗時顯示錯誤訊息

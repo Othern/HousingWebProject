@@ -52,7 +52,7 @@
             </a>
         </div>
     {% endfor %}
-    {% if session['login_status'] == 1 %}
+    {% if current_user.id %}
         <div style="text-align: center;">
             <h5 class="card-title mt-3">新增賣屋貼文</h5>
             <br>
