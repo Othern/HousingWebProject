@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2023-04-28 10:39:22
--- 伺服器版本： 10.4.22-MariaDB
--- PHP 版本： 8.1.2
+-- 產生時間： 2023 年 05 月 03 日 07:28
+-- 伺服器版本： 10.4.28-MariaDB
+-- PHP 版本： 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 資料庫: `housingwebsiteproject`
+-- 資料庫： `housingwebsiteproject`
 --
 
 -- --------------------------------------------------------
@@ -31,7 +31,7 @@ CREATE TABLE `availabletime` (
   `pId` int(11) NOT NULL,
   `startTime` datetime NOT NULL,
   `endTime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -43,7 +43,7 @@ CREATE TABLE `browses` (
   `uId` int(10) NOT NULL,
   `pId` int(10) NOT NULL,
   `browseTime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE `criticizes` (
   `uId` int(10) NOT NULL,
   `pId` int(10) NOT NULL,
   `comment` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -74,7 +74,7 @@ CREATE TABLE `house` (
   `restRoom` int(2) DEFAULT NULL,
   `balcony` int(2) DEFAULT NULL,
   `pId` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `house`
@@ -237,21 +237,21 @@ CREATE TABLE `houserent` (
   `waterHeater` tinyint(1) NOT NULL,
   `bed` tinyint(1) NOT NULL,
   `closet` tinyint(1) NOT NULL,
-  `paiedTVChannel` tinyint(1) NOT NULL,
+  `paidTVChannel` tinyint(1) NOT NULL,
   `internet` tinyint(1) NOT NULL,
   `gas` tinyint(1) NOT NULL,
   `sofa` tinyint(1) NOT NULL,
   `deskChair` tinyint(1) NOT NULL,
   `balcony` tinyint(1) NOT NULL,
-  `elevater` tinyint(1) NOT NULL,
+  `elevator` tinyint(1) NOT NULL,
   `parkingSpace` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `houserent`
 --
 
-INSERT INTO `houserent` (`hId`, `price`, `refrigerator`, `washingMachine`, `TV`, `airConditioner`, `waterHeater`, `bed`, `closet`, `paiedTVChannel`, `internet`, `gas`, `sofa`, `deskChair`, `balcony`, `elevater`, `parkingSpace`) VALUES
+INSERT INTO `houserent` (`hId`, `price`, `refrigerator`, `washingMachine`, `TV`, `airConditioner`, `waterHeater`, `bed`, `closet`, `paidTVChannel`, `internet`, `gas`, `sofa`, `deskChair`, `balcony`, `elevator`, `parkingSpace`) VALUES
 (47, 10000, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0),
 (48, 11000, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0),
 (49, 16000, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0),
@@ -360,7 +360,7 @@ CREATE TABLE `housesell` (
   `age` int(3) NOT NULL,
   `houseType` enum('華廈','電梯大樓','公寓','透天厝','別墅') NOT NULL,
   `houseName` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `housesell`
@@ -423,7 +423,7 @@ INSERT INTO `housesell` (`hId`, `ratioOfPublicArea`, `pricePerTwping`, `price`, 
 CREATE TABLE `image` (
   `pId` int(10) NOT NULL,
   `image` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `image`
@@ -584,7 +584,7 @@ CREATE TABLE `payment` (
   `expDate` date NOT NULL,
   `cardNumber` text NOT NULL,
   `cost` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `payment`
@@ -747,7 +747,7 @@ CREATE TABLE `post` (
   `name` varchar(10) NOT NULL,
   `phone` varchar(10) NOT NULL,
   `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `post`
@@ -907,7 +907,7 @@ CREATE TABLE `user` (
   `email` varchar(40) NOT NULL,
   `password` varchar(20) NOT NULL,
   `permission` enum('user','manager') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `user`
@@ -915,80 +915,80 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`uId`, `name`, `phone`, `email`, `password`, `permission`) VALUES
 (1, '鄔仁迪', '0914168771', 'whats2000mc@gmail.com', '<?php A1?>', 'manager'),
-(2, '翁武麟', '0902379316', 'willy910928@gmail.co', 'B1234567', 'manager'),
-(3, '黃冠誠', '0912290366', 'alan88.huang@gmail.c', 'C1234567', 'manager'),
+(2, '翁武麟', '0902379316', 'willy910928@gmail.com', 'B1234567', 'manager'),
+(3, '黃冠誠', '0912290366', 'alan88.huang@gmail.com', 'C1234567', 'manager'),
 (4, '王姵財', '0935957190', 'RHibDzsJC@gmail.com', 'BfPRSsVK', 'user'),
-(5, '陳惠君', '0927885537', 'NGCz4BS4he8F3A@gmail', '6xSbUDRd', 'user'),
+(5, '陳惠君', '0927885537', 'NGCz4BS4he8F3A@gmail.com', '6xSbUDRd', 'user'),
 (6, '張欣儀', '0927666654', 'GJJj6Sx9@gmail.com', '6FfQfCAw', 'user'),
-(7, '黃鎮宇', '0914070145', 'trmNZmOzH8X@gmail.co', '3WWUnuq7', 'user'),
+(7, '黃鎮宇', '0914070145', 'trmNZmOzH8X@gmail.com', '3WWUnuq7', 'user'),
 (8, '陳彥玫', '0918377045', 'Z2xm9Vu4H@gmail.com', 'P7k8zdkt', 'user'),
-(9, '彭育如', '0939244782', 'kw6GGDeR2FDQ3K@gmail', 'Dt4sKy4e', 'user'),
-(10, '祁可欣', '0919627374', 'Qcsx38AcvuOpPW@gmail', 'dX33YR4P', 'user'),
-(11, '陳成伯', '0934074347', 'HZh9vnUnpzZv@gmail.c', '48Qnaf4q', 'user'),
-(12, '黃文合', '0926513557', 'djjwjhy14LAPP@gmail.', 'q95wvkum', 'user'),
-(13, '陳柔宏', '0925610999', 'EaxyUYknp77uF2@gmail', 'S2UTKTtt', 'user'),
-(14, '林木芳', '0939137808', 'FxJY8kl96iCuP@gmail.', 'gYva3SAc', 'user'),
+(9, '彭育如', '0939244782', 'kw6GGDeR2FDQ3K@gmail.com', 'Dt4sKy4e', 'user'),
+(10, '祁可欣', '0919627374', 'Qcsx38AcvuOpPW@gmail.com', 'dX33YR4P', 'user'),
+(11, '陳成伯', '0934074347', 'HZh9vnUnpzZv@gmail.com', '48Qnaf4q', 'user'),
+(12, '黃文合', '0926513557', 'djjwjhy14LAPP@gmail.com', 'q95wvkum', 'user'),
+(13, '陳柔宏', '0925610999', 'EaxyUYknp77uF2@gmail.com', 'S2UTKTtt', 'user'),
+(14, '林木芳', '0939137808', 'FxJY8kl96iCuP@gmail.com', 'gYva3SAc', 'user'),
 (15, '梁美玉', '0920964792', 'ER3Uyybc69@gmail.com', '7fH7RWkM', 'user'),
 (16, '沈晉純', '0986967829', 'nwMGzmWiUR@gmail.com', 'xgB36U6w', 'user'),
 (17, '許世江', '0982566078', 't48HXbN9hb@gmail.com', 'aXWBS4QS', 'user'),
 (18, '姚賢恭', '0931115318', 'fBn4tQYaXD@gmail.com', 'haecHbTc', 'user'),
 (19, '鄭仲茜', '0986094046', 'CVU2y0p@gmail.com', 'EFUeke9k', 'user'),
-(20, '汪婷婷', '0987082334', 'c0qHUnp0t9f@gmail.co', '8kNqN8CR', 'user'),
-(21, '蔡淑花', '0920365094', 'L0eOHh2rcFw@gmail.co', 'W6ftCrqs', 'user'),
-(22, '施淑萍', '0971615586', 'KYJtmh0EjQ8@gmail.co', 'w3craaSf', 'user'),
+(20, '汪婷婷', '0987082334', 'c0qHUnp0t9f@gmail.com', '8kNqN8CR', 'user'),
+(21, '蔡淑花', '0920365094', 'L0eOHh2rcFw@gmail.com', 'W6ftCrqs', 'user'),
+(22, '施淑萍', '0971615586', 'KYJtmh0EjQ8@gmail.com', 'w3craaSf', 'user'),
 (23, '閔耀德', '0954698158', 'KBIXt94g1u@gmail.com', 'tWmXMu7c', 'user'),
-(24, '陳為和', '0987721141', 'IAzbrHNd5ZPMvS@gmail', 'uudSwWMH', 'user'),
+(24, '陳為和', '0987721141', 'IAzbrHNd5ZPMvS@gmail.com', 'uudSwWMH', 'user'),
 (25, '李宛蓉', '0953083735', 'a0gJ2CvgN@gmail.com', 'uDShAGZ5', 'user'),
 (26, '虞心怡', '0925282170', 'gpRlghGmV@gmail.com', 'eUDbMumn', 'user'),
-(27, '陳任輝', '0932966983', 'HMZUD6604wUr@gmail.c', 'QNUt3mut', 'user'),
-(28, '陳佳年', '0922805562', 'IBuWRJKvTup0vB@gmail', 'ZUB3a23T', 'user'),
+(27, '陳任輝', '0932966983', 'HMZUD6604wUr@gmail.com', 'QNUt3mut', 'user'),
+(28, '陳佳年', '0922805562', 'IBuWRJKvTup0vB@gmail.com', 'ZUB3a23T', 'user'),
 (29, '許詩婷', '0989807171', 'y9k4hwJad@gmail.com', 'VEXcgCH8', 'user'),
-(30, '王嘉惠', '0916224848', 'VgpMAPJOOP4Ie9@gmail', 'hGw8CTEv', 'user'),
-(31, '姚怡菁', '0952129253', 'HiNwQByBCEy09@gmail.', '4pveaTCy', 'user'),
+(30, '王嘉惠', '0916224848', 'VgpMAPJOOP4Ie9@gmail.com', 'hGw8CTEv', 'user'),
+(31, '姚怡菁', '0952129253', 'HiNwQByBCEy09@gmail.com', '4pveaTCy', 'user'),
 (32, '蕭雅茹', '0933585842', 'wFz6L9uF@gmail.com', 'N8x3uzp7', 'user'),
 (33, '郭家仁', '0913445596', 'P75Hhcq@gmail.com', 'M5pVrmy7', 'user'),
 (34, '洪志翔', '0972597345', 'alTRzLpf@gmail.com', 'WPvay3vK', 'user'),
 (35, '張奕君', '0939128448', 'ro0VMwK7@gmail.com', '6YKhaXQH', 'user'),
-(36, '王明臻', '0955536071', 'lCnrkvI9kGc@gmail.co', 'ARKNyz4w', 'user'),
-(37, '蔡佳玉', '0956438265', 'IX3i7xkGR5a@gmail.co', 'WDWacX5Y', 'user'),
+(36, '王明臻', '0955536071', 'lCnrkvI9kGc@gmail.com', 'ARKNyz4w', 'user'),
+(37, '蔡佳玉', '0956438265', 'IX3i7xkGR5a@gmail.com', 'WDWacX5Y', 'user'),
 (38, '郭俊毅', '0921968479', 'SsGZPoxS0Q@gmail.com', 'XNycMmrC', 'user'),
 (39, '蕭士哲', '0927913240', 'aZ08DAfIk@gmail.com', '8h5pdFnE', 'user'),
-(40, '沈幸丞', '0915090877', 'XERy2bknNvkK0@gmail.', 'ZC8HeMS5', 'user'),
-(41, '韓惠君', '0927630130', 'jKbeXjO9mvzAHn@gmail', 'rq6MG9kX', 'user'),
-(42, '車志豪', '0926578467', 'ROm0lYJPBjn@gmail.co', '2Sb9vCAc', 'user'),
-(43, '蔡信妏', '0919020735', 'tftuRGAVGb1@gmail.co', 'kwq6gC5R', 'user'),
-(44, '吳家齊', '0916488454', 'be0eXc2X0kTcO@gmail.', '63BzYk88', 'user'),
+(40, '沈幸丞', '0915090877', 'XERy2bknNvkK0@gmail.com', 'ZC8HeMS5', 'user'),
+(41, '韓惠君', '0927630130', 'jKbeXjO9mvzAHn@gmail.com', 'rq6MG9kX', 'user'),
+(42, '車志豪', '0926578467', 'ROm0lYJPBjn@gmail.com', '2Sb9vCAc', 'user'),
+(43, '蔡信妏', '0919020735', 'tftuRGAVGb1@gmail.com', 'kwq6gC5R', 'user'),
+(44, '吳家齊', '0916488454', 'be0eXc2X0kTcO@gmail.com', '63BzYk88', 'user'),
 (45, '謝婉婷', '0927573187', 'x1PXlmky2B@gmail.com', 'e93mNS2a', 'user'),
-(46, '汪明儒', '0989486246', 'a1AcYnfonpA@gmail.co', 'sVZ6EBPg', 'user'),
+(46, '汪明儒', '0989486246', 'a1AcYnfonpA@gmail.com', 'sVZ6EBPg', 'user'),
 (47, '溫淑惠', '0961447039', 'afelqPQ@gmail.com', 'm6wtt9XU', 'user'),
 (48, '黃瓊蘭', '0925645265', 'bSSNW43A3@gmail.com', 'Ww4pQhBS', 'user'),
 (49, '丁中維', '0934860145', 'UQmCNaBlX7@gmail.com', 'dwk8Mw2A', 'user'),
-(50, '陳嘉琪', '0924017631', 'EJUpBQqnfFpua@gmail.', 'hUCcGEmF', 'user'),
+(50, '陳嘉琪', '0924017631', 'EJUpBQqnfFpua@gmail.com', 'hUCcGEmF', 'user'),
 (51, '郭孟涵', '0922972173', 'Yg11X0Ud@gmail.com', 'r4vXSgbu', 'user'),
-(52, '張志吟', '0970172668', 'ncGJ6akdkrOT@gmail.c', 'uRGc2uqH', 'user'),
-(53, '左淑玲', '0954715814', 'c2Cbb3mP6DbriZ@gmail', 'eV77Yz6X', 'user'),
+(52, '張志吟', '0970172668', 'ncGJ6akdkrOT@gmail.com', 'uRGc2uqH', 'user'),
+(53, '左淑玲', '0954715814', 'c2Cbb3mP6DbriZ@gmail.com', 'eV77Yz6X', 'user'),
 (54, '王姿妤', '0921079461', 'Ie2VNlPOv@gmail.com', 'KHfnwK96', 'user'),
-(55, '黃漢福', '0915720972', 'IcbFulo2YVe@gmail.co', 'SPtT85fP', 'user'),
+(55, '黃漢福', '0915720972', 'IcbFulo2YVe@gmail.com', 'SPtT85fP', 'user'),
 (56, '王家榮', '0954206395', 'ikTE6cFmK@gmail.com', 'VreRe5xD', 'user'),
 (57, '周函治', '0912328820', 'Fz6HgvTOO@gmail.com', 'vBUxsMv5', 'user'),
 (58, '黃建志', '0919597831', 'bkf29RB4@gmail.com', 'uW3ruBBD', 'user'),
-(59, '王毓善', '0958310820', 'rmnrR97Noif6R@gmail.', '5Nn45qB6', 'user'),
-(60, '湛宜蓁', '0927984978', 'q0hErxGcNCyLCm@gmail', 'Q2tFwymz', 'user'),
-(61, '鄭淑南', '0926074597', 'VcOLaffgGZS@gmail.co', 'f37nDHzq', 'user'),
-(62, '邱幼幸', '0955911042', 'Ey4fBCTauTDwN1@gmail', 'PT6YaabZ', 'user'),
+(59, '王毓善', '0958310820', 'rmnrR97Noif6R@gmail.com', '5Nn45qB6', 'user'),
+(60, '湛宜蓁', '0927984978', 'q0hErxGcNCyLCm@gmail.com', 'Q2tFwymz', 'user'),
+(61, '鄭淑南', '0926074597', 'VcOLaffgGZS@gmail.com', 'f37nDHzq', 'user'),
+(62, '邱幼幸', '0955911042', 'Ey4fBCTauTDwN1@gmail.com', 'PT6YaabZ', 'user'),
 (63, '沈靜雯', '0934797041', 'ZgjSW7nu@gmail.com', 'q3ym8D5m', 'user'),
-(64, '孫依潔', '0958285928', 'gAEdU2plSsJi@gmail.c', 'EXKx2kdh', 'user'),
+(64, '孫依潔', '0958285928', 'gAEdU2plSsJi@gmail.com', 'EXKx2kdh', 'user'),
 (65, '曹佳琳', '0936496810', 'MrTgpGhOJH@gmail.com', 'eWtzysRn', 'user'),
 (66, '劉佐云', '0916450123', 'yXxpA895@gmail.com', 'P7kEsSNY', 'user'),
-(67, '鐘舜文', '0923011323', 'D2Y9FRn70Zk@gmail.co', 'uAeqth7c', 'user'),
+(67, '鐘舜文', '0923011323', 'D2Y9FRn70Zk@gmail.com', 'uAeqth7c', 'user'),
 (68, '陳思涵', '0938888758', 'kjNhYYK3zR@gmail.com', 'SUknK4PF', 'user'),
-(69, '胡有如', '0920501221', 'cbGIr8Mgf1SY@gmail.c', '6rMpAadF', 'user'),
-(70, '吳惠雯', '0939105640', 'N3TN60pa0wwes@gmail.', 'RAVcaCMx', 'user'),
-(71, '黃筱剛', '0929324538', 'A10xu83u0cgS@gmail.c', '7Mm4yDBs', 'user'),
+(69, '胡有如', '0920501221', 'cbGIr8Mgf1SY@gmail.com', '6rMpAadF', 'user'),
+(70, '吳惠雯', '0939105640', 'N3TN60pa0wwes@gmail.com', 'RAVcaCMx', 'user'),
+(71, '黃筱剛', '0929324538', 'A10xu83u0cgS@gmail.com', '7Mm4yDBs', 'user'),
 (72, '林惠婷', '0918977596', 'Ma4aKkXCY@gmail.com', 'vuhTxaWu', 'user'),
-(73, '張國亨', '0923776024', 'aDVY0Jgmv48z08@gmail', 'qU7qGMCD', 'user'),
-(74, '郭雅斌', '0987319788', 'fO0gPCCYQ2wo@gmail.c', 'MDKKvHav', 'user'),
-(75, '鄭雅菱', '0937945058', 'GsuMP9jLObXE1@gmail.', 'z5w7dYTu', 'user'),
+(73, '張國亨', '0923776024', 'aDVY0Jgmv48z08@gmail.com', 'qU7qGMCD', 'user'),
+(74, '郭雅斌', '0987319788', 'fO0gPCCYQ2wo@gmail.com', 'MDKKvHav', 'user'),
+(75, '鄭雅菱', '0937945058', 'GsuMP9jLObXE1@gmail.com', 'z5w7dYTu', 'user'),
 (76, '楊佩音', '0936367195', 'Gc01SG5dX@gmail.com', 'ACuzXU4H', 'user'),
 (77, '李翔祥', '0911906372', 'RBDKDyPnbl@gmail.com', '7uZD2nBR', 'user'),
 (78, '吳炳帆', '0931767145', 'txgMpWa7c@gmail.com', 'WbCgeqmM', 'user'),
@@ -996,24 +996,24 @@ INSERT INTO `user` (`uId`, `name`, `phone`, `email`, `password`, `permission`) V
 (80, '王雅新', '0963877300', 'u1uuRj7uf7@gmail.com', 'fUu7gSVC', 'user'),
 (81, '林歡禎', '0933026798', 'mM1izA6rbp@gmail.com', 'dP8M6kX6', 'user'),
 (82, '王詩涵', '0952928522', 'vurl3Ip85Y@gmail.com', 'RKAAgAvF', 'user'),
-(83, '陳祖蓉', '0920674742', 'f7NGmPWfa67@gmail.co', 'ee6GGpfS', 'user'),
-(84, '李佩君', '0972111987', 'wybF60HopIF@gmail.co', 'ZSxdR5VX', 'user'),
-(85, '梁學茂', '0972737990', 'nDPpjw0dcxI@gmail.co', 'BwQwhrXm', 'user'),
+(83, '陳祖蓉', '0920674742', 'f7NGmPWfa67@gmail.com', 'ee6GGpfS', 'user'),
+(84, '李佩君', '0972111987', 'wybF60HopIF@gmail.com', 'ZSxdR5VX', 'user'),
+(85, '梁學茂', '0972737990', 'nDPpjw0dcxI@gmail.com', 'BwQwhrXm', 'user'),
 (86, '連雅雯', '0914908682', 't9Q6JZw3@gmail.com', 'cdsynm7w', 'user'),
 (87, '夏漢紫', '0972546949', 'obvm8cdpN@gmail.com', 'UVG2rdyK', 'user'),
 (88, '陳盈平', '0929607693', 'xzjK7Ets7@gmail.com', 'xvHWqXdF', 'user'),
-(89, '邱欣儀', '0954956691', 'fMu2m7MG3iXsz@gmail.', 'fT9q7gC6', 'user'),
+(89, '邱欣儀', '0954956691', 'fMu2m7MG3iXsz@gmail.com', 'fT9q7gC6', 'user'),
 (90, '蕭若純', '0939469758', 'lhGmF8g@gmail.com', 'Vm7XHEbq', 'user'),
 (91, '陳韋諭', '0956430430', 'gbhbDmlt3k@gmail.com', 'G5x5xEwh', 'user'),
-(92, '李子依', '0925144002', 'toQeyLRny9xY@gmail.c', 'Xb4kzD6a', 'user'),
+(92, '李子依', '0925144002', 'toQeyLRny9xY@gmail.com', 'Xb4kzD6a', 'user'),
 (93, '康麗玲', '0956292289', 'kz6S5MM0M@gmail.com', 'SCbd9zPA', 'user'),
-(94, '黃子倩', '0972901437', 'AzBwflbPZew@gmail.co', 'FQ6QKqYp', 'user'),
-(95, '楊若福', '0928125758', 'UaWlAH0IbDms9M@gmail', 'VsvpUCwx', 'user'),
+(94, '黃子倩', '0972901437', 'AzBwflbPZew@gmail.com', 'FQ6QKqYp', 'user'),
+(95, '楊若福', '0928125758', 'UaWlAH0IbDms9M@gmail.com', 'VsvpUCwx', 'user'),
 (96, '張凱俊', '0954829398', 'C3htdqXoG@gmail.com', 'AkHHMevQ', 'user'),
 (97, '程育維', '0932904274', 'C0evIaS9@gmail.com', 'SkeSMZzT', 'user'),
 (98, '孫啟亞', '0922284501', 'VZkoyAYW@gmail.com', '2k4bk2DY', 'user'),
 (99, '夏家綺', '0988357075', 'YxssHHQ8tB@gmail.com', '7rUB2yQn', 'user'),
-(100, '林怡芳', '0952908829', 'MfF3ftei3RGo@gmail.c', 'dkMxWZkf', 'user');
+(100, '林怡芳', '0952908829', 'MfF3ftei3RGo@gmail.com', 'dkMxWZkf', 'user');
 
 --
 -- 已傾印資料表的索引
@@ -1029,7 +1029,7 @@ ALTER TABLE `availabletime`
 -- 資料表索引 `browses`
 --
 ALTER TABLE `browses`
-  ADD PRIMARY KEY (`uId`,`pId`);
+  ADD PRIMARY KEY (`uId`,`pId`,`browseTime`);
 
 --
 -- 資料表索引 `criticizes`
@@ -1075,7 +1075,7 @@ ALTER TABLE `house`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user`
 --
 ALTER TABLE `user`
-  MODIFY `uId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `uId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
