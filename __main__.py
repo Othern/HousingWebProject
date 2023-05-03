@@ -204,7 +204,11 @@ def rentals():
           f"FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
           f"INNER JOIN `image` ON image.pId = post.pId) " \
           f"INNER JOIN `houserent` ON house.hId = houserent.hId " \
-          f"WHERE `city` = '{selected_region}' "
+          f"INNER JOIN  (SELECT post.pId,COUNT(browses.uId) as click " \
+          f"FROM post " \
+          f"LEFT OUTER JOIN browses ON browses.pId = post.pId" \
+          f" GROUP BY post.pId) AS click  ON post.pId = click.pId " \
+          f"WHERE `city` = '{selected_region}'"
 
     type_sql = "" if str(selected_type) == "All" else f" AND `type` = '{selected_type}'"
     pattern_sql = f" AND `bedRoom` {selected_pattern}"
@@ -451,11 +455,14 @@ def revise_post():
     p_id = int(request.form.get("pId"))
     sql = f"SELECT `hId` from `house` where `pId` = {p_id}"
     cursor.execute(sql)
+    db.close()
+
     h_id = cursor.fetchone()["hId"]
     now = dt.datetime.now()
 
     def update_data(entity, attrs, int_attrs=None, float_attrs=None, bool_attrs=None, now_attrs=None,
                     without_h_id=False):
+        db_func, cursor_func = link_sql()
 
         if bool_attrs is None:
             bool_attrs = []
@@ -496,9 +503,10 @@ def revise_post():
         else:
             fetch_sql = "UPDATE " + entity + set_sql[:-2] + f" where `hId` = {h_id}"
 
-        cursor.execute(fetch_sql)
-        db.commit()
-        db.close()
+        print(fetch_sql)
+        cursor_func.execute(fetch_sql)
+        db_func.commit()
+        db_func.close()
 
     post = ('pId', 'uId', 'title', 'city', 'district', 'address', 'name', 'phone', 'description', 'reviseDateTime')
     update_data('`post`', post, without_h_id=True, now_attrs=['reviseDateTime'])

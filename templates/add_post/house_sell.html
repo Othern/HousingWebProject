@@ -24,8 +24,9 @@
     </div>
     <div class="col-md-4 mb-3">
         <div class="form-group">
-            <label for="pricePerTwPing">每坪價格(萬)</label>
-            <input type="text" class="form-control" id="pricePerTwPing" name="pricePerTwPing" min="0" required>
+            <label for="pricePerTwping">每坪價格(萬)</label>
+            <input type="text" class="form-control" id="pricePerTwping" name="pricePerTwPing" min="0"
+                   value="{{ post['pricePerTwping'] if 'pricePerTwping' in post else '' }}" required>
             <div class="invalid-feedback">
                 請輸入數字
             </div>
