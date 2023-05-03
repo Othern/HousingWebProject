@@ -361,7 +361,7 @@ def upload_post():
                 result.append(1) if request.form.get(attr) else result.append(0)
             else:
                 result.append(request.form.get(attr))
-
+        
         fetch_sql = "INSERT INTO " + entity + str(attrs).replace("'", "`") + "VALUES" + str(tuple(result))
         cursor.execute(fetch_sql)
         db.commit()
@@ -384,11 +384,11 @@ def upload_post():
     elif post_type == "rent":
         house_rent = ("hId", "price", "refrigerator", "washingMachine", "TV", "airConditioner",
                       "waterHeater", "bed", "closet", "paidTVChannel", "internet",
-                      "gas", "sofa", "deskChair", "rent-balcony", "elevator", "parkingSpace")
+                      "gas", "sofa", "deskChair", "balcony", "elevator", "parkingSpace")
 
         house_rent_bool_attrs = ["refrigerator", "washingMachine", "TV", "airConditioner",
                                  "waterHeater", "bed", "closet", "paidTVChannel", "internet",
-                                 "gas", "sofa", "deskChair", "rent-balcony", "elevator", "parkingSpace"]
+                                 "gas", "sofa", "deskChair", "balcony", "elevator", "parkingSpace"]
         insert_data('`houseRent`', house_rent, int_attrs=["price"], bool_attrs=house_rent_bool_attrs)
 
     image = request.files["image"]
@@ -408,7 +408,7 @@ def upload_post():
 
     pay_class = int(request.form.get("class"))
     exp_date = request.form.get("expDate")
-    exp_year = int(str(exp_date).split("/")[1])
+    exp_year = int("20"+str(exp_date).split("/")[1])
     exp_month = int(str(exp_date).split("/")[0])
     exp_date = dt.date(exp_year, exp_month, 1)
     if pay_class == 1:
@@ -420,8 +420,10 @@ def upload_post():
     card_number = request.form.get("cardNumber")
 
     payment = str(('pId', 'payDate', 'endDate', 'class', 'expDate', 'cardNumber', 'cost')).replace("'", "`")
-    sql = f"INSERT INTO `Payment`({payment})" \
-          f"VALUES ({p_id},'{pay_date}','{end_date}','{pay_class}','{exp_date}','{card_number}',{cost})"
+
+    sql = f"INSERT INTO `Payment`{payment}" \
+          f"VALUES ({p_id},'{pay_date}','{end_date}',{pay_class},'{exp_date}','{card_number}',{cost})"
+    print(sql)
     cursor.execute(sql)
     db.commit()
     cursor.close()
@@ -461,7 +463,12 @@ def revise_post():
             if attr in ["pId", "uId", "hId"]:
                 continue
             elif attr in bool_attrs:
-                if value:
+                if attr== "balcony":
+                    if value >0:
+                        set_sql = set_sql + f"`{attr}` = 1, "
+                    else:
+                        set_sql = set_sql + f"`{attr}` = 0, "
+                elif value:
                     set_sql = set_sql + f"`{attr}` = 1, "
                 else:
                     set_sql = set_sql + f"`{attr}` = 0, "
