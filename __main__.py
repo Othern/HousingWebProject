@@ -304,7 +304,7 @@ def rentals_info():
     revise_permission = 1 if u_id == results["uId"] else 0
 
     db.close()
-    print(u_id, results["uId"])
+
     return render_template(
         'rentals_info.html',
         pId=request.args.get('pId'),
