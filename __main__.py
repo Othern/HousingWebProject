@@ -489,6 +489,7 @@ def revise_post():
             elif attr in float_attrs:
                 set_sql = set_sql + f"`{attr}` = {float(value)}, "
             else:
+                
                 set_sql = set_sql + f"`{attr}` = '{value}', "
         if without_h_id:
             fetch_sql = "UPDATE " + entity + set_sql[:-2] + f" where `pId` = {p_id}"
