@@ -1,34 +1,96 @@
 <section class="container py-5">
     {% if post %}
-        <h5 class="title">{{ post['title'] }}</h5>
+        <h5 class="title fw-bold">{{ post['title'] }}</h5>
         <div class="row align-items-stretch">
-            <div class="col-md-4 ">
+            <div class="col-lg-6">
                 <img src="{{ post['image'] }}" class="img-fluid " alt="圖片無法顯示">
             </div>
-            <div class="col-md-8">
-                <div class="card h-100 py-1">
-                    <div class="card-body">
-                        <span style="font-weight: bold; color: red; font-size: 40px">{{ post['price'] }}</span>
-                        <span>萬元</span>
-                        <div class="text-muted">(單價:{{ post['pricePerTwping'] }}/坪)</div>
+            <div class="col-lg-6 px-5">
+                <div class="h-100 py-1">
+                    <div class="row border-bottom border-1">
+                        <div class="col-xl-6 col-12">
+                            <span style="font-weight: bold; color: red; font-size: 40px">{{ post['price'] }}</span>
+                            <span>萬元</span>
+                        </div>
+                        <div class="col-xl-6 col-12">
+                            <div class="text-muted d-flex align-items-center">單價
+                                <i class="bi bi-question-circle mx-2 mb-1" data-bs-toggle="tooltip"
+                                   data-bs-placement="top"
+                                   data-bs-title="
+                                   中古屋單價由 WNW 根據刊登者發佈的房源數據計算得出，
+                                        單價 = 售金 / 權狀坪數
+                                   備註：以上售金與權狀坪數，皆扣除車位數據"></i> :
+                                {{ post['pricePerTwping'] }}萬/坪
+                            </div>
+                            <div class="text-muted d-flex align-items-center">
+                                {% set loanAmount = post['price'] * (1 - 0.2) * 10000 %}
+                                {% set monthlyInterestRate = 2 / 1200 %}
+                                {% set monthlyPayment = (loanAmount * monthlyInterestRate * ((1 + monthlyInterestRate) ** 360)) / (((1 + monthlyInterestRate) ** 360) - 1) %}
+                                {% set referenceMonthlyPayment = monthlyPayment * 0.8 %}
 
-                        <p class="card-text mt-2 "><span
-                                class="text-muted">地址:</span>{{ post['city'] }}{{ post['district'] }}{{ post['address'] }}
-                        </p>
-                        <p class="card-text  "><span class="text-muted">房屋類型:</span>{{ post['houseType'] }}</p>
-                        <p class="card-text  "><span class="text-muted">屋齡:</span>{{ post['age'] }}年</p>
-                        <p class="card-text  "><span
-                                class="text-muted">格局:</span>{{ post['bedRoom'] }}房{{ post['livingRoom'] }}廳{{ post['restRoom'] }}衛{{ post['balcony'] }}陽台
-                        </p>
-                        <p class="card-text"><span class="text-muted">樓層:</span>{{ post['floor'] }}樓</p>
-                        <p class="card-text"><span class="text-muted">坪數:</span>{{ post['twPing'] }}</p>
-                        <p class="card-text"><span class="text-muted">公設比:</span>{{ post['ratioOfPublicArea'] }}</p>
-                        <p class="card-text"><span class="text-muted">負責人:</span>{{ post['name'] }}
-                            - {{ post['phone'] }}</p>
-                        <p class="card-text">
-                        <p class="text-muted">介紹:</p>
-                        <p>{{ post['description'] }}</p>
+                                參考月付
+                                <i class="bi bi-question-circle mx-2 mb-1" data-bs-toggle="tooltip"
+                                   data-bs-placement="top"
+                                   data-bs-title="這是以 30 年首付 20%，以 2% 複利計算的"></i> :
+                                月付{{ '%.0f' % referenceMonthlyPayment }}元
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="row border-bottom border-1 p-2">
+                        <div class="col-6 mb-2">
+                            <div class="row text-muted">格局</div>
+                            <div class="row">
+                                {{ post['bedRoom'] }}房
+                                {{ post['livingRoom'] }}廳
+                                {{ post['restRoom'] }}衛
+                                {{ post['balcony'] }}陽台
+                            </div>
+                        </div>
+                        <div class="col-3 mb-2">
+                            <div class="row text-muted">屋齡</div>
+                            <div class="row">
+                                {{ post['age'] }}年
+                            </div>
+                        </div>
+                        <div class="col-3 mb-2">
+                            <div class="row text-muted">權狀坪數</div>
+                            <div class="row">
+                                {{ post['twPing'] }}坪
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-2">
+                        <div class="col-md-4 col-6 text-muted">樓層</div>
+                        <div class="col-md-8 col-6">
+                            {{ post['floor'] }}{% if post['floor'].isdigit() %}F{% endif %}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-6 text-muted">公設比</div>
+                        <div class="col-md-8 col-6">{{ post['ratioOfPublicArea'] }}%</div>
+                    </div>
+
+                    <div class="row border-bottom border-1 pb-2">
+                        <div class="col-md-4 col-6 text-muted">地址</div>
+                        <div class="col-md-8 col-6">{{ post['city'] }}{{ post['district'] }}{{ post['address'] }}</div>
+                    </div>
+
+                    <div class="row py-2">
+                        <div class="col-md-4 col-6 text-muted">負責人</div>
+                        <div class="col-md-8 col-6">{{ post['name'] }}</div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button class="btn btn-warning fw-bold" type="button">{{ post['phone'] }}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="container my-5 p-5">
+                <div class="row">
+                    <div class="col-2 text-muted">房屋介紹:</div>
+                    <div class="col-10">{{ post['description'] }}</div>
                 </div>
             </div>
         </div>
@@ -43,3 +105,9 @@
         </div>
     {% endif %}
 </section>
+
+<script>
+    $(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+</script>
