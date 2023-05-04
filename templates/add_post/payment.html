@@ -19,8 +19,8 @@
     </div>
 
     <div class="col-md-3">
-        <label for="expDate" class="form-label">輸入到期日：(mm/yy)</label>
-        <input type="text" class="form-control" id="expDate" name="expDate" pattern="^\d\d/\d\d$" required>
+        <label for="expDate" class="form-label">輸入到期日：</label>
+        <input type="text" class="form-control" id="expDate" name="expDate" pattern="^\d\d/\d\d$" placeholder="mm/yy" required>
         <div class="invalid-feedback">
             到期日是有效且正確格式填寫
         </div>
@@ -36,7 +36,14 @@
 </div>
 <hr class="my-4">
 
-<h4 class="mb-3">預計花費</h4>
+<h4 class="mb-3 d-flex align-items-center">預計花費
+    <a class="mx-2 mb-1 text-muted fw-lighter" href="/pricing">
+        <i class="bi bi-question-circle" data-bs-toggle="tooltip"
+           data-bs-placement="top"
+           data-bs-title="點我了解更多">
+        </i>
+    </a>
+</h4>
 
 <p id="cost-result">你選擇了
     <strong class="text-warning">黃金</strong>
@@ -125,6 +132,10 @@
                 }
             });
         }
+
+        $(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip()
+        })
 
         validateCreditCardNumber('cardNumber', 'cardNumber-valid-feedback');
         validateExpDate('expDate');
