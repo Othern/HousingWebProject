@@ -52,7 +52,7 @@
             </a>
         </div>
     {% endfor %}
-    {% if current_user.id %}
+    {% if current_user.is_authenticated %}
         <div style="text-align: center;">
             <a href="../add_post.html?postType=sell">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"

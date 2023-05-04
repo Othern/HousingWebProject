@@ -46,6 +46,7 @@ def load_user(user_id):
 
 
 @app.route('/')
+@app.route('/home')
 def index():
     selected_region = session.get('selected_region', '台北市')
     db, cursor = link_sql()
