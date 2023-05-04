@@ -4,7 +4,7 @@ import os
 import pandas as pd
 from PIL import Image
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from flask_login import logout_user, LoginManager, login_user, login_required, UserMixin
+from flask_login import logout_user, LoginManager, login_user, login_required, UserMixin, current_user
 from werkzeug.utils import secure_filename
 
 from database import link_sql, check_user_exist
@@ -26,6 +26,9 @@ class User(UserMixin):
 
     def __repr__(self):
         return f'<User {self.email}>'
+
+    def get_id(self):
+        return self.id
 
 
 # 使用正則表達式找出字串中的所有時間
@@ -180,7 +183,7 @@ def sell():
     selected_tw_ping = session.get('selected_twPing', ">=0")
     selected_age = session.get('selected_age', ">=0")
     selected_my_post = session.get('selected_myPost', "All")
-    u_id = session.get("uId", 0)
+    u_id = current_user.get_id()
 
     sql = f"SELECT *FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
           f"INNER JOIN `image` ON image.pId = post.pId) " \
@@ -221,7 +224,7 @@ def rentals():
     selected_price = session.get('selected_price', ">=0")
     selected_tw_ping = session.get('selected_twPing', ">=0")
     selected_my_post = session.get('selected_myPost', "All")
-    u_id = session.get("uId", 0)
+    u_id = current_user.get_id()
 
     if selected_my_post == "1":
         my_post_sql = f" AND `uId` = {u_id}"
@@ -257,7 +260,7 @@ def rentals():
 
 @app.route('/my_post.html')
 def my_post():
-    selected_u_id = session.get("uId", 0)
+    selected_u_id = current_user.get_id()
     rent_sql = f"SELECT * " \
                f"FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
                f"INNER JOIN `image` ON image.pId = post.pId) " \
@@ -289,7 +292,7 @@ def my_post():
 @app.route('/sell_info.html')
 def sell_info():
     p_id = request.args.get('pId')
-    u_id = session.get("uId", 0)
+    u_id = current_user.get_id()
     db, cursor = link_sql()
 
     sql = f"SELECT house.*, post.*, image.*, housesell.* " \
@@ -302,6 +305,8 @@ def sell_info():
     cursor.execute(sql)
     results = cursor.fetchone()
     db.close()
+
+    print(results)
 
     if u_id == results["uId"]:
         revise_permission = 1
@@ -320,7 +325,7 @@ def sell_info():
 
 @app.route('/rentals_info.html')
 def rentals_info():
-    u_id = session.get("uId", 0)
+    u_id = current_user.get_id()
     db, cursor = link_sql()
 
     sql = f"SELECT house.*, post.*, image.*, houserent.* " \
@@ -359,7 +364,7 @@ def add_post():
 @app.route('/upload_post', methods=['POST', 'GET'])
 @login_required
 def upload_post():
-    u_id = session.get('uId', 0)
+    u_id = current_user.get_id()
     db, cursor = link_sql()
     sql = f"SELECT `pId` from `post` ORDER BY `pId` DESC LIMIT 1"
     cursor.execute(sql)
