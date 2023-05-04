@@ -9,7 +9,7 @@
                             {% for num in range(i, i + 4) %}
                                 {% if num < recommend_post|length %}
                                     <div class="col">
-                                        {% if  recommend_post[num]['pId'] <47 %}
+                                        {% if  recommend_post[num]['pId'] in sell_post_list  %}
                                             <a href="../sell_info.html?pId={{ recommend_post[num]['pId'] }}"
                                                class="card text-decoration-none">
                                         {% else %}

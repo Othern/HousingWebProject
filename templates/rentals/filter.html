@@ -110,7 +110,30 @@
         </div>
     </div>
 </div>
-
+<<div class="d-flex justify-content-end">
+    <div class="mx-2">
+    <input type="checkbox" id="sort-checkbox" name="priceOrder">
+    <label id="sort" for="sort-checkbox">
+        <i class="fas fa-arrow-down btn btn-outline-secondary  ">金額<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+          </svg></i>
+        <i class="fas fa-arrow-up btn btn-outline-secondary">金額<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+          </svg></i>
+    </label>
+  </div>
+    <div class="mx-2">
+    <input type="checkbox" id="sort-checkbox-2" name="twPingOrder">
+    <label id="sort" for="sort-checkbox-2">
+        <i class="fas fa-arrow-down btn btn-outline-secondary ">坪數<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+          </svg></i>
+        <i class="fas fa-arrow-up  btn btn-outline-secondary">坪數<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+          </svg></i>
+    </label>
+  </div>
+</div>
 <script>
     function filter(filter_name, defaults) {
         const filterOptions = document.querySelectorAll('input[name="' + filter_name + '"]');
@@ -154,8 +177,68 @@
     filter("price", ">=0")
     filter("twPing", ">=0")
     filter("myPost", "All")
-</script>
 
+    function order(order_name,name, defaults) {
+        const orderOption = document.querySelector('input[name="' + order_name + '"]');
+        orderOption.checked = localStorage.getItem(orderOption.id) === "true";
+        orderOption.addEventListener("change", (event) => {
+            let obj = {};
+            if (event.target.checked) {
+                localStorage.setItem(event.target.id, 'true');
+
+                obj[order_name] = " ORDER BY "+ name.toUpperCase() +" ASC";
+            } else {
+                localStorage.setItem(event.target.id, 'false');
+                obj[order_name] = defaults;
+            }
+            console.log(obj['priceOrder'])
+            $.ajax({
+                        type: 'POST',
+                        url: '/update/' + order_name,
+                        contentType: 'application/json;charset=UTF-8',
+                        data: JSON.stringify(obj),
+                        success: function () {
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+        });
+    }
+    order("priceOrder","price"," ORDER BY PRICE DESC")
+    order("twPingOrder","twPing"," ORDER BY PRICE DESC")
+
+</script>
+<style>
+    label i.fa-arrow-up{
+        display: none;
+    }
+    input:checked + label i.fa-arrow-down {
+        display: none;
+    }
+    input:checked + label i.fa-arrow-up {
+        display: inline-block;
+    }
+    #sort {
+        cursor: pointer;
+        background-color: #ffffff;
+        border-radius: 4px;
+        padding: 8px;
+        display: inline-block;
+        margin: 4px;
+        font-weight: bold;
+    }
+    #sort-checkbox {
+        display: none;
+    }
+    #sort-checkbox-2 {
+        display: none;
+    }
+    .container {
+        position: relative; 
+      }
+</style>
     
     
     
