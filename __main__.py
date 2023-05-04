@@ -1,5 +1,7 @@
 import datetime as dt
 import os
+import re
+import pandas as pd
 
 from PIL import Image
 from flask import Flask, render_template, request, session, redirect, url_for, flash
@@ -169,12 +171,32 @@ def sell():
         my_post_sql = ""
 
     sql = sql + house_type_sql + pattern_sql + price_sql + tw_ping_sql + age_sql + my_post_sql
-    print(sql)
     db, cursor = link_sql()
     cursor.execute(sql)
     results = cursor.fetchall()
-
     db.close()
+
+    def time_diff_string(input_str):
+        # 使用正則表達式找出字串中的所有時間
+        now = dt.datetime.now()
+        time_diff = now - input_str
+        if time_diff < dt.timedelta(hours=1):
+            minutes = int(time_diff.total_seconds() / 60)
+            result_str = str(minutes) + ' 分鐘前' 
+        elif time_diff < dt.timedelta(days=1):
+                # 不足1天，顯示小時前
+                hours = int(time_diff.total_seconds() / 3600)
+                result_str = str(hours) + ' 小時前'
+        else:
+            # 超過1天，顯示天前
+            days = int(time_diff.total_seconds() / 86400)
+            result_str = str(days) + ' 天前'
+        return result_str
+
+    df = pd.DataFrame(results)
+    df["reviseDateTime"] = df["reviseDateTime"].apply(time_diff_string)
+    for post,reviseDateTime in zip(results,df["reviseDateTime"]):
+        post["reviseDateTime"] = reviseDateTime
 
     return render_template(
         'sell.html',
@@ -222,6 +244,28 @@ def rentals():
     results = cursor.fetchall()
 
     db.close()
+
+    def time_diff_string(input_str):
+        # 使用正則表達式找出字串中的所有時間
+        now = dt.datetime.now()
+        time_diff = now - input_str
+        if time_diff < dt.timedelta(hours=1):
+            minutes = int(time_diff.total_seconds() / 60)
+            result_str = str(minutes) + ' 分鐘前' 
+        elif time_diff < dt.timedelta(days=1):
+                # 不足1天，顯示小時前
+                hours = int(time_diff.total_seconds() / 3600)
+                result_str = str(hours) + ' 小時前'
+        else:
+            # 超過1天，顯示天前
+            days = int(time_diff.total_seconds() / 86400)
+            result_str = str(days) + ' 天前'
+        return result_str
+
+    df = pd.DataFrame(results)
+    df["reviseDateTime"] = df["reviseDateTime"].apply(time_diff_string)
+    for post,reviseDateTime in zip(results,df["reviseDateTime"]):
+        post["reviseDateTime"] = reviseDateTime
 
     return render_template(
         'rentals.html',
