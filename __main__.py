@@ -476,6 +476,11 @@ def upload_post():
     return redirect(url_for('index'))
 
 
+@app.route('/pricing')
+def pricing():
+    return render_template('pricing.html')
+
+
 @app.route('/revise_post', methods=['POST', 'GET'])
 @login_required
 def revise_post():
