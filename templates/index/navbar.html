@@ -8,7 +8,8 @@
         <ul class=" nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             {% if selected_region %}
                 <li class="nav-item dropdown">
-                    <a id="selected-region" class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                    <a id="selected-region" class="nav-link dropdown-toggle text-secondary" href="#"
+                       data-bs-toggle="dropdown"
                        aria-expanded="false">{{ selected_region }}</a>
 
                     <ul class="dropdown-menu">
@@ -45,12 +46,29 @@
                     </ul>
                 </li>
             {% endif %}
-
-            <li><a href="{{ url_for('index') }}" class="nav-link px-2 link-secondary">首頁</a></li>
-            <li><a href="{{ url_for('sell') }}" class="nav-link px-2 ">買屋</a></li>
-            <li><a href="{{ url_for('rentals') }}" class="nav-link px-2">租屋</a></li>
-            {% if current_user.id %}
-                <li><a href="{{ url_for('my_post') }}" class="nav-link px-2">我的貼文</a></li>
+            {% set page_name = request.path.split('/')[-1] %}
+            <li>
+                <a href="{{ url_for('index') }}"
+                   class="nav-link mx-1 px-2 {% if not page_name or page_name == 'home' %}fw-bold link-secondary border-bottom{% endif %}">
+                    首頁
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('sell') }}"
+                   class="nav-link mx-1 px-2 {% if page_name == 'sell.html' %}fw-bold link-secondary border-bottom{% endif %}">
+                    買屋
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('rentals') }}"
+                   class="nav-link mx-1 px-2 {% if page_name == 'rentals.html' %}fw-bold link-secondary border-bottom{% endif %}">
+                    租屋
+                </a>
+            </li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('my_post') }}"
+                       class="nav-link mx-1 px-2 {% if page_name == 'my_post.html' %}fw-bold link-secondary border-bottom{% endif %}">我的貼文</a>
+                </li>
             {% endif %}
         </ul>
 
