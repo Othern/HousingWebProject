@@ -159,12 +159,11 @@
         let selectData = $(element).find("a").text();
 
         if (!selectData.split(' ')[2]) return;
-        
+
         let selectedAddress = selectData.split(' ')[2].trim(); // 獲取選擇的地址
         input.val(selectedAddress);
         searchInput.removeClass("active");
     }
-
 </script>
 
 {% include './common/declaimer.html' %}
