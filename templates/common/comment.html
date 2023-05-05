@@ -1,0 +1,121 @@
+<div class="container p-5">
+    <h2 class="fw-bold border-bottom pb-2 mb-5">房屋提問區</h2>
+    {% if criticizes %}
+        {% for comment in criticizes %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <h5 class="card-title fw-bold">{{ comment['name'] }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ comment['reviseDateTime'] }}</h6>
+                            <p class="card-text comment-text">{{ comment['comment'] }}</p>
+                        </div>
+                        {% if comment['uId'] == current_user.id %}
+                            <div class="col align-self-end">
+                                <div class="btn-group float-end comment-dropdown">
+                                    <button class="btn btn-light border-0 dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-pen"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button type="button" class="btn edit-comment dropdown-item"
+                                                data-comment-id="{{ loop.index0 }}">
+                                            修改
+                                        </button>
+                                        <form action="{{ url_for('delete_comment') }}" method="POST">
+                                            <input type="hidden" value="{{ comment['pId'] }}" name="pId">
+                                            <input type="hidden" value="{{ comment['cId'] }}" name="cId">
+                                            <input type="hidden" value="{{ postType }}" name="postType">
+                                            <button type="submit" class="btn text-danger dropdown-item">刪除</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% if comment['uId'] == current_user.id %}
+                            <form action="{{ url_for('revise_comment') }}" method="POST" class="edit-form d-none">
+                                <input type="hidden" value="{{ comment['pId'] }}" name="pId">
+                                <input type="hidden" value="{{ comment['cId'] }}" name="cId">
+                                <input type="hidden" value="{{ postType }}" name="postType">
+                                <label for="edit-comment-{{ comment['cId'] }}"></label>
+                                <textarea type="text" name="comment" id="edit-comment-{{ comment['cId'] }}"
+                                          class="form-control mb-2" placeholder="在此提問"
+                                          style="height: 100px">{{ comment['comment'] }}</textarea>
+                                <button type="submit" class="btn btn-secondary float-end">確認修改</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="container bg-secondary">
+            <div class="p-5 text-center bg-body-tertiary rounded-3">
+                <h2 class="text-body-emphasis">這裡空空如也</h2>
+                <p class="lead">
+                    目前沒有任何關於該房屋提問，你可以第一個提出
+                </p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% if current_user.is_authenticated %}
+    <div class="container px-5 pb-5">
+        <button class="w-100 btn btn-secondary btn-lg" data-bs-toggle="collapse"
+                data-bs-target="#comment-add" aria-expanded="false">新增提問
+        </button>
+        <div class="collapse" id="comment-add">
+            <div class="card card-body mt-5">
+                <form action="/upload_comment" method="post" id="comment-form">
+                    <div class="form-group mb-2">
+                        <label class="mb-2">留言：</label>
+                        <input type="hidden" value="{{ pId }}" name="pId">
+                        <input type="hidden" value="{{ postType }}" name="postType">
+
+                        <label for="add-comment"></label>
+                        <textarea class="form-control" name="comment" id="add-comment"
+                                  placeholder="在此輸入你要的提問，請不要留下您的個資" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-end edit-confirm">提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<script>
+    $(document).ready(function () {
+        // 找到所有的edit-comment按鈕
+        const editButtons = document.querySelectorAll('.edit-comment');
+
+// 對每個按鈕加上點擊事件監聽器
+        editButtons.forEach((btn) => {
+            btn.addEventListener('click', (event) => {
+                // 取得被點擊的edit-comment按鈕所在的卡片
+                const card = event.target.closest('.card');
+
+                // 找到卡片內的文章和修改框
+                const commentText = card.querySelector('.comment-text');
+                const editForm = card.querySelector('.edit-form');
+                const editDropdown = card.querySelector('.comment-dropdown');
+
+                // 隱藏文章，
+                editDropdown.style.display = 'none';
+                commentText.style.display = 'none';
+                editForm.classList.remove('d-none');
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
