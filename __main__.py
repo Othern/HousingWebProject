@@ -1,7 +1,8 @@
 import datetime as dt
 import os
+
 from PIL import Image
-from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask import Flask, render_template, session, redirect, url_for, flash, jsonify, request
 from flask_login import logout_user, LoginManager, login_user, login_required, UserMixin, current_user
 from werkzeug.utils import secure_filename
 
@@ -247,8 +248,8 @@ def rentals():
           f"INNER JOIN `houserent` ON house.hId = houserent.hId " \
           f"INNER JOIN  (SELECT post.pId,COUNT(browses.uId) as click " \
           f"FROM post " \
-          f"LEFT OUTER JOIN browses ON browses.pId = post.pId" \
-          f" GROUP BY post.pId) AS click  ON post.pId = click.pId " \
+          f"LEFT OUTER JOIN browses ON browses.pId = post.pId " \
+          f"GROUP BY post.pId) AS click  ON post.pId = click.pId " \
           f"WHERE `city` = '{selected_region}'"
 
     type_sql = "" if str(selected_type) == "All" else f" AND `type` = '{selected_type}'"
@@ -321,8 +322,7 @@ def sell_info():
     sql = f"SELECT *FROM criticizes,(SELECT uId , name FROM user ) AS user " \
           f"where user.uId = criticizes.uId  AND pId = {p_id}"
 
-    comment =  get_post_data(sql)
-
+    comment = get_post_data(sql)
 
     if u_id == results["uId"]:
         revise_permission = 1
@@ -334,7 +334,7 @@ def sell_info():
         pId=p_id,
         uId=u_id,
         revise_permission=revise_permission,
-        criticizes = comment,
+        criticizes=comment,
         postType="sell",
         post=results
     )
@@ -363,7 +363,7 @@ def rentals_info():
     sql = f"SELECT *FROM criticizes,(SELECT uId , name FROM user ) AS user " \
           f"where user.uId = criticizes.uId  AND pId = {p_id}"
 
-    comment =  get_post_data(sql)
+    comment = get_post_data(sql)
 
     return render_template(
         'rentals_info.html',
@@ -371,7 +371,7 @@ def rentals_info():
         uId=u_id,
         postType="rent",
         revise_permission=revise_permission,
-        criticizes = comment,
+        criticizes=comment,
         post=results
     )
 
@@ -382,63 +382,66 @@ def add_comment():
     u_id = current_user.id
     p_id = request.form.get("pId")
     comment = request.form.get("comment")
-    postType = request.form.get("postType")
+    post_type = request.form.get("postType")
     now = dt.datetime.now()
 
-    db,cursor = link_sql()
+    db, cursor = link_sql()
     cursor.execute("SELECT max(cId) AS final_cId FROM `criticizes`")
-    final_cId = cursor.fetchone()["final_cId"]
-    if final_cId != None:
-        c_id = final_cId +1
+    final_c_id = cursor.fetchone()["final_cId"]
+    if final_c_id is not None:
+        c_id = final_c_id + 1
     else:
         c_id = 1
     sql = "INSERT INTO criticizes(cId,uId, pId, comment, reviseDateTime) VALUES (%s,%s, %s, %s, %s)"
 
-    cursor.execute(sql, (c_id,u_id, p_id, comment, now))
+    cursor.execute(sql, (c_id, u_id, p_id, comment, now))
     db.commit()
     db.close()
     flash('新增成功')
-    if postType == "sell":
+    if post_type == "sell":
         return redirect(f'sell_info.html?pId={p_id}')
-    else :
+    else:
         return redirect(f'rentals_info.html?pId={p_id}')
+
 
 @app.route('/revise_comment', methods=['POST', 'GET'])
 @login_required
 def revise_comment():
     c_id = request.form.get("cId")
     p_id = request.form.get("pId")
-    postType = request.form.get("postType")
+    post_type = request.form.get("postType")
     comment = request.form.get("comment")
     now = dt.datetime.now()
-    db,cursor = link_sql()
-    sql = f"UPDATE criticizes SET comment = '{comment}', reviseDateTime = '{now}' "\
+    db, cursor = link_sql()
+    sql = f"UPDATE criticizes SET comment = '{comment}', reviseDateTime = '{now}' " \
           f"WHERE cId = {c_id}"
     cursor.execute(sql)
     db.commit()
     db.close()
     flash('修改成功')
-    if postType == "sell":
+    if post_type == "sell":
         return redirect(f'sell_info.html?pId={p_id}')
-    else :
+    else:
         return redirect(f'rentals_info.html?pId={p_id}')
+
 
 @app.route('/delete_comment', methods=['POST', 'GET'])
 @login_required
 def delete_comment():
     c_id = request.form.get("cId")
     p_id = request.form.get("pId")
-    postType = request.form.get("postType")
-    db,cursor = link_sql()
+    post_type = request.form.get("postType")
+    db, cursor = link_sql()
     sql = f"DELETE FROM criticizes WHERE cId =  {c_id}"
     cursor.execute(sql)
     db.commit()
     db.close()
     flash('刪除成功')
-    if postType == "sell":
+    if post_type == "sell":
         return redirect(f'sell_info.html?pId={p_id}')
-    else :
+    else:
         return redirect(f'rentals_info.html?pId={p_id}')
+
 
 @app.route('/add_post.html')
 @login_required
@@ -578,7 +581,45 @@ def pricing():
 
 @app.route('/search')
 def search():
-    return render_template('search.html')
+    return render_template('search_results.html')
+
+
+@app.route('/search/suggest')
+def search_suggest():
+    search_type = request.args.get('type')  # 獲取搜索類型
+    query = request.args.get('query')  # 獲取搜索關鍵詞
+
+    selected_region = session.get('selected_region', '台北市')
+
+    db, cursor = link_sql()
+
+    if search_type == 'rent':
+        sql = "SELECT `pId`, `title`, `district`, `address` " \
+              "FROM `post` " \
+              "NATURAL JOIN `house` " \
+              "NATURAL JOIN `houserent` " \
+              "WHERE `city` = %s AND " \
+              "(`address` LIKE %s OR " \
+              "`district` LIKE %s OR " \
+              "`title` LIKE %s)"
+        query_values = (selected_region, f'%{query}%', f'%{query}%', f'%{query}%')
+    else:
+        sql = "SELECT `pId`, `title`, `district`, `address` " \
+              "FROM `post` " \
+              "NATURAL JOIN `house` " \
+              "NATURAL JOIN `housesell` " \
+              "WHERE `city` = %s AND " \
+              "(`address` LIKE %s OR " \
+              "`housename` LIKE %s OR " \
+              "`district` LIKE %s OR " \
+              "`title` LIKE %s)"
+        query_values = (selected_region, f'%{query}%', f'%{query}%', f'%{query}%', f'%{query}%')
+
+    cursor.execute(sql, query_values)
+    results = cursor.fetchall()
+    db.close()
+
+    return jsonify(results)
 
 
 @app.route('/revise_post', methods=['POST', 'GET'])
