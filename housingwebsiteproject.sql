@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2023 年 05 月 03 日 12:12
+-- 產生時間： 2023 年 05 月 05 日 10:27
 -- 伺服器版本： 10.4.28-MariaDB
 -- PHP 版本： 8.2.4
 
@@ -51,6 +51,7 @@ CREATE TABLE `browses` (
 
 INSERT INTO `browses` (`uId`, `pId`, `browseTime`) VALUES
 (3, 1, '2023-05-03 14:12:49'),
+(3, 2, '2023-05-05 16:18:49'),
 (3, 8, '2023-05-03 15:25:55'),
 (3, 47, '2023-05-03 17:10:53'),
 (3, 50, '2023-05-03 16:53:08');
@@ -62,9 +63,11 @@ INSERT INTO `browses` (`uId`, `pId`, `browseTime`) VALUES
 --
 
 CREATE TABLE `criticizes` (
+  `cId` int(10) NOT NULL,
   `uId` int(10) NOT NULL,
   `pId` int(10) NOT NULL,
-  `comment` text NOT NULL
+  `comment` text NOT NULL,
+  `reviseDateTime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1046,7 +1049,7 @@ ALTER TABLE `browses`
 -- 資料表索引 `criticizes`
 --
 ALTER TABLE `criticizes`
-  ADD PRIMARY KEY (`uId`,`pId`);
+  ADD PRIMARY KEY (`cId`);
 
 --
 -- 資料表索引 `house`

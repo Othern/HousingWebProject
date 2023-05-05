@@ -318,7 +318,11 @@ def sell_info():
     results = cursor.fetchone()
     db.close()
 
-    print(results)
+    sql = f"SELECT *FROM criticizes,(SELECT uId , name FROM user ) AS user " \
+          f"where user.uId = criticizes.uId  AND pId = {p_id}"
+
+    comment =  get_post_data(sql)
+
 
     if u_id == results["uId"]:
         revise_permission = 1
@@ -330,6 +334,7 @@ def sell_info():
         pId=p_id,
         uId=u_id,
         revise_permission=revise_permission,
+        criticizes = comment,
         postType="sell",
         post=results
     )
@@ -337,6 +342,7 @@ def sell_info():
 
 @app.route('/rentals_info.html')
 def rentals_info():
+    p_id = request.args.get('pId')
     u_id = current_user.get_id() if current_user.get_id() else 0
 
     db, cursor = link_sql()
@@ -354,15 +360,85 @@ def rentals_info():
 
     db.close()
 
+    sql = f"SELECT *FROM criticizes,(SELECT uId , name FROM user ) AS user " \
+          f"where user.uId = criticizes.uId  AND pId = {p_id}"
+
+    comment =  get_post_data(sql)
+
     return render_template(
         'rentals_info.html',
         pId=request.args.get('pId'),
         uId=u_id,
         postType="rent",
         revise_permission=revise_permission,
+        criticizes = comment,
         post=results
     )
 
+
+@app.route('/upload_comment', methods=['POST', 'GET'])
+@login_required
+def add_comment():
+    u_id = current_user.id
+    p_id = request.form.get("pId")
+    comment = request.form.get("comment")
+    postType = request.form.get("postType")
+    now = dt.datetime.now()
+
+    db,cursor = link_sql()
+    cursor.execute("SELECT max(cId) AS final_cId FROM `criticizes`")
+    final_cId = cursor.fetchone()["final_cId"]
+    if final_cId != None:
+        c_id = final_cId +1
+    else:
+        c_id = 1
+    sql = "INSERT INTO criticizes(cId,uId, pId, comment, reviseDateTime) VALUES (%s,%s, %s, %s, %s)"
+
+    cursor.execute(sql, (c_id,u_id, p_id, comment, now))
+    db.commit()
+    db.close()
+    flash('新增成功')
+    if postType == "sell":
+        return redirect(f'sell_info.html?pId={p_id}')
+    else :
+        return redirect(f'rentals_info.html?pId={p_id}')
+
+@app.route('/revise_comment', methods=['POST', 'GET'])
+@login_required
+def revise_comment():
+    c_id = request.form.get("cId")
+    p_id = request.form.get("pId")
+    postType = request.form.get("postType")
+    comment = request.form.get("comment")
+    now = dt.datetime.now()
+    db,cursor = link_sql()
+    sql = f"UPDATE criticizes SET comment = '{comment}', reviseDateTime = '{now}' "\
+          f"WHERE cId = {c_id}"
+    cursor.execute(sql)
+    db.commit()
+    db.close()
+    flash('修改成功')
+    if postType == "sell":
+        return redirect(f'sell_info.html?pId={p_id}')
+    else :
+        return redirect(f'rentals_info.html?pId={p_id}')
+
+@app.route('/delete_comment', methods=['POST', 'GET'])
+@login_required
+def delete_comment():
+    c_id = request.form.get("cId")
+    p_id = request.form.get("pId")
+    postType = request.form.get("postType")
+    db,cursor = link_sql()
+    sql = f"DELETE FROM criticizes WHERE cId =  {c_id}"
+    cursor.execute(sql)
+    db.commit()
+    db.close()
+    flash('刪除成功')
+    if postType == "sell":
+        return redirect(f'sell_info.html?pId={p_id}')
+    else :
+        return redirect(f'rentals_info.html?pId={p_id}')
 
 @app.route('/add_post.html')
 @login_required
