@@ -670,8 +670,9 @@ def update_my_post():
 
 @app.route('/update/browses', methods=['POST'])
 def update_browses():
-    u_id = request.json['uId']
+    u_id = current_user.get_id() if current_user.get_id() else 0
     p_id = request.json['pId']
+
     now = dt.datetime.now()
     db, cursor = link_sql()
     sql = f"SELECT * FROM `post` WHERE `pId` = {p_id} limit 1"
