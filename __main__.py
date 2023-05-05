@@ -32,9 +32,10 @@ class User(UserMixin):
 
 
 # 使用正則表達式找出字串中的所有時間
-def time_diff_string(input_str):
-    time_diff = dt.datetime.now() - input_str
-
+def time_diff_string(input_datetime):
+    if input_datetime == None:
+        return None
+    time_diff = dt.datetime.now() - input_datetime
     if time_diff < dt.timedelta(hours=1):
         minutes = int(time_diff.total_seconds() / 60)
         result_str = str(minutes) + ' 分鐘前'
@@ -53,13 +54,11 @@ def get_post_data(sql):
     db, cursor = link_sql()
     cursor.execute(sql)
     results = cursor.fetchall()
-
+    
     db.close()
 
-    df = pd.DataFrame(results)
-    df["reviseDateTime"] = df["reviseDateTime"].apply(time_diff_string)
-    for post, reviseDateTime in zip(results, df["reviseDateTime"]):
-        post["reviseDateTime"] = reviseDateTime
+    for post in results:
+        post["reviseDateTime"] = time_diff_string(post["reviseDateTime"])
 
     return results
 
@@ -158,10 +157,19 @@ def index():
           f"ORDER BY `class` DESC " \
           f"LIMIT 8 "
 
+
     cursor.execute(sql)
 
     results[3] = cursor.fetchall()
 
+    sql="SELECT pId FROM houseSell,house WHERE house.hId = housesell.hId"
+    cursor.execute(sql)
+    temp_results4 = cursor.fetchall()
+    results4 = []
+    for result in temp_results4:
+        results4.append(result["pId"])
+
+    results[4] = results4
     db.close()
 
     return render_template(
@@ -170,7 +178,8 @@ def index():
         recommend_post=results[0],
         family_post=results[1],
         suite_post=results[2],
-        shared_post=results[3]
+        shared_post=results[3],
+        sell_post_list =results[4]    
     )
 
 
@@ -206,7 +215,7 @@ def sell():
     else:
         my_post_sql = ""
 
-    sql = sql + house_type_sql + pattern_sql + price_sql + tw_ping_sql + age_sql + my_post_sql
+    sql = sql + house_type_sql + pattern_sql + price_sql + tw_ping_sql + age_sql + my_post_sql + selected_order
     results = get_post_data(sql)
 
     return render_template(
@@ -248,7 +257,7 @@ def rentals():
     price_sql = f" AND `price` {selected_price}"
     tw_ping_sql = f" AND `twPing` {selected_tw_ping}"
 
-    sql = sql + pattern_sql + price_sql + tw_ping_sql + type_sql + my_post_sql
+    sql = sql + pattern_sql + price_sql + tw_ping_sql + type_sql + my_post_sql + selected_order
     results = get_post_data(sql)
 
     return render_template(
@@ -259,29 +268,32 @@ def rentals():
 
 
 @app.route('/my_post.html')
+@login_required
 def my_post():
     selected_u_id = current_user.get_id()
+    
     rent_sql = f"SELECT * " \
                f"FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
                f"INNER JOIN `image` ON image.pId = post.pId) " \
                f"INNER JOIN `houserent` ON house.hId = houserent.hId " \
+               f"INNER JOIN  (SELECT post.pId,COUNT(browses.uId) as click " \
+               f"FROM post " \
+               f"LEFT OUTER JOIN browses ON browses.pId = post.pId" \
+               f" GROUP BY post.pId) AS click  ON post.pId = click.pId " \
                f"WHERE `uId` = {selected_u_id}"
 
     sell_sql = f"SELECT * " \
                f"FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
                f"INNER JOIN `image` ON image.pId = post.pId) " \
                f"INNER JOIN `housesell` ON house.hId = housesell.hId " \
+               f"INNER JOIN  (SELECT post.pId,COUNT(browses.uId) as click " \
+               f"FROM post " \
+               f"LEFT OUTER JOIN browses ON browses.pId = post.pId" \
+               f" GROUP BY post.pId) AS click  ON post.pId = click.pId " \
                f"WHERE `uId` = {selected_u_id}"
-
-    db, cursor = link_sql()
-
-    cursor.execute(rent_sql)
-    rent_results = cursor.fetchall()
-    cursor.execute(sell_sql)
-    sell_results = cursor.fetchall()
-
-    db.close()
-
+    rent_results = get_post_data(rent_sql)
+    sell_results = get_post_data(sell_sql)
+   
     return render_template(
         'my_post.html',
         post_rent_results=rent_results,
@@ -293,6 +305,7 @@ def my_post():
 def sell_info():
     p_id = request.args.get('pId')
     u_id = current_user.get_id()
+    
     db, cursor = link_sql()
 
     sql = f"SELECT house.*, post.*, image.*, housesell.* " \
@@ -326,6 +339,7 @@ def sell_info():
 @app.route('/rentals_info.html')
 def rentals_info():
     u_id = current_user.get_id()
+    
     db, cursor = link_sql()
 
     sql = f"SELECT house.*, post.*, image.*, houserent.* " \
@@ -365,6 +379,7 @@ def add_post():
 @login_required
 def upload_post():
     u_id = current_user.get_id()
+    
     db, cursor = link_sql()
     sql = f"SELECT `pId` from `post` ORDER BY `pId` DESC LIMIT 1"
     cursor.execute(sql)
@@ -581,6 +596,17 @@ def update_region():
     session['selected_region'] = selected_region
     return 'susses'
 
+@app.route('/update/priceOrder',methods=['POST'])
+def update_price_order():
+    selected_order = request.json['priceOrder']
+    session['selected_order'] = selected_order
+    return 'susses'
+
+@app.route('/update/twPingOrder',methods=['POST'])
+def update_twPing_order():
+    selected_order = request.json['twPingOrder']
+    session['selected_order'] = selected_order
+    return 'susses'
 
 @app.route('/update/pattern', methods=['POST'])
 def update_pattern():
@@ -740,12 +766,13 @@ def delete_post_sell():
     db, cursor = link_sql()
     p_id = request.form['delete-pId']
 
-    sql = "DELETE house, post, image, housesell, payment " \
+    sql = "DELETE house, post, image, housesell, payment, browses " \
           "FROM house " \
           "JOIN post ON house.pId = post.pId " \
           "JOIN image ON image.pId = post.pId " \
           "JOIN housesell ON house.hId = housesell.hId " \
           "JOIN payment ON payment.pId = post.pId " \
+          "JOIN browses ON browses.pId = post.pId " \
           "WHERE post.pId = %s "
     cursor.execute(sql, (p_id,))
     db.commit()
@@ -759,11 +786,12 @@ def delete_post_rent():
     db, cursor = link_sql()
     p_id = request.form['delete-pId']
 
-    sql = "DELETE house, post, image, houserent, payment " \
+    sql = "DELETE house, post, image, houserent, payment, browses  " \
           "FROM house JOIN post ON house.pId = post.pId " \
           "JOIN image ON image.pId = post.pId " \
           "JOIN houserent ON house.hId = houserent.hId " \
           "JOIN payment ON payment.pId = post.pId " \
+          "JOIN browses ON browses.pId = post.pId " \
           "WHERE post.pId = %s"
 
     cursor.execute(sql, (p_id,))
@@ -772,6 +800,51 @@ def delete_post_rent():
 
     return redirect(url_for('rentals'))
 
+@app.route('/browses_record.html')
+@login_required
+def browses_record():
+    selected_u_id = current_user.id
+    # rent_sql = f"SELECT * " \
+    #        f"FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
+    #        f"INNER JOIN `image` ON image.pId = post.pId) " \
+    #        f"INNER JOIN `houserent` ON house.hId = houserent.hId " \
+    #        f"INNER JOIN (SELECT post.pId,browses.uId " \
+    #        f"FROM post " \
+    #        f"INNER JOIN browses ON browses.pId = post.pId " \
+    #        f"WHERE browses.uId = {selected_u_id}) AS record ON post.pId = record.pId"
+    rent_sql = f"SELECT * " \
+           f"FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
+           f"INNER JOIN `image` ON image.pId = post.pId) " \
+           f"INNER JOIN `houserent` ON house.hId = houserent.hId " \
+           f"INNER JOIN (SELECT post.pId,COUNT(browses.uId) as click " \
+           f"FROM post LEFT OUTER JOIN `browses` ON browses.pId = post.pId " \
+           f"GROUP BY post.pId) AS click  ON post.pId = click.pId " \
+           f"INNER JOIN (SELECT DISTINCT post.pId, browses.uId " \
+           f"FROM post " \
+           f"INNER JOIN browses ON browses.pId = post.pId " \
+           f"WHERE browses.uId = {selected_u_id}) AS record ON post.pId = record.pId"
+           
+
+    sell_sql = f"SELECT * " \
+           f"FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
+           f"INNER JOIN `image` ON image.pId = post.pId) " \
+           f"INNER JOIN `housesell` ON house.hId = housesell.hId " \
+           f"INNER JOIN (SELECT post.pId,COUNT(browses.uId) as click " \
+           f"FROM post LEFT OUTER JOIN `browses` ON browses.pId = post.pId " \
+           f"GROUP BY post.pId) AS click  ON post.pId = click.pId " \
+           f"INNER JOIN (SELECT DISTINCT post.pId, browses.uId " \
+           f"FROM post " \
+           f"INNER JOIN browses ON browses.pId = post.pId " \
+           f"WHERE browses.uId = {selected_u_id}) AS record ON post.pId = record.pId"
+    
+    rent_results = get_post_data(rent_sql)
+    sell_results = get_post_data(sell_sql)
+    
+    return render_template(
+        'browses_record.html',
+        record_rent_results=rent_results,
+        record_sell_results=sell_results
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
