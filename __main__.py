@@ -190,7 +190,7 @@ def sell():
     selected_age = session.get('selected_age', ">=0")
     selected_my_post = session.get('selected_myPost', "All")
     selected_order = session.get('selected_order', " ORDER BY PRICE DESC")
-    u_id = current_user.get_id()
+    u_id = current_user.get_id() if current_user.get_id() else 0
 
     sql = f"SELECT *FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
           f"INNER JOIN `image` ON image.pId = post.pId) " \
@@ -232,8 +232,7 @@ def rentals():
     selected_tw_ping = session.get('selected_twPing', ">=0")
     selected_my_post = session.get('selected_myPost', "All")
     selected_order = session.get('selected_order', " ORDER BY PRICE DESC")
-
-    u_id = current_user.get_id()
+    u_id = current_user.get_id() if current_user.get_id() else 0
 
     if selected_my_post == "1":
         my_post_sql = f" AND `uId` = {u_id}"
@@ -304,7 +303,7 @@ def my_post():
 @app.route('/sell_info.html')
 def sell_info():
     p_id = request.args.get('pId')
-    u_id = current_user.get_id()
+    u_id = current_user.get_id() if current_user.get_id() else 0
 
     db, cursor = link_sql()
 
@@ -338,7 +337,7 @@ def sell_info():
 
 @app.route('/rentals_info.html')
 def rentals_info():
-    u_id = current_user.get_id()
+    u_id = current_user.get_id() if current_user.get_id() else 0
 
     db, cursor = link_sql()
 
@@ -499,6 +498,11 @@ def upload_post():
 @app.route('/pricing')
 def pricing():
     return render_template('pricing.html')
+
+
+@app.route('/search')
+def search():
+    return render_template('search.html')
 
 
 @app.route('/revise_post', methods=['POST', 'GET'])
