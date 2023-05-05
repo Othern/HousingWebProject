@@ -805,6 +805,51 @@ def delete_post_rent():
 
     return redirect(url_for('rentals'))
 
+@app.route('/browses_record.html')
+@login_required
+def browses_record():
+    selected_u_id = current_user.id
+    # rent_sql = f"SELECT * " \
+    #        f"FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
+    #        f"INNER JOIN `image` ON image.pId = post.pId) " \
+    #        f"INNER JOIN `houserent` ON house.hId = houserent.hId " \
+    #        f"INNER JOIN (SELECT post.pId,browses.uId " \
+    #        f"FROM post " \
+    #        f"INNER JOIN browses ON browses.pId = post.pId " \
+    #        f"WHERE browses.uId = {selected_u_id}) AS record ON post.pId = record.pId"
+    rent_sql = f"SELECT * " \
+           f"FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
+           f"INNER JOIN `image` ON image.pId = post.pId) " \
+           f"INNER JOIN `houserent` ON house.hId = houserent.hId " \
+           f"INNER JOIN (SELECT post.pId,COUNT(browses.uId) as click " \
+           f"FROM post LEFT OUTER JOIN `browses` ON browses.pId = post.pId " \
+           f"GROUP BY post.pId) AS click  ON post.pId = click.pId " \
+           f"INNER JOIN (SELECT DISTINCT post.pId, browses.uId " \
+           f"FROM post " \
+           f"INNER JOIN browses ON browses.pId = post.pId " \
+           f"WHERE browses.uId = {selected_u_id}) AS record ON post.pId = record.pId"
+           
+
+    sell_sql = f"SELECT * " \
+           f"FROM ((`house` INNER JOIN `post` ON house.pId = post.pId) " \
+           f"INNER JOIN `image` ON image.pId = post.pId) " \
+           f"INNER JOIN `housesell` ON house.hId = housesell.hId " \
+           f"INNER JOIN (SELECT post.pId,COUNT(browses.uId) as click " \
+           f"FROM post LEFT OUTER JOIN `browses` ON browses.pId = post.pId " \
+           f"GROUP BY post.pId) AS click  ON post.pId = click.pId " \
+           f"INNER JOIN (SELECT DISTINCT post.pId, browses.uId " \
+           f"FROM post " \
+           f"INNER JOIN browses ON browses.pId = post.pId " \
+           f"WHERE browses.uId = {selected_u_id}) AS record ON post.pId = record.pId"
+    
+    rent_results = get_post_data(rent_sql)
+    sell_results = get_post_data(sell_sql)
+    
+    return render_template(
+        'browses_record.html',
+        record_rent_results=rent_results,
+        record_sell_results=sell_results
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)

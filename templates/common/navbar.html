@@ -69,6 +69,11 @@
                 <li><a href="{{ url_for('my_post') }}"
                        class="nav-link mx-1 px-2 {% if page_name == 'my_post.html' %}fw-bold link-secondary border-bottom{% endif %}">我的貼文</a>
                 </li>
+                <li><a href="{{url_for('browses_record')}}"
+                    class="nav-link mx-1 px-2 {% if page_name == 'browses_record.html' %}fw-bold link-secondary border-bottom{% endif %}">我的瀏覽紀錄</a>
+
+
+                </li>
             {% endif %}
         </ul>
 

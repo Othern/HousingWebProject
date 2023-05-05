@@ -1,5 +1,8 @@
 <section class="container py-5">
-    {% for post in post_rent_results %}
+    <div style="text-align: center;">
+        <h5 class="card-title mt-3">瀏覽過的租屋貼文</h5>
+    </div>
+    {% for post in record_rent_results %}
         <a href="../rentals_info.html?pId={{ post['pId'] }}" style="text-decoration: none;">
             <div class="align-items-stretch">
                 <div class="card h-100 py-1 border-0 border-bottom">
@@ -35,7 +38,7 @@
                                     </div>
                                     <div class="mb-3 d-flex align-items-center">
                                         <i class="bi bi-person-circle me-2 mb-1"></i>
-                                        <span>{{ post['name'] }} - {{ post['phone'] }} {{post['reviseDateTime']}}更新 / {{post['click']}}人瀏覽 </span>
+                                        <span>{{ post['name'] }} - {{ post['phone'] }} {{post['reviseDateTime']}}更新 / {{post['click']}}人瀏覽</span>
                                     </div>
                                 </div>
                             </div>
@@ -54,15 +57,5 @@
             </div>
         </a>
     {% endfor %}
-    {% if current_user.is_authenticated %}
-        <div style="text-align: center;">
-            <h5 class="card-title mt-3">新增租屋貼文</h5>
-            <br>
-            <a href="../add_post.html?postType=rent">
-                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
-                     class="bi bi-plus-square-fill" viewBox="0 0 16 16">
-                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"></path>
-                </svg>
-            </a></div>
-    {% endif %}
+   
 </section>
