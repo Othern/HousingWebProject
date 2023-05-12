@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+</head>
+<body>
+  <div id="chart-container">
+    <canvas id="myChart"></canvas>
+  </div>
+  <script>
+    var chartData = {{ chart_data|safe }};
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: chartData.map(d => d.month),
+        datasets: [{
+          type: 'bar',
+          label: '房屋筆數',
+          data: chartData.map(d => d.size),
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgb(54, 162, 235)',
+          borderWidth: 1,
+          yAxis: 'y'
+        }]
+      },
+      options: {
+        aspectRatio: 2,
+        interaction: {
+          mode: 'index',
+          axis: 'y'
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: chartData[0].city + '房屋筆數及平均價格 - ' + chartData[0].type,
+            font: {
+              size: 30
+            },
+            tooltip: {
+              enabled: true
+            }
+          },
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            position: 'left',
+            ticks: {
+              min: 100,
+              max: 500,
+              stepSize: 50,
+              beginAtZero: true
+            }
+          },
+         
+        }
+      }
+    });
+
+    myChart.data.datasets.push({
+      type: 'line',
+      label: '當月平均價格(單位:百)',
+      data: chartData.map(d => d.mean),
+      borderColor: 'rgb(255, 99, 132)',
+      pointBackgroundColor: 'rgb(255, 99, 132)',
+      borderWidth: 2.5,
+      pointRadius: 4.5,
+      fill: false,
+      yAxis: 'y'
+    });
+
+    myChart.update({
+      duration: 0,
+      easing: 'linear'
+    });
+
+  
+    myChart.update();
+
+    var legend = document.createElement('div');
+    legend.innerHTML = "";
+    myChart.legend.legendItems.forEach(function(item) {
+      legend.innerHTML += '<div><span style="background-color:' + item.fillStyle + '"></span>' + item.text + '</div>';
+    });
+    var parent = document.getElementById('myChart').parentNode;
+    var sibling = document.getElementById('myChart').nextSibling;
+    parent.insertBefore(legend, sibling);
+
+  </script>
+  <style>
+    #chart-container {
+      width: 100%;
+      padding: 10px 150px;
+    }
+
+    #myChart {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</body>
+
+</html>
