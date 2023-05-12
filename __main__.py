@@ -1,9 +1,5 @@
 import datetime as dt
 import os
-import pandas as pd
-import cn2an
-import matplotlib.pyplot as plt
-import numpy as np
 
 from PIL import Image
 from flask import Flask, render_template, session, redirect, url_for, flash, jsonify, request
@@ -333,43 +329,6 @@ def sell_info():
     else:
         revise_permission = 0
 
-    def sell_data(location,year):
-        attr = ['date','address','pricePerTwPing','houseType']
-
-        df = pd.read_csv(location)
-        df = df[attr]
-        df["date"] = pd.to_datetime(df["date"])
-        df = df[df["date"] > dt.datetime(int(year),1,1)]
-        
-        df['year'] = df['date'].astype(str).str[0:4]
-        df['month'] = df['date'].astype(str).str[5:7]
-        df['city'] = df['address'].astype(str).str[0:3]
-        
-        df = df.drop(['date', 'address'], axis=1)
-
-        df=df[['year','month','city','pricePerTwPing','houseType']]
-        df['pricePerTwPing']=df['pricePerTwPing']/1000
-        return df
-
-    def data_sell_process(year:str,season:str):
-        data=sell_data(f"./house_data/sell_{year}_{season}.csv",year)
-        
-        return data
-
-    data_01 = data_sell_process("2022", "01")
-    data_02 = data_sell_process("2022", "02")
-    data_03 = data_sell_process("2022", "03")
-    data_04 = data_sell_process("2022", "04")
-    data_05 = data_sell_process("2023", "01")
-    data_06 = data_sell_process("2023", "02")
-    data = pd.concat([data_01, data_02, data_03, data_04,data_05,data_06], ignore_index=True)
-
-    data = data.groupby(['year', 'month', 'city', 'houseType'])['pricePerTwPing'].agg(['mean', 'size']).reset_index()
-    data = data[(data['city'] == results['city']) & (data['houseType'] == results['houseType'])]
-    
-    chart_data = data.to_json(orient='records')
-
-
     return render_template(
         'sell_info.html',
         pId=p_id,
@@ -377,8 +336,7 @@ def sell_info():
         revise_permission=revise_permission,
         criticizes=comment,
         postType="sell",
-        post=results,
-        chart_data = chart_data
+        post=results
     )
 
 
@@ -406,46 +364,6 @@ def rentals_info():
           f"where user.uId = criticizes.uId  AND pId = {p_id}"
 
     comment = get_post_data(sql)
-    if (results['type']=='分租套房' or results['type']=='獨立套房'):
-        results['type']='套房'
-    
-
-    def rent_data(location,year):
-        attr = ['date','address','price','type']
-
-        df = pd.read_csv(location)
-        df = df[attr]
-        df["date"] = pd.to_datetime(df["date"])
-        df = df[df["date"] > dt.datetime(int(year),1,1)]
-        
-        df['year'] = df['date'].astype(str).str[0:4]
-        df['month'] = df['date'].astype(str).str[5:7]
-        df['city'] = df['address'].astype(str).str[0:3]
-        
-        df = df.drop(['date', 'address'], axis=1)
-
-        df=df[['year','month','city','price','type']]
-        df['price']=df['price']/100
-        return df
-
-    def data_rent_process(year:str,season:str):
-        data=rent_data(f"./house_data/rent_{year}_{season}.csv",year)
-        
-        return data
-
-    data_01 = data_rent_process("2022", "01")
-    data_02 = data_rent_process("2022", "02")
-    data_03 = data_rent_process("2022", "03")
-    data_04 = data_rent_process("2022", "04")
-    data_05 = data_rent_process("2023", "01")
-    data_06 = data_rent_process("2023", "02")
-    data = pd.concat([data_01, data_02, data_03, data_04,data_05,data_06], ignore_index=True)
-
-    data = data.groupby(['year', 'month', 'city', 'type'])['price'].agg(['mean', 'size']).reset_index()
-    data = data[(data['city'] == results['city']) & (data['type'] == results['type'])]
-    
-    chart_data = data.to_json(orient='records')
-
 
     return render_template(
         'rentals_info.html',
@@ -454,8 +372,7 @@ def rentals_info():
         postType="rent",
         revise_permission=revise_permission,
         criticizes=comment,
-        post=results,
-        chart_data = chart_data
+        post=results
     )
 
 
