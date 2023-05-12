@@ -21,11 +21,13 @@
 
     <link href="../static/css/main.css" rel="stylesheet" type="text/css"/>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key }}&libraries=places&callback=Function.prototype"></script>
     <script src="../static/scripts/login/password_validation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 </head>
 
 
-<body>
+<body onload="showMap()">
 {% include './common/navbar.html' %}
 {% include 'common/notifaction.html' %}
 <div id="sellinfo-content">
@@ -46,6 +48,7 @@
         {% include './revise_post/revise_post_form.html' %}
     </div>
 {% endif %}
+{% include './common/chart_sell.html' %}
 {% include './common/comment.html' %}
 </body>
 
