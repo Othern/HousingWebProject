@@ -1,4 +1,6 @@
 /* topic.html */
 section#index-topic {
-    height: 60vh;
+  position: relative;
+  z-index: 999;
+  height: 60vh;
 }
