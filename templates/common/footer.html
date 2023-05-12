@@ -55,7 +55,7 @@
                             </select>
                         </span>
                         <label for="search-input" class="visually-hidden">物件名稱</label>
-                        <input id="search-input" type="text" class="form-control rounded-0 shadow-none"
+                        <input id="search-input" type="text" class="form-control input-query rounded-0 shadow-none"
                                placeholder="社區名稱/地點街區">
                         <button class="search-button btn btn-primary rounded-start-0 shadow-none" type="button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -81,9 +81,9 @@
 
     // getting all required elements
     const searchInput = $(".search-input");
-    const input = searchInput.find("input");
-    const searchType = searchInput.find(".search-type")
-    const searchButton = searchInput.find(".search-button")
+    const input = searchInput.find(".input-query");
+    const searchType = searchInput.find(".search-type");
+    const searchButton = searchInput.find(".search-button");
     const resultBox = searchInput.find(".search-results");
 
     $(document).ready(function () {

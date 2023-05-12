@@ -1,7 +1,160 @@
-<section id="index-topic" class="topic-content">
+<section id="index-topic" class="topic">
     <img src="../../static/images/index/topic/topic.jpg"
          class="d-block w-100 h-100 img-fluid" alt="圖片無法載入">
     <div class="d-block d-xs-none">
-        <h3></h3>
+        <div class="topic-content bg-dark bg-opacity-50 p-5">
+            <form class="topic-search-input">
+                <h5 class="border-bottom fw-bold text-light fs-3">找尋理想房屋</h5>
+                <div class="mb-2">
+                    <input type="radio" class="btn-check search-type" name="searchType" id="option1" autocomplete="off" value="buy" checked>
+                    <label class="btn btn-outline-warning" for="option1">買屋</label>
+
+                    <input type="radio" class="btn-check search-type" name="searchType" id="option2" autocomplete="off" value="rent">
+                    <label class="btn btn-outline-warning" for="option2">租屋</label>
+                </div>
+                <div class="input-group">
+                    {% if selected_region %}
+                        <span class="input-group-text p-0 search-region rounded-0 d-sm-flex d-none">
+                                <label for="selected-region" class=""></label>
+                                <select id="selected-region" class="border-0 search-type form-select shadow-none"
+                                        onchange="updateDropdown(this.value)">
+                                    <option value="{{ selected_region }}" selected>{{ selected_region }}</option>
+                                    <option value="台北市">台北市</option>
+                                    <option value="新北市">新北市</option>
+                                    <option value="桃園市">桃園市</option>
+                                    <option value="新竹市">新竹市</option>
+                                    <option value="新竹縣">新竹縣</option>
+                                    <option value="宜蘭縣">宜蘭縣</option>
+                                    <option value="基隆市">基隆市</option>
+                                    <option disabled>──────────</option>
+                                    <option value="台中市">台中市</option>
+                                    <option value="彰化縣">彰化縣</option>
+                                    <option value="雲林縣">雲林縣</option>
+                                    <option value="苗栗縣">苗栗縣</option>
+                                    <option value="南投縣">南投縣</option>
+                                    <option disabled>──────────</option>
+                                    <option value="高雄市">高雄市</option>
+                                    <option value="台南市">台南市</option>
+                                    <option value="嘉義市">嘉義市</option>
+                                    <option value="屏東縣">屏東縣</option>
+                                    <option disabled>──────────</option>
+                                    <option value="台東縣">台東縣</option>
+                                    <option value="花蓮縣">花蓮縣</option>
+                                    <option value="澎湖縣">澎湖縣</option>
+                                    <option value="金門縣">金門縣</option>
+                                    <option value="連江縣">連江縣</option>
+                                </select>
+                            </span>
+                    {% endif %}
+                    <label for="search-input-topic" class="visually-hidden">物件名稱</label>
+                    <input id="search-input-topic" type="text"
+                           class="form-control form-control-lg input-query rounded-0 shadow-none"
+                           placeholder="社區名稱/地點街區">
+                    <button class="search-button btn btn-warning rounded-0 shadow-none" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <ul class="search-results bg-light rounded-bottom-3 list-unstyled">
+                </ul>
+            </form>
+        </div>
     </div>
 </section>
+
+<script>
+    let topicSuggestions = []
+    // getting all required elements
+    const topicSearchInput = $(".topic-search-input");
+    const topicInput = topicSearchInput.find(".input-query");
+    let topicSearchType = topicSearchInput.find(".search-type");
+    const topicSearchButton = topicSearchInput.find(".search-button");
+    const topicResultBox = topicSearchInput.find(".search-results");
+    const topicSelectRegion = topicSearchInput.find(".search-region");
+
+    $(document).ready(function () {
+
+        // if user press any key and release
+        topicInput.on("keyup", function (e) {
+            let userData = e.target.value; // user entered data
+            let emptyArray = topicSuggestions;
+            if (userData) {
+                emptyArray = emptyArray.map((data) => {
+                    let url = $('input[name=searchType]:checked').val() === "buy" ? "sell_info.html?pId=" : "rentals_info.html?pId=";
+                    // passing return data inside li tag with a link
+                    return `<li><a class="text-reset text-decoration-none" href="${url}${data['pId']}">${data['district']} | ${data['address']} <br> ${data['title']}</a></li>`;
+                });
+                topicResultBox.addClass("active");
+                topicSelectRegion.addClass("rounded-bottom-0");
+                topicSearchButton.addClass("rounded-bottom-0");
+
+                showSuggestions(emptyArray);
+                let allList = topicResultBox.find("li");
+                for (let i = 0; i < allList.length; i++) {
+                    // 單純點擊輔助完成
+                    allList.eq(i).attr("onclick", "select(this)");
+                }
+            } else {
+                topicResultBox.removeClass("active"); // hide autocomplete box
+                topicSelectRegion.removeClass("rounded-bottom-0");
+                topicSearchButton.removeClass("rounded-bottom-0");
+            }
+        });
+
+        function showSuggestions(list) {
+            let listData;
+            if (!list.length) {
+                let userValue = topicInput.val();
+                listData = "<li>" + userValue + "</li>";
+            } else {
+                listData = list.join("");
+            }
+            topicResultBox.html(listData);
+        }
+
+        topicInput.on('input', function () {
+            const searchQuery = topicInput.val();  // 獲取輸入框的值
+            const searchQueryType = topicSearchInput.find(".search-type:checked").val();
+
+            $.ajax({
+                url: '/search/suggest',  // 請求的URL
+                type: 'GET',
+                data: {type: searchQueryType, query: searchQuery},  // 傳遞給服務器的參數
+                success: function (results) {
+                    // 成功獲取到搜索結果後執行的回調函數
+                    // 將搜索結果顯示在search-results區域
+                    topicSuggestions = results
+                }
+            });
+        });
+
+        topicSearchType.on('change', function() {
+            topicSearchType = $(this); // 更新 topicSearchType 的值
+            const searchQuery = topicInput.val();  // 獲取輸入框的值
+            const searchQueryType = topicSearchType.val();
+
+            $.ajax({
+                url: '/search/suggest',  // 請求的URL
+                type: 'GET',
+                data: {type: searchQueryType, query: searchQuery},  // 傳遞給服務器的參數
+                success: function (results) {
+                    // 成功獲取到搜索結果後執行的回調函數
+                    // 將搜索結果顯示在search-results區域
+                    topicSuggestions = results
+                }
+            });
+        });
+    });
+
+    function select(element) {
+        let selectData = $(element).find("a").text();
+
+        if (!selectData.split(' ')[2]) return;
+
+        let selectedAddress = selectData.split(' ')[2].trim(); // 獲取選擇的地址
+        topicInput.val(selectedAddress);
+        topicSearchInput.removeClass("active");
+    }
+</script>

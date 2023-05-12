@@ -18,3 +18,32 @@ img {
 .nav-link {
   color: #6c757d !important;
 }
+
+/* topic.html */
+.topic {
+  height: 100vh;
+
+  img {
+    object-fit: cover;
+  }
+
+  .topic-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    width: 50%;
+
+    @media screen and (max-width: 1024px) {
+      transform: translate(-50%, -50%);
+      width: 75%;
+    }
+
+    @media screen and (max-width: 768px) {
+      transform: translate(-50%, -50%);
+      width: 100%;
+    }
+
+    -ms-transform: translate(-50%, -40%);
+  }
+}
