@@ -22,6 +22,7 @@
     <link href="../static/css/main.css" rel="stylesheet" type="text/css"/>
 
     <script src="../static/scripts/login/password_validation.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrliAWR2taTmGw9YZm6QJe0O5heNIWXls&libraries=places"></script>
 </head>
 
 
@@ -46,11 +47,13 @@
         {% include './revise_post/revise_post_form.html' %}
     </div>
 {% endif %}
+{% include './common/chart_rent.html' %}
 {% include './common/comment.html' %}
 </body>
 
 
 <footer>
+    
     {% include './common/footer.html' %}
 </footer>
 
