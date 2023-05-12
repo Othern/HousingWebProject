@@ -3,7 +3,7 @@
          class="d-block w-100 h-100 img-fluid" alt="圖片無法載入">
     <div class="d-block d-xs-none">
         <div class="topic-content bg-dark bg-opacity-50 p-5">
-            <form class="topic-search-input">
+            <form action="/search" method="get" class="topic-search-input">
                 <h5 class="border-bottom fw-bold text-light fs-3">找尋理想房屋</h5>
                 <div class="mb-2">
                     <input type="radio" class="btn-check search-type" name="searchType" id="option1" autocomplete="off" value="buy" checked>
@@ -47,10 +47,10 @@
                             </span>
                     {% endif %}
                     <label for="search-input-topic" class="visually-hidden">物件名稱</label>
-                    <input id="search-input-topic" type="text"
+                    <input id="search-input-topic" type="text" name="query"
                            class="form-control form-control-lg input-query rounded-0 shadow-none"
                            placeholder="社區名稱/地點街區">
-                    <button class="search-button btn btn-warning rounded-0 shadow-none" type="button">
+                    <button class="search-button btn btn-warning rounded-0 shadow-none" type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>

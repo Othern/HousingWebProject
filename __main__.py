@@ -1,24 +1,29 @@
 import datetime as dt
+import json
 import os
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
 
+import pandas as pd
 from PIL import Image
 from flask import Flask, render_template, session, redirect, url_for, flash, jsonify, request
 from flask_login import logout_user, LoginManager, login_user, login_required, UserMixin, current_user
 from werkzeug.utils import secure_filename
 
 from database import link_sql, check_user_exist
+from search import generate_sql_query
+
+with open('setting.json', 'r') as f:
+    settings = json.load(f)
 
 app = Flask(__name__, template_folder='./templates')
 
-app.secret_key = '12345678'
+app.secret_key = settings['AppSecretKey']
 app.config['UPLOAD_POST_IMAGE_FOLDER'] = "static/images/post/"
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-GOOGLE_API_KEY = 'mykey'
+
+GOOGLE_API_KEY = settings['GoogleApiKey']
+OPENAI_API_KEY = settings['OpenAIKey']
 
 
 class User(UserMixin):
@@ -64,6 +69,21 @@ def get_post_data(sql):
         post["reviseDateTime"] = time_diff_string(post["reviseDateTime"])
 
     return results
+
+
+def get_dataframe(location, attr, year):
+    df = pd.read_csv(location)
+    df = df[attr]
+    df["date"] = pd.to_datetime(df["date"])
+    df = df[df["date"] > dt.datetime(int(year), 1, 1)]
+
+    df['year'] = df['date'].astype(str).str[0:4]
+    df['month'] = df['date'].astype(str).str[5:7]
+    df['city'] = df['address'].astype(str).str[0:3]
+
+    df = df.drop(['date', 'address'], axis=1)
+
+    return df
 
 
 @login_manager.user_loader
@@ -333,28 +353,19 @@ def sell_info():
     else:
         revise_permission = 0
 
-    def sell_data(location,year):
-        attr = ['date','address','pricePerTwPing','houseType']
+    def sell_data(location, year):
+        attr = ['date', 'address', 'pricePerTwPing', 'houseType']
 
-        df = pd.read_csv(location)
-        df = df[attr]
-        df["date"] = pd.to_datetime(df["date"])
-        df = df[df["date"] > dt.datetime(int(year),1,1)]
-        
-        df['year'] = df['date'].astype(str).str[0:4]
-        df['month'] = df['date'].astype(str).str[5:7]
-        df['city'] = df['address'].astype(str).str[0:3]
-        
-        df = df.drop(['date', 'address'], axis=1)
+        df = get_dataframe(location, attr, year)
 
-        df=df[['year','month','city','pricePerTwPing','houseType']]
-        df['pricePerTwPing']=df['pricePerTwPing']/1000
+        df = df[['year', 'month', 'city', 'pricePerTwPing', 'houseType']]
+        df['pricePerTwPing'] = df['pricePerTwPing'] / 1000
         return df
 
-    def data_sell_process(year:str,season:str):
-        data=sell_data(f"./house_data/sell_{year}_{season}.csv",year)
-        
-        return data
+    def data_sell_process(year: str, season: str):
+        fetch_data = sell_data(f"./house_data/sell_{year}_{season}.csv", year)
+
+        return fetch_data
 
     data_01 = data_sell_process("2022", "01")
     data_02 = data_sell_process("2022", "02")
@@ -362,10 +373,10 @@ def sell_info():
     data_04 = data_sell_process("2022", "04")
     data_05 = data_sell_process("2023", "01")
     data_06 = data_sell_process("2023", "02")
-    data = pd.concat([data_01, data_02, data_03, data_04,data_05,data_06], ignore_index=True)
+    data = pd.concat([data_01, data_02, data_03, data_04, data_05, data_06], ignore_index=True)
 
     data = data.groupby(['year', 'month', 'city', 'houseType'])['pricePerTwPing'].agg(['mean', 'size']).reset_index()
-    
+
     data = data[(data['city'] == results['city']) & (data['houseType'] == results['houseType'])]
     chart_data = data.to_json(orient='records')
 
@@ -376,8 +387,8 @@ def sell_info():
         revise_permission=revise_permission,
         criticizes=comment,
         postType="sell",
-        post=results, 
-        chart_data = chart_data,
+        post=results,
+        chart_data=chart_data,
         google_api_key=GOOGLE_API_KEY
     )
 
@@ -407,32 +418,22 @@ def rentals_info():
 
     comment = get_post_data(sql)
 
-    if (results['type']=='分租套房' or results['type']=='獨立套房' or results['type']=='雅房'):
-        results['type']='套房'
-    
+    if results['type'] == '分租套房' or results['type'] == '獨立套房' or results['type'] == '雅房':
+        results['type'] = '套房'
 
-    def rent_data(location,year):
-        attr = ['date','address','price','type']
+    def rent_data(location, year):
+        attr = ['date', 'address', 'price', 'type']
 
-        df = pd.read_csv(location)
-        df = df[attr]
-        df["date"] = pd.to_datetime(df["date"])
-        df = df[df["date"] > dt.datetime(int(year),1,1)]
-        
-        df['year'] = df['date'].astype(str).str[0:4]
-        df['month'] = df['date'].astype(str).str[5:7]
-        df['city'] = df['address'].astype(str).str[0:3]
-        
-        df = df.drop(['date', 'address'], axis=1)
+        df = get_dataframe(location, attr, year)
 
-        df=df[['year','month','city','price','type']]
-        df['price']=df['price']/100
+        df = df[['year', 'month', 'city', 'price', 'type']]
+        df['price'] = df['price'] / 100
         return df
 
-    def data_rent_process(year:str,season:str):
-        data=rent_data(f"./house_data/rent_{year}_{season}.csv",year)
-        
-        return data
+    def data_rent_process(year: str, season: str):
+        fetch_data = rent_data(f"./house_data/rent_{year}_{season}.csv", year)
+
+        return fetch_data
 
     data_01 = data_rent_process("2022", "01")
     data_02 = data_rent_process("2022", "02")
@@ -440,7 +441,7 @@ def rentals_info():
     data_04 = data_rent_process("2022", "04")
     data_05 = data_rent_process("2023", "01")
     data_06 = data_rent_process("2023", "02")
-    data = pd.concat([data_01, data_02, data_03, data_04,data_05,data_06], ignore_index=True)
+    data = pd.concat([data_01, data_02, data_03, data_04, data_05, data_06], ignore_index=True)
 
     data = data.groupby(['year', 'month', 'city', 'type'])['price'].agg(['mean', 'size']).reset_index()
     data = data[(data['city'] == results['city']) & (data['type'] == results['type'])]
@@ -455,7 +456,7 @@ def rentals_info():
         revise_permission=revise_permission,
         criticizes=comment,
         post=results,
-        chart_data = chart_data,
+        chart_data=chart_data,
         google_api_key=GOOGLE_API_KEY
     )
 
@@ -663,9 +664,19 @@ def pricing():
     return render_template('pricing.html')
 
 
-@app.route('/search')
+@app.route('/search', methods=['GET'])
 def search():
-    return render_template('search_results.html')
+    search_type = request.args.get('searchType')  # 獲取搜索類型
+    query = request.args.get('query')  # 獲取搜索關鍵詞
+    selected_region = session.get('selected_region', '台北市')
+
+    sql_query = generate_sql_query(search_type, query, selected_region)
+    print(sql_query)
+
+    return render_template(
+        'search_results.html',
+        selected_region=selected_region
+    )
 
 
 @app.route('/search/suggest')
